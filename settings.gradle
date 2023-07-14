@@ -14,3 +14,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "EmoCloudMusic"
 include ':app'
+include ':lib_netWork'
+include ':lib_account'
+include ':lib_base'
+include ':lib_scroll'
