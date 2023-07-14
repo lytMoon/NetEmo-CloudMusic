@@ -17,7 +17,7 @@ import retrofit2.http.Query
 interface ApiService {
      //   示例：comment/music?id=186016&limit=1
      @GET("comment/music")
-     fun getMusicComments(@Query("id") id:Int,@Query("limit")limit: Int =100): Call<MusicComment<Comment>>
+     fun getMusicComments(@Query("id") id:Int,@Query("limit")limit: Int =100): Observable<MusicComment<Comment>>
 
 
 }

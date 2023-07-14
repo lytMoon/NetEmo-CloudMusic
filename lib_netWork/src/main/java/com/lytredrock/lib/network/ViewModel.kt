@@ -6,6 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.lytredrock.lib.network.musicData.Comment
 import com.lytredrock.lib.network.musicData.MusicComment
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,49 +36,34 @@ class ViewModel:androidx.lifecycle.ViewModel() {
     @SuppressLint("CheckResult")
     fun receiveMusicComments(id:Int){
        apiService.getMusicComments(id)
-           .enqueue(object: Callback<MusicComment<Comment>>{
-               override fun onResponse(
-                   call: Call<MusicComment<Comment>>,
-                   response: Response<MusicComment<Comment>>
+        /***
+         * 下面使用了Rxjava
+         */
+           .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
+           .observeOn(AndroidSchedulers.mainThread())//在安卓主线程（执行onNext的逻辑）
+           .subscribe(object : Observer<MusicComment<Comment>> {
+               override fun onSubscribe(d: Disposable) {
 
-               ) {
-                   _musicComments.postValue(response.body()?.comments)
-                   val list = response.body()?.comments
+               }
+
+               override fun onError(e: Throwable) {
+                   Log.d("receiveMusicComments","(ViewModel.kt:69)-->> "+e.message);
+               }
+
+               override fun onComplete() {
+
+               }
+
+               override fun onNext(t: MusicComment<Comment>) {
+                   _musicComments.postValue(t.comments)
+                   val list =t.comments
                    if (list != null) {
                        for (it in list)
                            Log.d("receiveMusicComments","(ViewModel.kt:45)-->> "+it.content)
-                   };
-
-               }
-
-               override fun onFailure(call: Call<MusicComment<Comment>>, t: Throwable) {
-                  Log.d("receiveMusicComments", "(ViewModel.kt:57)-->> 失败了");
+                   }
                }
 
            })
-//           .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
-//           .observeOn(AndroidSchedulers.mainThread())//在安卓主线程更新UI（执行onNext的逻辑）
-//           .subscribe(object : Observer<MusicComment<Comment>> {
-//               override fun onSubscribe(d: Disposable) {
-//               }
-//
-//               override fun onError(e: Throwable) {
-//               }
-//
-//               override fun onComplete() {
-//               }
-//
-//               override fun onNext(t: MusicComment<Comment>) {
-//                   _musicComments.postValue(t.comments)
-//                   Log.d("receiveMusicComments", "(ViewModel.kt:57)-->> $_musicComments");
-//
-//
-//               }
-//
-//           })
 
    }
-
-
-
 }
