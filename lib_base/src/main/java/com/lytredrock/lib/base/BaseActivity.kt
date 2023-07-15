@@ -22,7 +22,7 @@ import androidx.lifecycle.Observer
 open class BaseActivity():AppCompatActivity() {
 
     fun myToast(text:String,toastContext:Context){
-        Toast.makeText(toastContext,text,Toast.LENGTH_SHORT)
+        Toast.makeText(toastContext,text,Toast.LENGTH_SHORT).show()
     }
     inline fun <reified T: Activity> startActivity(){
         val intent = Intent(this, T::class.java)
