@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.lytredrock.model.login.model_login-mergeDebugResources-26:/values-en-rIN/values-en-rIN.xml",
+            "outputFile": "com.lytredrock.model.login.model_login-mergeDebugResources-39:/values-en-rIN/values-en-rIN.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\29364\\.gradle\\caches\\transforms-3\\b270d1a26e91fe5547d283a56cc4ab3b\\transformed\\core-1.9.0\\res\\values-en-rIN\\values-en-rIN.xml",
+                    "source": "C:\\Users\\29364\\.gradle\\caches\\transforms-3\\6da50bc281d9b7eaf1752636e72c16a0\\transformed\\core-1.9.0\\res\\values-en-rIN\\values-en-rIN.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\29364\\.gradle\\caches\\transforms-3\\558e8d9b27b3ef1f19c48e98e25708f5\\transformed\\appcompat-1.6.1\\res\\values-en-rIN\\values-en-rIN.xml",
+                    "source": "C:\\Users\\29364\\.gradle\\caches\\transforms-3\\13aaadb979dca056175cab265896d31a\\transformed\\appcompat-1.6.1\\res\\values-en-rIN\\values-en-rIN.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

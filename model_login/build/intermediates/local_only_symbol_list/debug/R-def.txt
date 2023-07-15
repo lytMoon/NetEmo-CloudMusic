@@ -2,11 +2,23 @@ R_DEF: Internal format may change without notice
 local
 color black
 color white
+drawable gradient_background
+drawable gradient_button_background
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+id btMsg
+id loadPic
+id loginButton
+id login_webView
 layout activity_login
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name
+string dianwokanshuoming
+string login
+string logintipmsg
+string passwordGet
+string pleaseenternumber
 style Base.Theme.EmoCloudMusic
 style Theme.EmoCloudMusic
+xml network_security_config

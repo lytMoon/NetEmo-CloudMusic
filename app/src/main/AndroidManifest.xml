@@ -11,7 +11,7 @@
         android:icon="@drawable/emocloud"
         android:label="@string/app_name"
         android:roundIcon="@drawable/emocloud"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/Theme.EmoCloudMusic"
         tools:targetApi="31">
         <activity

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">model_login</string>
+    <string name="login">登录（扫码后）</string>
+    <string name="logintipmsg">请您用二维码登录谢谢</string>
+    <string name="pleaseenternumber">输入手机号</string>
+    <string name="passwordGet">请输入验证码</string>
+    <string name="dianwokanshuoming">点我查看使用说明</string>
 </resources>
