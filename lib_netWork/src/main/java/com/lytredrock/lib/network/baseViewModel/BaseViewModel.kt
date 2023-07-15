@@ -1,19 +1,17 @@
-package com.lytredrock.lib.network
+package com.lytredrock.lib.network.baseViewModel
 
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.lytredrock.lib.network.ServiceCreator
+import com.lytredrock.lib.network.apiService.ApiService
 import com.lytredrock.lib.network.musicData.Comment
 import com.lytredrock.lib.network.musicData.MusicComment
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 /**
  * description ：在ViewModel中封装了网络请求的具体逻辑
@@ -47,7 +45,7 @@ class BaseViewModel:androidx.lifecycle.ViewModel() {
                }
 
                override fun onError(e: Throwable) {
-                   Log.d("receiveMusicComments","(ViewModel.kt:69)-->> "+e.message);
+                   Log.d("receiveMusicComments","(BaseViewModel.kt:69)-->> "+e.message);
                }
 
                override fun onComplete() {
@@ -59,7 +57,7 @@ class BaseViewModel:androidx.lifecycle.ViewModel() {
                    val list =t.comments
                    if (list != null) {
                        for (it in list)
-                           Log.d("receiveMusicComments","(ViewModel.kt:45)-->> "+it.content)
+                           Log.d("receiveMusicComments","(BaseViewModel.kt:45)-->> "+it.content)
                    }
                }
 

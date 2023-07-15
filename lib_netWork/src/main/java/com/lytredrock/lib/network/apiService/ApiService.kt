@@ -1,9 +1,8 @@
-package com.lytredrock.lib.network
+package com.lytredrock.lib.network.apiService
 
 import com.lytredrock.lib.network.musicData.Comment
 import com.lytredrock.lib.network.musicData.MusicComment
 import io.reactivex.Observable
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 

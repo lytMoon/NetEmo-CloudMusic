@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
-import com.lytredrock.lib.network.BaseViewModel
+import com.lytredrock.lib.network.baseViewModel.BaseViewModel
 
 class MainActivity : AppCompatActivity() {
     //懒加载注入viewmodel
