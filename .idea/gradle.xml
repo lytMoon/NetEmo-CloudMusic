@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/lib_base" />
             <option value="$PROJECT_DIR$/lib_netWork" />
             <option value="$PROJECT_DIR$/lib_scroll" />
+            <option value="$PROJECT_DIR$/model_login" />
           </set>
         </option>
       </GradleProjectSettings>

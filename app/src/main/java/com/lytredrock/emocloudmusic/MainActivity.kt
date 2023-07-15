@@ -13,6 +13,13 @@ import com.lytredrock.emocloudmusic.frgment.FindFragment
 import com.lytredrock.emocloudmusic.frgment.MineFragment
 import com.lytredrock.lib.network.BaseViewModel
 
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
 class MainActivity : BaseActivity(){
     private val myViewBinding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,8 +50,8 @@ class MainActivity : BaseActivity(){
                 R.id.community -> myViewBinding.vp2.currentItem = 2
             }
             return@setOnItemSelectedListener true
+
         }
 
     }
 
-}
