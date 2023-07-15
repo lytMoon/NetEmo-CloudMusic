@@ -14,9 +14,10 @@ import retrofit2.http.Query
  * version: 1.0
  */
 interface ApiService {
-     //   示例：comment/music?id=186016&limit=1
+     //   示例：comment/music?id=186016&limit=1,获取音乐的数据
      @GET("comment/music")
      fun getMusicComments(@Query("id") id:Int,@Query("limit")limit: Int =100): Observable<MusicComment<Comment>>
 
+     //
 
 }
