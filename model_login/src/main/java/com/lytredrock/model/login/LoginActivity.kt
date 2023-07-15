@@ -56,7 +56,7 @@ class LoginActivity : BaseActivity() {
             NetWorkUtils.ReceiveQRKey()
             Log.d("TAG","(LoginActivity.kt:48)-->> "+NetWorkUtils.receivedNumber)
             if (NetWorkUtils.receivedNumber!=null){
-                myToast("请求成功请等待，不要频繁点击哦",this)
+                myToast("请求成功，请等待下一步提示",this)
                 NetWorkUtils.receiveQRPic(NetWorkUtils.receivedNumber!!)
                 Log.d("TAG","(LoginActivity.kt:52)-->> "+NetWorkUtils.qrUrl)
                 if(NetWorkUtils.qrUrl!=null){

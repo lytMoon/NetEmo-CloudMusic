@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.lytredrock.model.login.model_login-mergeDebugResources-39:/values-xlarge-v4/values-xlarge-v4.xml",
+            "outputFile": "com.lytredrock.model.login.model_login-mergeDebugResources-40:/values-xlarge-v4/values-xlarge-v4.xml",
             "map": [
                 {
                     "source": "C:\\Users\\29364\\.gradle\\caches\\transforms-3\\13aaadb979dca056175cab265896d31a\\transformed\\appcompat-1.6.1\\res\\values-xlarge-v4\\values-xlarge-v4.xml",
