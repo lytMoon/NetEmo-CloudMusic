@@ -4,12 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
-import com.lytredrock.lib.network.ViewModel
+import com.lytredrock.lib.network.BaseViewModel
 
 class MainActivity : AppCompatActivity() {
     //懒加载注入viewmodel
     val myViewModel by lazy {
-        ViewModelProvider(this).get(ViewModel::class.java)
+        ViewModelProvider(this).get(BaseViewModel::class.java)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

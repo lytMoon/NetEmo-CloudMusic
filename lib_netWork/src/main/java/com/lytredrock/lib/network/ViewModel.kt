@@ -22,7 +22,7 @@ import retrofit2.Response
  * date : 2023/7/14 17:28
  * version: 1.0
  */
-class ViewModel:androidx.lifecycle.ViewModel() {
+class BaseViewModel:androidx.lifecycle.ViewModel() {
 
     val apiService= ServiceCreator.create(ApiService::class.java)
 
