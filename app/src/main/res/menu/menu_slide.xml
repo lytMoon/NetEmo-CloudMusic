@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/comment"
+    android:icon="@drawable/ic_comment"
+    android:title="评论"/>
+    <item
+        android:id="@+id/station"
+        android:icon="@drawable/ic_station"
+        android:title="电台"/>
+    <item
+        android:id="@+id/attention"
+        android:icon="@drawable/ic_attention"
+        android:title="关注"/>
+    <item
+        android:id="@+id/fans"
+        android:icon="@drawable/ic_fans"
+        android:title="粉丝"/>
+    <item
+        android:id="@+id/dynamic"
+        android:icon="@drawable/ic_dynamic"
+        android:title="动态"/>
+    <item
+        android:id="@+id/out"
+        android:title="退出登陆"/>
+</menu>

@@ -23,7 +23,8 @@ class SplashActivity :BaseActivity() {
 
         myViewBinding.tvSkip.setOnClickListener {
             startActivity<MainActivity>()
-            boolean=false }
+            boolean=false
+            finish()}
 
         Glide.with(this).load(R.drawable.splash).into(myViewBinding.ivSplash)
 
@@ -33,6 +34,7 @@ class SplashActivity :BaseActivity() {
             override fun run() {
                 if (boolean)
                 startActivity<MainActivity>()
+               finish()
             }
 
         },4000)
