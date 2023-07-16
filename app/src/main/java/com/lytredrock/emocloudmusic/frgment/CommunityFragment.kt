@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.lytredrock.emocloudmusic.R
+import com.lytredrock.emocloudmusic.databinding.FragmentConmmnityBinding
 
 /**
  * description ： TODO:类的作用
@@ -14,13 +15,20 @@ import com.lytredrock.emocloudmusic.R
  * date : 2023/7/15 19:52
  */
 class CommunityFragment:Fragment() {
+
+    private var _binding: FragmentConmmnityBinding? = null
+    private val binding get() = _binding!!
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_conmmnity, container, false)
+        _binding = FragmentConmmnityBinding.inflate(inflater, container, false)
+        return _binding?.root
     }
 
     public override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
     }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

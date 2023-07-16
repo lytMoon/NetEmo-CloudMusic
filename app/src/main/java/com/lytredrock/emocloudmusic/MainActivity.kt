@@ -2,6 +2,10 @@ package com.lytredrock.emocloudmusic
 
 import BaseActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
+import android.view.MenuItem
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.lytredrock.emocloudmusic.databinding.ActivityMainBinding
 import com.lytredrock.emocloudmusic.frgment.CommunityFragment
@@ -22,6 +26,11 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(myViewBinding.root)
         transparentStatusBar(window, false)
+        myViewBinding.ivSlideMenu.bringToFront()
+        myViewBinding.ivSlideMenu.setOnClickListener {
+            myViewBinding.drawerLayout.openDrawer(GravityCompat.START)
+        }
+
         var fragments = ArrayList<BackFragment>()
         fragments.add(object : BackFragment {
             override fun back(): Fragment {

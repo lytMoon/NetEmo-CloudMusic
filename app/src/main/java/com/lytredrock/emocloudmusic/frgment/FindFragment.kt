@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.lytredrock.emocloudmusic.R
+import com.lytredrock.emocloudmusic.databinding.FragmentConmmnityBinding
+import com.lytredrock.emocloudmusic.databinding.FragmentFindBinding
 
 /**
  * description ： TODO:类的作用
@@ -14,15 +16,21 @@ import com.lytredrock.emocloudmusic.R
  * date : 2023/7/15 19:50
  */
 class FindFragment: Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_find, container, false)
 
+    private var _binding: FragmentFindBinding? = null
+    private val binding get() = _binding!!
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = FragmentFindBinding.inflate(inflater, container, false)
+        return _binding?.root
     }
 
     public override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
     }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }
