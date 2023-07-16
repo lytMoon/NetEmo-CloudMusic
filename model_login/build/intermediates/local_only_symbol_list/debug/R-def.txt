@@ -2,15 +2,22 @@ R_DEF: Internal format may change without notice
 local
 color black
 color white
+drawable __music86
+drawable app_logo
 drawable gradient_background
 drawable gradient_button_background
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+id QRImage
 id btMsg
 id loadPic
 id loginButton
-id login_webView
+id tab_layout
+id textView
+id viewPager
 layout activity_login
+layout item_code_login
+layout item_qrcode_login
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name

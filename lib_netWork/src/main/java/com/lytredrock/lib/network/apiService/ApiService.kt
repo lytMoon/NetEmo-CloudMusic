@@ -35,7 +35,7 @@ interface ApiService {
       * 二维码生成
       */
      @GET("login/qr/create")
-     fun qrCreat(@Query("key") key:String):Observable<QRPic<QRPicData>>
+     fun qrCreat(@Query("key") key:String,@Query("qrimg") qrimg:Int=200):Observable<QRPic<QRPicData>>
 
      /**
       * 二维码查询（获取cookie）
