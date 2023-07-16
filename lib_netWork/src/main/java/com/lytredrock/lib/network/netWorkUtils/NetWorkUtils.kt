@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.lytredrock.lib.network.apiService.ApiService
+import com.lytredrock.lib.network.apiService.MusicInfoCallBack
 import com.lytredrock.lib.network.musicData.Comment
 import com.lytredrock.lib.network.musicData.MusicComment
 import com.lytredrock.lib.network.musicData.QRData
@@ -103,7 +104,7 @@ object NetWorkUtils {
      * 得到图片相关信息
      */
 
-    fun receiveQRPic(key:String){
+    fun receiveQRPic(key:String,callBack: MusicInfoCallBack){
         apiService.qrCreat(key)
             .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
             .observeOn(AndroidSchedulers.mainThread())//在安卓主线程（执行onNext的逻辑）
@@ -113,7 +114,7 @@ object NetWorkUtils {
                 }
 
                 override fun onError(e: Throwable) {
-
+                    callBack.onFailed(e.message.toString())
                 }
 
                 override fun onComplete() {
@@ -121,8 +122,8 @@ object NetWorkUtils {
                 }
 
                 override fun onNext(t: QRPic<QRPicData>) {
-                    qrUrl=t.data.qrurl
-                    Log.d("receiveQRPic", "(NetWorkUtils.kt:125)-->> $qrUrl");
+                    callBack.onRespond(t.data.qrimg)
+                    Log.d("receiveQRPic", "(NetWorkUtils.kt:125)-->> "+t.data.qrimg);
 
                 }
 
