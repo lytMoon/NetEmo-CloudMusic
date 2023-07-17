@@ -4,11 +4,58 @@
     <data>
 
     </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_marginTop="50sp"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
+        <ImageView
+            android:src="@drawable/phone"
+            android:layout_width="50sp"
+            android:layout_height="50sp"/>
+        <EditText
+            android:id="@+id/tv_phoneNum"
+            android:layout_width="match_parent"
+            android:hint="@string/chinesephoneNum"
+            android:textSize="18sp"
+            android:layout_height="50sp"/>
+    </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/bt_Button"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:text="@string/sendCode"
+        android:layout_gravity="center_horizontal"/>
+
+    <LinearLayout
+        android:layout_marginTop="60dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@drawable/codephone"
+            android:layout_width="50sp"
+            android:layout_height="50sp"/>
+        <EditText
+            android:id="@+id/tv_code"
+            android:layout_width="match_parent"
+            android:hint="请您输入验证码"
+            android:textSize="18sp"
+            android:layout_height="50sp"/>
+    </LinearLayout>
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:text="@string/enter"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>
+
 </layout>

@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.lytredrock.lib.network.apiService.ApiService
 import com.lytredrock.lib.network.apiService.MusicInfoCallBack
+import com.lytredrock.lib.network.apiService.PhoneNumCallBack
+import com.lytredrock.lib.network.musicData.CodeNum
 import com.lytredrock.lib.network.musicData.Comment
 import com.lytredrock.lib.network.musicData.MusicComment
 import com.lytredrock.lib.network.musicData.QRData
@@ -130,6 +132,38 @@ object NetWorkUtils {
             })
 
     }
+
+
+    /**
+     * 获得手机二维码
+     */
+
+    fun receiveCodeNum(phoneNum:Int,callBack: PhoneNumCallBack){
+        apiService.codeSend(phoneNum)
+            .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
+            .observeOn(AndroidSchedulers.mainThread())//在安卓主线程（执行onNext的逻辑）
+            .subscribe(object :Observer<CodeNum>{
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onError(e: Throwable) {
+                    callBack.onFailed(e.message.toString())
+                }
+
+                override fun onComplete() {
+
+                }
+
+                override fun onNext(t: CodeNum) {
+                    callBack.onRespond(t)
+                    Log.d("receiveCodeNum","(NetWorkUtils.kt:160)-->> "+t.data+t.data);
+                }
+
+            })
+    }
+
+
 
 
 
