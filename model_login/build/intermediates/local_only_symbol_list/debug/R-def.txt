@@ -13,6 +13,7 @@ drawable phone
 id QRImage
 id btMsg
 id bt_Button
+id bt_login
 id loadPic
 id loginButton
 id tab_layout
