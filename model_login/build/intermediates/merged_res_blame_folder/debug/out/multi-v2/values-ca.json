@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.lytredrock.model.login.model_login-mergeDebugResources-40:/values-ca/values-ca.xml",
+            "outputFile": "com.lytredrock.model.login.model_login-mergeDebugResources-36:/values-ca/values-ca.xml",
             "map": [
                 {
                     "source": "C:\\Users\\29364\\.gradle\\caches\\transforms-3\\6da50bc281d9b7eaf1752636e72c16a0\\transformed\\core-1.9.0\\res\\values-ca\\values-ca.xml",
