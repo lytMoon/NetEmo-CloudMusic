@@ -93,7 +93,7 @@ object NetWorkUtils {
 
                 override fun onNext(t: QRKey<QRData>) {
                    receivedNumber= t.data.unikey
-                    Log.d("ReceiveQRKey","(BaseViewModel.kt:90)-->> "+receivedNumber)
+                    Log.d("ReceiveQRKey", "(BaseViewModel.kt:90)-->> $receivedNumber")
                 }
 
             })
