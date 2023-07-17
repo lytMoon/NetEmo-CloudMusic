@@ -102,6 +102,21 @@ class LoginActivity : BaseActivity() {
                 myToast("请再次点击按钮",this)
             }
         }
+
+        /**
+         * 实现手机号登录
+         */
+        identifyBinding.btButton.setOnClickListener {
+            val phoneNum = identifyBinding.tvPhoneNum.text.toString()
+            if (phoneNum.matches(Regex("[0-9]+"))){
+
+                myToast("成功",this)
+            }
+            else{
+                myToast("请输入阿拉伯数字",this)
+            }
+
+        }
     }
 
     /**
@@ -112,4 +127,6 @@ class LoginActivity : BaseActivity() {
         val bitmap =  BitmapFactory.decodeByteArray(decode, 0, decode.size)
         qrCodeBinding.QRImage.setImageBitmap(bitmap)
     }
+
+
 }

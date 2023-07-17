@@ -1,5 +1,6 @@
 package com.lytredrock.lib.network.apiService
 
+import com.lytredrock.lib.network.musicData.CodeNum
 import com.lytredrock.lib.network.musicData.Comment
 import com.lytredrock.lib.network.musicData.MusicComment
 import com.lytredrock.lib.network.musicData.QRData
@@ -42,4 +43,11 @@ interface ApiService {
       */
      @GET("login/qr/check")
      fun qeLogin(@Query("key") key:String):Observable<QRLast>
+
+
+     /**
+      * 发送验证码
+      */
+     @GET("captcha/sent")
+     fun codeSend(@Query("phone") phone:Int) :Observable<CodeNum>
 }
