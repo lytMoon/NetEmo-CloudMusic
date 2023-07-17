@@ -7,7 +7,7 @@ android {
     namespace 'com.lytredrock.model.login'
     compileSdk 33
 
-    dataBinding{
+    viewBinding{
         enabled = true
     }
     defaultConfig {
