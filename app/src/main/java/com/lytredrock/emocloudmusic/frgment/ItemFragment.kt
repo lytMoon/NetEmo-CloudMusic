@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.lytredrock.emocloudmusic.R
 import com.lytredrock.emocloudmusic.databinding.ActivityMainBinding.inflate
-import com.lytredrock.emocloudmusic.databinding.FragmentFindBinding
 
 /**
  * description ： TODO:类的作用
@@ -18,11 +19,15 @@ import com.lytredrock.emocloudmusic.databinding.FragmentFindBinding
 class ItemFragment:Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-      return inflater.inflate(R.layout.fragment_banner, container, false)
-
+        val myView: View =inflater.inflate(R.layout.fragment_banner, container, false)
+        val back=myView.findViewById<ImageView>(R.id.iv_banner)
+         val bundle = arguments
+        val email = bundle!!.getInt("data")
+        Glide.with(requireContext()).load(email).into(back)
+      return myView
     }
 
-    override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
     }
