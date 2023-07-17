@@ -48,9 +48,11 @@
             android:layout_height="50sp"/>
     </LinearLayout>
     <Button
+        android:id="@+id/bt_login"
         android:layout_width="150dp"
         android:layout_height="45dp"
         android:text="@string/enter"
+        android:enabled="false"
         android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

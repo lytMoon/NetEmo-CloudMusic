@@ -6,6 +6,6 @@
     <string name="passwordGet">请输入验证码</string>
     <string name="dianwokanshuoming">点我查看使用说明</string>
     <string name="chinesephoneNum">请您输入中国手机号</string>
-    <string name="sendCode">发送验证法</string>
+    <string name="sendCode">发送验证码</string>
     <string name="enter">登录</string>
 </resources>

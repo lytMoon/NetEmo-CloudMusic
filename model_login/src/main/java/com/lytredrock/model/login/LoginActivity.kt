@@ -10,23 +10,36 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import com.lytredrock.lib.network.apiService.MusicInfoCallBack
-import com.lytredrock.lib.network.netWorkUtils.NetWorkUtils
+import androidx.lifecycle.ViewModelProvider
+import com.lytredrock.model.login.netWorkUtils.NetWorkUtils
 import com.lytredrock.model.login.adapter.BasePagerAdapter
+import com.lytredrock.model.login.apiService.IVerifyCodeInfo
+import com.lytredrock.model.login.apiService.MusicInfoCallBack
+import com.lytredrock.model.login.apiService.PhoneNumCallBack
+import com.lytredrock.model.login.apiService.qrCallBack
 import com.lytredrock.model.login.databinding.ActivityLoginBinding
 import com.lytredrock.model.login.databinding.ItemCodeLoginBinding
 import com.lytredrock.model.login.databinding.ItemQrcodeLoginBinding
+import com.lytredrock.model.login.loginData.CodeNum
+import com.lytredrock.model.login.loginData.QRLast
 
 class LoginActivity : BaseActivity() {
 
     private lateinit var loginAdapter: BasePagerAdapter
     private val titlesList = arrayListOf<String>()
     private val viewsList = arrayListOf<View>()
+    private lateinit var phoneNum: String
+    private lateinit var codeNumber: String
+
 
     private lateinit var qrCodeBinding: ItemQrcodeLoginBinding
     private lateinit var identifyBinding: ItemCodeLoginBinding
-    //懒加载注入databinding
+    //懒加载注入viewBinding
     private val mBinding: ActivityLoginBinding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
+    //懒加载注入viewmodel
+    val loginViewModel by lazy {
+        ViewModelProvider(this)[LoginViewModel::class.java]
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(mBinding.root)
@@ -34,6 +47,7 @@ class LoginActivity : BaseActivity() {
         iniTabLayout()
         onClick()
     }
+
 
 
     /**
@@ -86,10 +100,11 @@ class LoginActivity : BaseActivity() {
          */
         qrCodeBinding.loadPic.setOnClickListener {
             NetWorkUtils.ReceiveQRKey()
-            Log.d("TAG","(LoginActivity.kt:48)-->> "+NetWorkUtils.receivedNumber)
+            Log.d("TAG","(LoginActivity.kt:48)-->> "+ NetWorkUtils.receivedNumber)
             if (NetWorkUtils.receivedNumber!=null){
+                qrCodeBinding.loginButton.isEnabled=true
                 myToast("正在请求，未刷新请继续点击按钮",this)
-                NetWorkUtils.receiveQRPic(NetWorkUtils.receivedNumber!!,object : MusicInfoCallBack{
+                NetWorkUtils.receiveQRPic(NetWorkUtils.receivedNumber!!,object : MusicInfoCallBack {
                     override fun onRespond(qrimg: String) {
                         base64ToBitmap(qrimg)
                     }
@@ -103,24 +118,83 @@ class LoginActivity : BaseActivity() {
             }
         }
 
+
+        qrCodeBinding.loginButton.setOnClickListener {
+            if (NetWorkUtils.receivedNumber!=null){
+                NetWorkUtils.receiveQRState(NetWorkUtils.receivedNumber!!,object:qrCallBack{
+                    override fun onRespond(data: QRLast) {
+                        myToast(data.message,this@LoginActivity)
+                        //下面跳转模块，同时
+                    }
+
+                    override fun onFailed(e: String) {
+
+                        myToast(e,this@LoginActivity)
+                        Log.d("TAG","(LoginActivity.kt:123)-->> $e")
+
+                    }
+
+                })
+
+            }
+
+
+        }
+
         /**
          * 实现手机号登录
          */
         identifyBinding.btButton.setOnClickListener {
-            val phoneNum = identifyBinding.tvPhoneNum.text.toString()
+             phoneNum = identifyBinding.tvPhoneNum.text.toString()
             if (phoneNum.matches(Regex("[0-9]+"))){
+                myToast("发送成功，请不要频繁点击",this)
+                identifyBinding.btLogin.isEnabled = true
+                NetWorkUtils.receiveCodeNum(phoneNum,object: PhoneNumCallBack{
+                    override fun onRespond(d: CodeNum) {
 
-                myToast("成功",this)
+
+                    }
+
+                    override fun onFailed(e: String) {
+
+                    }
+
+                })
             }
             else{
                 myToast("请输入阿拉伯数字",this)
             }
 
         }
+
+        identifyBinding.btLogin.setOnClickListener {
+            codeNumber = identifyBinding.tvCode.text.toString()
+            Log.d("codeNumber","(LoginActivity.kt:140)-->> $phoneNum,$codeNumber");
+            if (::phoneNum.isInitialized&&::codeNumber.isInitialized){
+                NetWorkUtils.receiveCodeState(phoneNum,codeNumber, object : IVerifyCodeInfo{
+                    override fun onRespond(flag: Boolean) {
+                        if (flag){
+                            myToast("登录成功",this@LoginActivity)
+                        }
+                    }
+
+                    override fun onFailed(e: String?) {
+                        myToast("登录失败，请检查您的验证码",this@LoginActivity)
+                        Log.d("TAG","(LoginActivity.kt:150)-->> $e")
+                    }
+
+                })
+            }
+            else{
+               myToast("请正确填写信息",this)
+            }
+
+
+        }
     }
 
     /**
-     * 把二维码图片的base64吗转化为bitmap
+     * 把二维码图片的base64码转化为bitmap
      */
     private fun base64ToBitmap(qrCodeUrl: String) {
         val decode: ByteArray = Base64.decode(qrCodeUrl.split(",")[1], Base64.DEFAULT)
