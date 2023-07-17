@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-
-    </data>
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:layout_marginTop="50sp"
         android:orientation="horizontal"
@@ -58,4 +55,3 @@
 
 </LinearLayout>
 
-</layout>
