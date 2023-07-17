@@ -30,7 +30,6 @@ class MainActivity : BaseActivity() {
         myViewBinding.ivSlideMenu.setOnClickListener {
             myViewBinding.drawerLayout.openDrawer(GravityCompat.START)
         }
-
         var fragments = ArrayList<BackFragment>()
         fragments.add(object : BackFragment {
             override fun back(): Fragment {

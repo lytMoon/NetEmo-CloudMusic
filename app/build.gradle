@@ -37,8 +37,6 @@ android {
 
 dependencies {
 
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation(project(':lib_netWork'))
     implementation(project(':lib_base'))
     implementation 'androidx.core:core-ktx:1.8.0'
