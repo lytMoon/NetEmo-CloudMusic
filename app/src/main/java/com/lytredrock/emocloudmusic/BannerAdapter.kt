@@ -10,12 +10,14 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
  * email : 2191288460@qq.com
  * date : 2023/7/17 11:38
  */
-class BannerAdapter(fragmentActivity: FragmentActivity, private val fragments:ArrayList<BackFragment>):
-    FragmentStateAdapter(fragmentActivity) {
+class BannerAdapter(
+    fragmentActivity: FragmentActivity, private val fragments: ArrayList<BackFragment>
+) : FragmentStateAdapter(fragmentActivity) {
 
     override fun getItemCount(): Int {
         return fragments.size
     }
+
     override fun createFragment(position: Int): Fragment {
         return fragments[position].back()
     }
