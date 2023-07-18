@@ -22,7 +22,7 @@ class ItemFragment:Fragment() {
         val myView: View =inflater.inflate(R.layout.fragment_banner, container, false)
         val back=myView.findViewById<ImageView>(R.id.iv_banner)
          val bundle = arguments
-        val email = bundle!!.getInt("data")
+        val email = bundle!!.getString("data")
         Glide.with(requireContext()).load(email).into(back)
       return myView
     }

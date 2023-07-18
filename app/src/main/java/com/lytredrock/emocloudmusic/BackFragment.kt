@@ -9,5 +9,5 @@ import androidx.fragment.app.Fragment
  * date : 2023/7/15 17:32
  */
 interface BackFragment {
-    abstract fun back(): Fragment
+     fun back(): Fragment
 }
