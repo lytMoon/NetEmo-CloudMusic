@@ -2,7 +2,6 @@ package com.lytredrock.emocloudmusic.frgment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lytredrock.emocloudmusic.BackFragment
 import com.lytredrock.emocloudmusic.BannerAdapter
 import com.lytredrock.emocloudmusic.MainRvAdapter
-import com.lytredrock.emocloudmusic.R
+import com.lytredrock.emocloudmusic.RecommendSongListAdapter
 import com.lytredrock.emocloudmusic.databinding.FragmentFindBinding
 import com.lytredrock.emocloudmusic.viewmodel.FindFragmentViewModel
 import java.util.Timer
@@ -41,11 +40,11 @@ class FindFragment : Fragment() {
 
         myViewModel.apply {
             getBannerInFragment(1)
-            bannerLIfeData.observe(viewLifecycleOwner) {
+            bannerLifeData.observe(viewLifecycleOwner) {
                 for (element in it) {
                     val itemFragment = ItemFragment()
                     val bundle = Bundle()
-                    bundle.putString("data",element.pic)
+                    bundle.putString("data", element.pic)
                     itemFragment.arguments = bundle
                     fragments.add(object : BackFragment {
                         override fun back(): Fragment {
@@ -59,10 +58,20 @@ class FindFragment : Fragment() {
         }
 
 
+        myViewModel.apply {
+            getRecommendSongLIstInFragment()
+            recommendSongListLifeData.observe(viewLifecycleOwner) {
+                binding.rvRecommendSongList.adapter = RecommendSongListAdapter(it, requireActivity())
+                binding.rvRecommendSongList.layoutManager =
+                    GridLayoutManager(requireContext(), 1, RecyclerView.HORIZONTAL, false)
+            }
+        }
+
+
 
         myViewModel.apply {
             getBallInFragment()
-            dataLIfeData.observe(viewLifecycleOwner) {
+            dataLifeData.observe(viewLifecycleOwner) {
                 binding.rvFind.adapter = MainRvAdapter(it, requireActivity())
                 binding.rvFind.layoutManager =
                     GridLayoutManager(requireContext(), 1, RecyclerView.HORIZONTAL, false)
@@ -75,7 +84,7 @@ class FindFragment : Fragment() {
             override fun run() {
                 when (binding.vpFind.currentItem) {
 
-                    fragments.size-1 -> activity?.runOnUiThread { binding.vpFind.currentItem = 0 }
+                    fragments.size - 1 -> activity?.runOnUiThread { binding.vpFind.currentItem = 0 }
 
                     else -> binding.vpFind.currentItem = ++binding.vpFind.currentItem
                 }

@@ -2,6 +2,7 @@ package com.lytredrock.emocloudmusic.viewmodel
 
 import com.lytredrock.emocloudmusic.data.BannerData
 import com.lytredrock.emocloudmusic.data.FindData
+import com.lytredrock.emocloudmusic.data.RecommendSongListData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -19,4 +20,7 @@ interface FindDataInterface {
 
     @GET("banner")
     fun getInternetData2(@Query("type")type: Int ): Call<BannerData>
+
+@GET("personalized")
+    fun getInternetData3(): Call<RecommendSongListData>
 }
