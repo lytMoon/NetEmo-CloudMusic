@@ -52,6 +52,8 @@ class LoginActivity : BaseActivity() {
 
     /**
      * 初始化tablayout和我们登录视图的绑定，使用viewpager（Androidx下的，adapter是pageAdapter）
+     * 这里只是viewpager跟不同的view相互绑定，没有使用fragment，没有使用vp2
+     * 我做的搜索model实现了viewpager2和fragment和tablayoutl联动。
      */
     private fun iniTabLayout() {
         val qrCodeView: View = LayoutInflater.from(this).inflate(R.layout.item_qrcode_login, null)

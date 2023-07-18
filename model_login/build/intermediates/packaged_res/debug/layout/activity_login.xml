@@ -37,7 +37,7 @@
             app:tabSelectedTextColor="#ff678f"
             app:tabTextColor="#333333"
             app:tabUnboundedRipple="true" />
-
+        <!--这里使用viewpager跟xml文件绑定-->
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
