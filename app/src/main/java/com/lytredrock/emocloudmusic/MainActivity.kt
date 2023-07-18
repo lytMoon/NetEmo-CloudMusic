@@ -1,20 +1,13 @@
 package com.lytredrock.emocloudmusic
 
 import BaseActivity
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
-import android.view.MenuItem
 import androidx.core.view.GravityCompat
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.lytredrock.emocloudmusic.databinding.ActivityMainBinding
 import com.lytredrock.emocloudmusic.frgment.CommunityFragment
 import com.lytredrock.emocloudmusic.frgment.FindFragment
 import com.lytredrock.emocloudmusic.frgment.MineFragment
-import java.util.Timer
-import java.util.TimerTask
 
 
 class MainActivity : BaseActivity() {
@@ -49,7 +42,7 @@ class MainActivity : BaseActivity() {
             }
         })
         myViewBinding.vp2.adapter = FragmentAdapter(this, fragments)
-        myViewBinding.vp2.isUserInputEnabled=false
+        myViewBinding.vp2.isUserInputEnabled = false
 
         myViewBinding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
