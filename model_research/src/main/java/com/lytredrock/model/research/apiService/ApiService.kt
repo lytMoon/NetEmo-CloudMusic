@@ -1,8 +1,10 @@
 package com.lytredrock.model.research.apiService
 
-import android.database.Observable
-import com.lytredrock.model.research.musicdata.MusicSearchData
+import com.lytredrock.model.research.musicdata.Result
+import com.lytredrock.model.research.musicdata.SearchSongData
+import io.reactivex.Observable
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 /**
  * description ：用于搜索功能的实现
@@ -11,14 +13,13 @@ import retrofit2.http.GET
  * date : 2023/7/17 20:31
  * version: 1.0
  */
-class ApiService {
+interface ApiService {
 
     /**
-     * 返回搜索的结果
+     * 返回搜索的单曲的结果
      */
-   // @GET("search/multimatch")
-    //fun getMusicInfo():Observable<MusicSearchData>
-
+    @GET("search")
+    fun getSongInfo(@Query("keywords")keywords:String): Observable<SearchSongData<Result>>
 
 
 }

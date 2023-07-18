@@ -84,12 +84,12 @@
         "source": "C:\\Users\\29364\\.gradle\\daemon\\8.0\\com.lytredrock.model.login.model_login-main-40:\\drawable\\__music86.xml"
     },
     {
-        "merged": "com.lytredrock.model.login.model_login-merged_res-38:/layout_item_qrcode_login.xml.flat",
-        "source": "com.lytredrock.model.login.model_login-main-40:/layout/item_qrcode_login.xml"
-    },
-    {
         "merged": "C:\\Users\\29364\\.gradle\\daemon\\8.0\\com.lytredrock.model.login.model_login-merged_res-38:\\drawable_codephone.xml.flat",
         "source": "C:\\Users\\29364\\.gradle\\daemon\\8.0\\com.lytredrock.model.login.model_login-main-40:\\drawable\\codephone.xml"
+    },
+    {
+        "merged": "com.lytredrock.model.login.model_login-merged_res-38:/layout_activity_login.xml.flat",
+        "source": "com.lytredrock.model.login.model_login-main-40:/layout/activity_login.xml"
     },
     {
         "merged": "C:\\Users\\29364\\.gradle\\daemon\\8.0\\com.lytredrock.model.login.model_login-merged_res-38:\\drawable_gradient_button_background.xml.flat",
