@@ -1,7 +1,9 @@
 package com.lytredrock.emocloudmusic.frgment
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lytredrock.emocloudmusic.BackFragment
-import com.lytredrock.emocloudmusic.BannerAdapter
-import com.lytredrock.emocloudmusic.MainRvAdapter
-import com.lytredrock.emocloudmusic.RecommendSongListAdapter
+import com.lytredrock.emocloudmusic.SongListActivity
+import com.lytredrock.emocloudmusic.adapter.BannerAdapter
+import com.lytredrock.emocloudmusic.adapter.MainRvAdapter
+import com.lytredrock.emocloudmusic.adapter.RecommendSongListAdapter
 import com.lytredrock.emocloudmusic.databinding.FragmentFindBinding
 import com.lytredrock.emocloudmusic.viewmodel.FindFragmentViewModel
 import java.util.Timer
@@ -42,6 +44,7 @@ class FindFragment : Fragment() {
             getBannerInFragment(1)
             bannerLifeData.observe(viewLifecycleOwner) {
                 for (element in it) {
+                    Log.d("KKKKK", "onCreateView: ")
                     val itemFragment = ItemFragment()
                     val bundle = Bundle()
                     bundle.putString("data", element.pic)
@@ -54,16 +57,24 @@ class FindFragment : Fragment() {
                 }
                 binding.vpFind.adapter = BannerAdapter(requireActivity(), fragments)
             }
-
         }
-
 
         myViewModel.apply {
             getRecommendSongLIstInFragment()
             recommendSongListLifeData.observe(viewLifecycleOwner) {
-                binding.rvRecommendSongList.adapter = RecommendSongListAdapter(it, requireActivity())
+                val myAdapter = RecommendSongListAdapter(it, requireActivity())
+                binding.rvRecommendSongList.adapter = myAdapter
                 binding.rvRecommendSongList.layoutManager =
                     GridLayoutManager(requireContext(), 1, RecyclerView.HORIZONTAL, false)
+                myAdapter.setOnclick(object : RecommendSongListAdapter.ClickInterface {
+                    override fun onImageviewClick(view: View, position: Int) {
+                        val intent = Intent(requireContext(), SongListActivity::class.java)
+                        intent.putExtra("id", it[position].id)
+                        intent.putExtra("name",it[position].name)
+                        startActivity(intent)
+                    }
+
+                })
             }
         }
 

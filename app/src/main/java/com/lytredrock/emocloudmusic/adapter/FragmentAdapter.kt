@@ -1,8 +1,9 @@
-package com.lytredrock.emocloudmusic
+package com.lytredrock.emocloudmusic.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.lytredrock.emocloudmusic.frgment.BackFragment
 
 /**
  * description ： vp2的适配器
