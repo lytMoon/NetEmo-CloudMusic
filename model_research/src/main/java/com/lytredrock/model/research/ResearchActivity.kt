@@ -4,16 +4,14 @@ import BaseActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lytredrock.model.research.adapter.VpFragmentAdapter
-import com.lytredrock.model.research.apiService.SongCallBack
 import com.lytredrock.model.research.databinding.ResearchMainBinding
 import com.lytredrock.model.research.fragments.ArtistsFragment
 import com.lytredrock.model.research.fragments.SongFragment
-import com.lytredrock.model.research.networkUtils.SearchNetWorkUtil
+import com.lytredrock.model.research.viewModel.ArtistsViewModel
 import com.lytredrock.model.research.viewModel.SongViewModel
 
 
@@ -22,7 +20,8 @@ class ResearchActivity : BaseActivity() {
 
     private val titlesList = arrayListOf<String>()
     private val fragmentList = arrayListOf<BackInterface>()
-    private val songFragment= SongFragment()
+
+
 
     //懒加载注入viewBinding
     private val mBinding: ResearchMainBinding by lazy { ResearchMainBinding.inflate(layoutInflater) }
@@ -33,6 +32,9 @@ class ResearchActivity : BaseActivity() {
     private val songViewModel by lazy {
         ViewModelProvider(this)[SongViewModel::class.java]
     }
+    private val artistViewModel by lazy {
+        ViewModelProvider(this)[ArtistsViewModel::class.java]
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +44,7 @@ class ResearchActivity : BaseActivity() {
         iniTabLayout()
         iniTest()
         iniClick()
+
     }
 
     private fun iniClick() {
@@ -49,13 +52,10 @@ class ResearchActivity : BaseActivity() {
             val key = mBinding.searchView.query.toString()
             if (TextUtils.isEmpty(key)){
                 myToast("输入不能为空",this)
-
             }
             else{
-
-
-
-
+                songViewModel.getSongInfo(key)
+                artistViewModel.getArtistsInfo(key)
             }
             Log.d("tvSearch","(ResearchActivity.kt:41)-->> $key");
         }
@@ -92,13 +92,9 @@ class ResearchActivity : BaseActivity() {
                 else -> tab.text = "Third"
             }
         }.attach()
-
-
     }
-
     //开启沉浸式状态栏
     private fun iniActionBar() {
         transparentStatusBar(window,false)
     }
-
 }
