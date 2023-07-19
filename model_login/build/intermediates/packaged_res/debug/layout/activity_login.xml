@@ -11,7 +11,7 @@
         <ImageView
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/__music86"
+            android:src="@drawable/music86"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="30sp"/>
