@@ -6,5 +6,5 @@ data class Al(
     val pic: Long,
     val picUrl: String,
     val pic_str: String,
-    val tns: List<String>
+    val tns: List<Any>
 )

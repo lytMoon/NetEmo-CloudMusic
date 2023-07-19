@@ -4,7 +4,9 @@ import BaseActivity
 import android.os.Bundle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import com.lytredrock.emocloudmusic.adapter.FragmentAdapter
 import com.lytredrock.emocloudmusic.databinding.ActivityMainBinding
+import com.lytredrock.emocloudmusic.frgment.BackFragment
 import com.lytredrock.emocloudmusic.frgment.CommunityFragment
 import com.lytredrock.emocloudmusic.frgment.FindFragment
 import com.lytredrock.emocloudmusic.frgment.MineFragment

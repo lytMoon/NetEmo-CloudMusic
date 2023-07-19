@@ -1,4 +1,4 @@
-package com.lytredrock.emocloudmusic
+package com.lytredrock.emocloudmusic.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.lytredrock.emocloudmusic.R
 import com.lytredrock.emocloudmusic.data.Data
 
 /**

@@ -1,6 +1,5 @@
 package com.lytredrock.emocloudmusic.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lytredrock.emocloudmusic.data.Banner
