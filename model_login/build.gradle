@@ -38,7 +38,6 @@ android {
 dependencies {
     implementation(project(':lib_base'))
     implementation(project(':lib_netWork'))
-
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

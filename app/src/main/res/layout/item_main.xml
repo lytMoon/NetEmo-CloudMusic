@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="60dp"
-    android:layout_height="50dp">
+    android:layout_height="60dp">
 
 
     <androidx.cardview.widget.CardView
@@ -22,7 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FF0000"
-            />
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="43dp" />
     </androidx.cardview.widget.CardView>
 
 
@@ -30,11 +31,14 @@
         android:id="@+id/tv_find"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
+        android:layout_marginTop="10dp"
         android:text="dsfwfewef"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.543"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cv_find"
-        app:layout_constraintVertical_bias="0.354" />
+        app:layout_constraintVertical_bias="0.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
