@@ -35,8 +35,8 @@ class RvMvAdapter(val data: List<Mv>, private val activity: FragmentActivity) :
 
     class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
         val mvName: TextView = root.findViewById(R.id.tv_mv_title)
-        val mvAuthorName: TextView =root.findViewById(R.id.tv_mv_author_name)
-        val mvPic : ImageView = root.findViewById(R.id.iv_mv_pic)
+        val mvAuthorName: TextView = root.findViewById(R.id.tv_mv_author_name)
+        val mvPic: ImageView = root.findViewById(R.id.iv_mv_pic)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerHolder {
@@ -53,8 +53,8 @@ class RvMvAdapter(val data: List<Mv>, private val activity: FragmentActivity) :
         val itemData = data[position]
         holder.apply {
 
-            holder.mvAuthorName.text=itemData.artistName
-            holder.mvName.text=itemData.name
+            holder.mvAuthorName.text = itemData.artistName
+            holder.mvName.text = itemData.name
             Glide.with(activity)
                 .load(itemData.cover)
                 .transform(RoundedCorners(20))

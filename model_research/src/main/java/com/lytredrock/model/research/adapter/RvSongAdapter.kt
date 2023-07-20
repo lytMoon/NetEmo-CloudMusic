@@ -32,8 +32,8 @@ class RvSongAdapter(val data: List<Song>, private val activity: FragmentActivity
 
     class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
         val musicName: TextView = root.findViewById<TextView>(R.id.tv_music_name)
-        val musicInfo:TextView=root.findViewById(R.id.tv_music_Info)
-        val artistName :TextView = root.findViewById<TextView>(R.id.tv_artist)
+        val musicInfo: TextView = root.findViewById(R.id.tv_music_Info)
+        val artistName: TextView = root.findViewById<TextView>(R.id.tv_artist)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerHolder {
@@ -51,7 +51,7 @@ class RvSongAdapter(val data: List<Song>, private val activity: FragmentActivity
         holder.apply {
             musicName.text = itemData.name
             musicInfo.text = itemData.album.name
-            artistName.text=itemData.artists.get(0).name
+            artistName.text = itemData.artists.get(0).name
 //            val temp = itemData.
 //            Glide.with(activity).load(temp).into(ivfind)
         }

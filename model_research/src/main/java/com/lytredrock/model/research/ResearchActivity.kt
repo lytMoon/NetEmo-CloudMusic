@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lytredrock.lib.base.BaseUtils
 import com.lytredrock.lib.base.BaseUtils.myToast
@@ -20,12 +21,14 @@ import com.lytredrock.model.research.viewModel.ArtistsViewModel
 import com.lytredrock.model.research.viewModel.MVViewmodel
 import com.lytredrock.model.research.viewModel.SongViewModel
 
-@Route(path =SEARCH_AROUTER)
+@Route(path = SEARCH_AROUTER)
 class ResearchActivity : AppCompatActivity() {
     private val titlesList = arrayListOf<String>()
     private val fragmentList = arrayListOf<BackInterface>()
+
     //懒加载注入viewBinding
     private val mBinding: ResearchMainBinding by lazy { ResearchMainBinding.inflate(layoutInflater) }
+
     //懒加载注入viewmodel
     private val songViewModel by lazy {
         ViewModelProvider(this)[SongViewModel::class.java]
@@ -44,21 +47,20 @@ class ResearchActivity : AppCompatActivity() {
         iniTabLayout()
         iniTest()
         iniClick()
-
+        //   ARouter.getInstance().build("/mv/mvPlay").navigation()
     }
 
     private fun iniClick() {
-        mBinding.tvSearch.setOnClickListener{
+        mBinding.tvSearch.setOnClickListener {
             val key = mBinding.searchView.query.toString()
-            if (TextUtils.isEmpty(key)){
-                myToast("输入不能为空",this)
-            }
-            else{
+            if (TextUtils.isEmpty(key)) {
+                myToast("输入不能为空", this)
+            } else {
                 songViewModel.getSongInfo(key)
                 artistViewModel.getArtistsInfo(key)
                 mvViewmodel.getMVInfo(key)
             }
-            Log.d("tvSearch","(ResearchActivity.kt:41)-->> $key");
+            Log.d("tvSearch", "(ResearchActivity.kt:41)-->> $key");
         }
     }
 
@@ -69,19 +71,19 @@ class ResearchActivity : AppCompatActivity() {
     private fun iniTabLayout() {
 
         fragmentList.let {
-            it.add( object : BackInterface {
+            it.add(object : BackInterface {
                 override fun back(): Fragment {
-                    return   SongFragment()
+                    return SongFragment()
                 }
             })
             it.add(object : BackInterface {
                 override fun back(): Fragment {
-                    return  ArtistsFragment()
+                    return ArtistsFragment()
                 }
             })
             it.add(object : BackInterface {
                 override fun back(): Fragment {
-                    return  MVFragment()
+                    return MVFragment()
                 }
             })
 
@@ -90,8 +92,8 @@ class ResearchActivity : AppCompatActivity() {
         for (title in titlesList) {
             mBinding.tabLayout.addTab(mBinding.tabLayout.newTab().setText(title))
         }
-        val vpFragmentAdapter =VpFragmentAdapter(this,fragmentList)
-        mBinding.viewPager2.adapter=vpFragmentAdapter
+        val vpFragmentAdapter = VpFragmentAdapter(this, fragmentList)
+        mBinding.viewPager2.adapter = vpFragmentAdapter
 
         TabLayoutMediator(mBinding.tabLayout, mBinding.viewPager2) { tab, position ->
             when (position) {
@@ -101,8 +103,9 @@ class ResearchActivity : AppCompatActivity() {
             }
         }.attach()
     }
+
     //开启沉浸式状态栏
     private fun iniActionBar() {
-        BaseUtils.transparentStatusBar(window,false)
+        BaseUtils.transparentStatusBar(window, false)
     }
 }

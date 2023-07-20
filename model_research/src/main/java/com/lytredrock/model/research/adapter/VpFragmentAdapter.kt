@@ -12,8 +12,11 @@ import com.lytredrock.model.research.apiService.BackInterface
  * date : 2023/7/18 11:29
  * version: 1.0
  */
-class VpFragmentAdapter(fragmentActivity:FragmentActivity,private val fragments:ArrayList<BackInterface>):FragmentStateAdapter(fragmentActivity) {
-   //返回fragment的总个数
+class VpFragmentAdapter(
+    fragmentActivity: FragmentActivity,
+    private val fragments: ArrayList<BackInterface>
+) : FragmentStateAdapter(fragmentActivity) {
+    //返回fragment的总个数
 
 
     override fun getItemCount(): Int {

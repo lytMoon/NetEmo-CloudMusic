@@ -23,16 +23,18 @@ class ArtistsFragment : Fragment() {
     private val artistViewModel by lazy {
         ViewModelProvider(requireActivity())[ArtistsViewModel::class.java]
     }
+
     //懒加载注入viewBinding
     private val mBinding: FragmentArtistsBinding by lazy {
         FragmentArtistsBinding.inflate(
             layoutInflater
         )
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) : View {
+    ): View {
         return mBinding.root
     }
 
@@ -41,11 +43,11 @@ class ArtistsFragment : Fragment() {
         super.onResume()
         artistViewModel.artistData.observe(viewLifecycleOwner) {
 
-                mBinding.rvArtist.adapter = RvArtistAdapter(it,requireActivity())
-                mBinding.rvArtist.layoutManager =
-                    GridLayoutManager(requireContext(), 1, RecyclerView.VERTICAL, false)
-                Log.d("96369", "(MainActivity.kt:69)-->> $it")
-            }
+            mBinding.rvArtist.adapter = RvArtistAdapter(it, requireActivity())
+            mBinding.rvArtist.layoutManager =
+                GridLayoutManager(requireContext(), 1, RecyclerView.VERTICAL, false)
+            Log.d("96369", "(MainActivity.kt:69)-->> $it")
+        }
 
 
     }

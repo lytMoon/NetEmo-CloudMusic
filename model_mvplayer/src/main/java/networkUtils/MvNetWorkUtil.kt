@@ -22,28 +22,31 @@ import mvdata.UrlData
  */
 object MvNetWorkUtil {
 
-    private val apiService= ServiceCreatorUtils.create(ApiService::class.java)
+    private val apiService = ServiceCreatorUtils.create(ApiService::class.java)
 
 
     /**
      * 获取mv的相关信息
      */
-    fun receiveMvInfo(key:String,callBack:MvInfoCallBack){
+    fun receiveMvInfo(key: String, callBack: MvInfoCallBack) {
         apiService.getMvInfo(key)
             .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
             .observeOn(AndroidSchedulers.mainThread())//在安卓主线程（执行onNext的逻辑）
-            .subscribe(object :Observer<MvInfoData<Data>>{
+            .subscribe(object : Observer<MvInfoData<Data>> {
                 override fun onSubscribe(d: Disposable) {
                 }
+
                 override fun onError(e: Throwable) {
-                    Log.d("receiveMvInfo","(MvNetWorkUtil.kt:36)-->> ${e.message}");
+                    Log.d("receiveMvInfo", "(MvNetWorkUtil.kt:36)-->> ${e.message}");
                     callBack.onFailed(e.message.toString())
                 }
+
                 override fun onComplete() {
                 }
+
                 override fun onNext(t: MvInfoData<Data>) {
                     callBack.onRespond(t)
-                    Log.d("receiveMvInfo","(MvNetWorkUtil.kt:43)-->> ${t.data}");
+                    Log.d("receiveMvInfo", "(MvNetWorkUtil.kt:43)-->> ${t.data}");
                 }
 
             })
@@ -53,22 +56,25 @@ object MvNetWorkUtil {
      * 获取mv的播放链接
      */
 
-    fun receiveMvUrlInfo(key: String, callBack: MvUrlCallBack){
+    fun receiveMvUrlInfo(key: String, callBack: MvUrlCallBack) {
         apiService.getMvUrlInfo(key)
             .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
             .observeOn(AndroidSchedulers.mainThread())//在安卓主线程（执行onNext的逻辑）
-            .subscribe(object :Observer<MvUrlData<UrlData>>{
+            .subscribe(object : Observer<MvUrlData<UrlData>> {
                 override fun onSubscribe(d: Disposable) {
                 }
+
                 override fun onError(e: Throwable) {
                     callBack.onFailed(e.message.toString())
 
                 }
+
                 override fun onComplete() {
                 }
+
                 override fun onNext(t: MvUrlData<UrlData>) {
-                 callBack.onRespond(t)
-                 Log.d("receiveMvUrlInfo","(MvNetWorkUtil.kt:73)-->> ${t.data.url}");
+                    callBack.onRespond(t)
+                    Log.d("receiveMvUrlInfo", "(MvNetWorkUtil.kt:73)-->> ${t.data.url}");
 
 
                 }
