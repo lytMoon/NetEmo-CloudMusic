@@ -10,6 +10,7 @@ data class Song(
 
     val name: String,
 
+    val mv: Int,
 
 
 

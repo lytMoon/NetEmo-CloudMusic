@@ -36,6 +36,7 @@ class SongListAdapter(val data: List<Song>,private val activity: SongListActivit
         val name=root.findViewById<TextView>(R.id.tv_itemSongList)
         val Singer=root.findViewById<TextView>(R.id.tv_Singer)
         val song=root.findViewById<ImageView>(R.id.iv_song)
+        val mv=root.findViewById<ImageView>(R.id.iv_mv)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerHolder {
@@ -54,6 +55,9 @@ class SongListAdapter(val data: List<Song>,private val activity: SongListActivit
             Glide.with(activity).load(itemData.al.picUrl).into(song)
             Singer.text=itemData.ar[0].name
           name.text=itemData.name
+            if(itemData.mv!=0){
+                Glide.with(activity).load(R.drawable.ic_broadcast).into(mv)
+            }
         }
 
     }
