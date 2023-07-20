@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_mv_pic"
+            android:layout_marginLeft="20dp"
+            android:layout_width="163dp"
+            android:layout_height="95dp"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_mv_title"
+                android:textSize="17sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/musicColor"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                tools:ignore="SmallSp" />
+            <TextView
+                android:id="@+id/tv_mv_author_name"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="6dp"
+                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:text="@string/line"
+        android:textSize="5dp"
+        android:textColor="#DDBCBC"
+        android:layout_height="5dp"/>
+
+
+</LinearLayout>

@@ -1,6 +1,8 @@
 package com.lytredrock.model.research.apiService
 
 import com.lytredrock.model.research.musicdata.ArtistResult
+import com.lytredrock.model.research.musicdata.MVData
+import com.lytredrock.model.research.musicdata.MVResult
 import com.lytredrock.model.research.musicdata.Result
 import com.lytredrock.model.research.musicdata.SearchArtistData
 import com.lytredrock.model.research.musicdata.SearchSongData
@@ -30,5 +32,11 @@ interface ApiService {
     @GET("search")
     fun getArtistInfo(@Query("keywords")keywords:String,@Query("type")type: Int =100): Observable<SearchArtistData<ArtistResult>>
 
+
+    /**
+     * 返回搜索的MV结果
+     */
+    @GET("search")
+    fun getMVInfo(@Query("keywords")keywords:String,@Query("type")type: Int =1004):Observable<MVData<MVResult>>
 
 }
