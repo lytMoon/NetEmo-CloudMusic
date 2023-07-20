@@ -11,12 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.lytredrock.emocloudmusic.SongListActivity
 import com.lytredrock.emocloudmusic.adapter.BannerAdapter
 import com.lytredrock.emocloudmusic.adapter.MainRvAdapter
 import com.lytredrock.emocloudmusic.adapter.RecommendSongListAdapter
 import com.lytredrock.emocloudmusic.databinding.FragmentFindBinding
 import com.lytredrock.emocloudmusic.viewmodel.FindFragmentViewModel
+import com.lytredrock.model.research.SEARCH_AROUTER
 import java.util.Timer
 import java.util.TimerTask
 
@@ -57,6 +59,10 @@ class FindFragment : Fragment() {
                 }
                 binding.vpFind.adapter = BannerAdapter(requireActivity(), fragments)
             }
+        }
+
+        binding.cardSearch.setOnClickListener {
+            ARouter.getInstance().build(SEARCH_AROUTER).navigation()
         }
 
         myViewModel.apply {
