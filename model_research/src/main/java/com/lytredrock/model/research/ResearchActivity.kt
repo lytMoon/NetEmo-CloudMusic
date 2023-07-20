@@ -4,8 +4,10 @@ import BaseActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lytredrock.model.research.adapter.VpFragmentAdapter
 import com.lytredrock.model.research.databinding.ResearchMainBinding
@@ -14,8 +16,8 @@ import com.lytredrock.model.research.fragments.SongFragment
 import com.lytredrock.model.research.viewModel.ArtistsViewModel
 import com.lytredrock.model.research.viewModel.SongViewModel
 
-
-class ResearchActivity : BaseActivity() {
+@Route(path ="/test/service")
+class ResearchActivity : AppCompatActivity() {
 
 
     private val titlesList = arrayListOf<String>()
@@ -51,7 +53,7 @@ class ResearchActivity : BaseActivity() {
         mBinding.tvSearch.setOnClickListener{
             val key = mBinding.searchView.query.toString()
             if (TextUtils.isEmpty(key)){
-                myToast("输入不能为空",this)
+               // myToast("输入不能为空",this)
             }
             else{
                 songViewModel.getSongInfo(key)
@@ -95,6 +97,6 @@ class ResearchActivity : BaseActivity() {
     }
     //开启沉浸式状态栏
     private fun iniActionBar() {
-        transparentStatusBar(window,false)
+      //  transparentStatusBar(window,false)
     }
 }

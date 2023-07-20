@@ -2,13 +2,13 @@ R_DEF: Internal format may change without notice
 local
 color black
 color white
-drawable __music86
 drawable app_logo
 drawable codephone
 drawable gradient_background
 drawable gradient_button_background
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable music86
 drawable phone
 id QRImage
 id btMsg
