@@ -11,11 +11,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lytredrock.lib.base.BaseUtils
 import com.lytredrock.lib.base.BaseUtils.myToast
 import com.lytredrock.model.research.adapter.VpFragmentAdapter
+import com.lytredrock.model.research.apiService.BackInterface
 import com.lytredrock.model.research.databinding.ResearchMainBinding
 import com.lytredrock.model.research.fragments.ArtistsFragment
 import com.lytredrock.model.research.fragments.MVFragment
 import com.lytredrock.model.research.fragments.SongFragment
-import com.lytredrock.model.research.networkUtils.SearchNetWorkUtil
 import com.lytredrock.model.research.viewModel.ArtistsViewModel
 import com.lytredrock.model.research.viewModel.MVViewmodel
 import com.lytredrock.model.research.viewModel.SongViewModel
@@ -27,7 +27,6 @@ class ResearchActivity : AppCompatActivity() {
     //懒加载注入viewBinding
     private val mBinding: ResearchMainBinding by lazy { ResearchMainBinding.inflate(layoutInflater) }
     //懒加载注入viewmodel
-
     private val songViewModel by lazy {
         ViewModelProvider(this)[SongViewModel::class.java]
     }
@@ -70,17 +69,17 @@ class ResearchActivity : AppCompatActivity() {
     private fun iniTabLayout() {
 
         fragmentList.let {
-            it.add( object :BackInterface{
+            it.add( object : BackInterface {
                 override fun back(): Fragment {
                     return   SongFragment()
                 }
             })
-            it.add(object :BackInterface{
+            it.add(object : BackInterface {
                 override fun back(): Fragment {
                     return  ArtistsFragment()
                 }
             })
-            it.add(object :BackInterface{
+            it.add(object : BackInterface {
                 override fun back(): Fragment {
                     return  MVFragment()
                 }
