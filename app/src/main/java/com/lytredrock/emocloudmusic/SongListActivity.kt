@@ -3,6 +3,7 @@ package com.lytredrock.emocloudmusic
 import BaseActivity
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -34,8 +35,6 @@ class SongListActivity : BaseActivity() {
 
 
         myViewBinding.collapsingToolbar.title = name
-        myViewBinding.collapsingToolbar.setCollapsedTitleTextColor(R.color.white)
-        myViewBinding.collapsingToolbar.setExpandedTitleColor(R.color.white)
 
         myViewModel.apply {
             getSongListInInternet(id)
@@ -50,6 +49,14 @@ class SongListActivity : BaseActivity() {
             }
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home->{finish()
+                return true}
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 
