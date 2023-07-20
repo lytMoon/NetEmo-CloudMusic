@@ -29,19 +29,16 @@ import java.util.TimerTask
  * date : 2023/7/15 19:50
  */
 class FindFragment : Fragment() {
+
     private val myViewModel by lazy { ViewModelProvider(this)[FindFragmentViewModel::class.java] }
 
-    private var _binding: FragmentFindBinding? = null
-    private val binding get() = _binding!!
+    private val binding: FragmentFindBinding by lazy { FragmentFindBinding.inflate(layoutInflater) }
+
+    val timer=Timer()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentFindBinding.inflate(inflater, container, false)
         val fragments = ArrayList<BackFragment>()
-
-
-
-
         myViewModel.apply {
             getBannerInFragment(1)
             bannerLifeData.observe(viewLifecycleOwner) {
@@ -96,21 +93,21 @@ class FindFragment : Fragment() {
         }
 
 
-        Timer().schedule(object : TimerTask() {
+        timer.schedule(object : TimerTask() {
             @SuppressLint("SuspiciousIndentation")
             override fun run() {
                 when (binding.vpFind.currentItem) {
 
                     fragments.size - 1 -> activity?.runOnUiThread { binding.vpFind.currentItem = 0 }
 
-                    else -> binding.vpFind.currentItem = ++binding.vpFind.currentItem
+                    else ->  activity?.runOnUiThread {binding.vpFind.currentItem =++binding.vpFind.currentItem}
                 }
             }
 
         }, 2000, 3000)
 
 
-        return _binding?.root
+        return binding.root
     }
 
     public override fun onViewCreated(
@@ -119,10 +116,9 @@ class FindFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        timer.cancel()
     }
 
 }

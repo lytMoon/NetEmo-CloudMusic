@@ -6,12 +6,27 @@
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="fragmentconmmunity"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout2"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.016"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp2_hot"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout2"
+        tools:layout_editor_absoluteX="0dp" >
+    </androidx.viewpager2.widget.ViewPager2>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
