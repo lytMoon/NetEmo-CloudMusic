@@ -3,8 +3,11 @@ package com.lytredrock.model.research.networkUtils
 import android.util.Log
 import com.lytredrock.model.research.apiService.ApiService
 import com.lytredrock.model.research.apiService.ArtistCallBack
+import com.lytredrock.model.research.apiService.MVCallBack
 import com.lytredrock.model.research.apiService.SongCallBack
 import com.lytredrock.model.research.musicdata.ArtistResult
+import com.lytredrock.model.research.musicdata.MVData
+import com.lytredrock.model.research.musicdata.MVResult
 import com.lytredrock.model.research.musicdata.Result
 import com.lytredrock.model.research.musicdata.SearchArtistData
 import com.lytredrock.model.research.musicdata.SearchSongData
@@ -85,6 +88,35 @@ object SearchNetWorkUtil {
     }
 
 
+    /**
+     * 返回搜索的mv信息
+     */
 
+    fun receiveMVInfo(keywords: String,callback:MVCallBack){
+        apiService.getMVInfo(keywords)
+            .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
+            .observeOn(AndroidSchedulers.mainThread())//在安卓主线程（执行onNext的逻辑）
+            .subscribe(object :Observer<MVData<MVResult>>{
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onError(e: Throwable) {
+                    callback.onFailed(e.message.toString())
+
+                }
+
+                override fun onComplete() {
+
+                }
+
+                override fun onNext(t: MVData<MVResult>) {
+                    callback.onRespond(t)
+                    Log.d("receiveMVInfo","(SearchNetWorkUtil.kt:114)-->> ${t.result.mvs[0]}");
+                }
+
+            })
+
+    }
 
 }
