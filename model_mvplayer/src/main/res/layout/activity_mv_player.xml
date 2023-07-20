@@ -20,7 +20,7 @@
 
 
 
-    <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+    <VideoView
         android:id="@+id/iVideoPlayer"
         android:layout_width="match_parent"
         android:layout_height="200dp"
