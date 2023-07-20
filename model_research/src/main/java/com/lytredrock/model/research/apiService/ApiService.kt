@@ -23,20 +23,26 @@ interface ApiService {
      * 返回搜索的单曲的结果
      */
     @GET("search")
-    fun getSongInfo(@Query("keywords")keywords:String): Observable<SearchSongData<Result>>
+    fun getSongInfo(@Query("keywords") keywords: String): Observable<SearchSongData<Result>>
 
 
     /***
      * 返回搜索的歌手的结果
      */
     @GET("search")
-    fun getArtistInfo(@Query("keywords")keywords:String,@Query("type")type: Int =100): Observable<SearchArtistData<ArtistResult>>
+    fun getArtistInfo(
+        @Query("keywords") keywords: String,
+        @Query("type") type: Int = 100
+    ): Observable<SearchArtistData<ArtistResult>>
 
 
     /**
      * 返回搜索的MV结果
      */
     @GET("search")
-    fun getMVInfo(@Query("keywords")keywords:String,@Query("type")type: Int =1004):Observable<MVData<MVResult>>
+    fun getMVInfo(
+        @Query("keywords") keywords: String,
+        @Query("type") type: Int = 1004
+    ): Observable<MVData<MVResult>>
 
 }

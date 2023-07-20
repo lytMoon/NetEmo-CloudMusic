@@ -22,8 +22,8 @@ import com.lytredrock.model.research.musicdata.Song
  * date : 2023/7/19 13:17
  * version: 1.0
  */
-class RvArtistAdapter(val data: List<Artist>, private val activity: FragmentActivity):
-    RecyclerView.Adapter<RvArtistAdapter.InnerHolder>()  {
+class RvArtistAdapter(val data: List<Artist>, private val activity: FragmentActivity) :
+    RecyclerView.Adapter<RvArtistAdapter.InnerHolder>() {
     private var clickInterface: ClickInterface? = null
 
     interface ClickInterface {
@@ -36,7 +36,7 @@ class RvArtistAdapter(val data: List<Artist>, private val activity: FragmentActi
     }
 
     class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
-        val artistPic :ImageView=root.findViewById(R.id.iv_artist_pic_fragment)
+        val artistPic: ImageView = root.findViewById(R.id.iv_artist_pic_fragment)
         val artistName: TextView = root.findViewById<TextView>(R.id.tv_artist_name_fragment)
     }
 
@@ -54,14 +54,14 @@ class RvArtistAdapter(val data: List<Artist>, private val activity: FragmentActi
 
         val itemData = data[position]
         holder.apply {
-            holder.artistName.text=itemData.name
+            holder.artistName.text = itemData.name
             Glide.with(activity)
                 .load(itemData.img1v1Url)
                 .transform(RoundedCorners(180))
                 .into(artistPic)
 
 
-//            val temp = itemData.
+//            val temp = itemData.a
 //            Glide.with(activity).load(temp).into(ivfind)
         }
 
@@ -70,7 +70,6 @@ class RvArtistAdapter(val data: List<Artist>, private val activity: FragmentActi
 //            clickInterface?.onTitleClick(it, position)
 //        }
     }
-
 
 
 }

@@ -43,17 +43,13 @@ class MVFragment : Fragment() {
         super.onResume()
         mvViewmodel.mvData.observe(viewLifecycleOwner) {
 
-            mBinding.rvMv.adapter = RvMvAdapter(it,requireActivity())
+            mBinding.rvMv.adapter = RvMvAdapter(it, requireActivity())
             mBinding.rvMv.layoutManager =
                 GridLayoutManager(requireContext(), 1, RecyclerView.VERTICAL, false)
         }
 
 
-
-
     }
-
-
 
 
 }
