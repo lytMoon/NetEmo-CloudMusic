@@ -42,7 +42,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 
     implementation(project(':lib_base'))
-    implementation(project(':model_research'))
+    implementation implementation(project(':model_search',))
     implementation(project(':model_mvplayer'))
 
     api 'com.alibaba:arouter-api:1.5.2'

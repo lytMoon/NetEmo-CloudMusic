@@ -29,7 +29,7 @@
         android:testOnly="true"
         android:theme="@style/Theme.EmoCloudMusic" >
         <activity
-            android:name="com.lytredrock.model.login.LoginActivity"
+            android:name="com.lytredrock.model.login.ui.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
