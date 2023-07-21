@@ -2,6 +2,7 @@ package networkutils
 
 import android.util.Log
 import apiservice.ApiService
+import apiservice.MvCommentsCallBack
 import apiservice.MvInfoCallBack
 import apiservice.MvUrlCallBack
 import io.reactivex.Observer
@@ -9,6 +10,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import mvdata.Data
+import mvdata.HotComment
+import mvdata.MvCommentsData
 import mvdata.MvInfoData
 import mvdata.MvUrlData
 import mvdata.UrlData
@@ -79,6 +82,35 @@ object MvNetWorkUtil {
 
                 }
             })
+    }
+
+    /**
+     * 获取mv的评论
+     */
+
+    fun receiveMvComments(key: String,callBack: MvCommentsCallBack){
+        apiService.getComments(key)
+            .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
+            .observeOn(AndroidSchedulers.mainThread())//在安卓主线程（执行onNext的逻辑）
+            .subscribe(object :Observer<MvCommentsData<HotComment>>{
+                override fun onSubscribe(d: Disposable) {
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.d("receiveMvComments","(MvNetWorkUtil.kt:99)-->> ${e.message.toString()}");
+                   callBack.onFailed(e.message.toString())
+                }
+
+                override fun onComplete() {
+                }
+
+                override fun onNext(t: MvCommentsData<HotComment>) {
+                    callBack.onRespond(t)
+                    Log.d("receiveMvComments","(MvNetWorkUtil.kt:105)-->> ${t.hotComments}");
+                }
+
+            })
+
     }
 
 }

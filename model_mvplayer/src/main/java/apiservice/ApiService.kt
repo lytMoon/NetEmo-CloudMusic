@@ -4,6 +4,8 @@ package apiservice
 
 import io.reactivex.Observable
 import mvdata.Data
+import mvdata.HotComment
+import mvdata.MvCommentsData
 import mvdata.MvInfoData
 import mvdata.MvUrlData
 import mvdata.UrlData
@@ -34,7 +36,6 @@ interface ApiService {
     /**
      * 返回mv的评论
      */
-
     @GET("comment/mv")
-    fun getComments(@Query("id")id:String,@Query("limit")limit:Int=100)
+    fun getComments(@Query("id")id:String,@Query("limit")limit:Int=100):Observable<MvCommentsData<HotComment>>
 }
