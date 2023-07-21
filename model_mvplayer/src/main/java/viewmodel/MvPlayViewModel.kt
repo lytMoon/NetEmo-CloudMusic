@@ -4,13 +4,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import apiService.MvInfoCallBack
-import apiService.MvUrlCallBack
+import apiservice.MvInfoCallBack
+import apiservice.MvUrlCallBack
 import mvdata.Data
 import mvdata.MvInfoData
 import mvdata.MvUrlData
 import mvdata.UrlData
-import networkUtils.MvNetWorkUtil
+import networkutils.MvNetWorkUtil
 
 /**
  * description ：
