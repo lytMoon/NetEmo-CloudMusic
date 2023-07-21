@@ -1,4 +1,4 @@
-package com.lytredrock.model.research.viewmodel
+package com.lytredrock.model.research.searchviewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData

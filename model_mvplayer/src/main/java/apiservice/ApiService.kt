@@ -34,4 +34,7 @@ interface ApiService {
     /**
      * 返回mv的评论
      */
+
+    @GET("comment/mv")
+    fun getComments(@Query("id")id:String,@Query("limit")limit:Int=100)
 }

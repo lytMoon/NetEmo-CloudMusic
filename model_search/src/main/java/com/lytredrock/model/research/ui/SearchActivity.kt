@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lytredrock.lib.base.BaseUtils
 import com.lytredrock.lib.base.BaseUtils.myToast
@@ -18,9 +17,9 @@ import com.lytredrock.model.research.databinding.SearchMainBinding
 import com.lytredrock.model.research.fragments.ArtistsFragment
 import com.lytredrock.model.research.fragments.MVFragment
 import com.lytredrock.model.research.fragments.SongFragment
-import com.lytredrock.model.research.viewmodel.ArtistsViewModel
-import com.lytredrock.model.research.viewmodel.MVViewmodel
-import com.lytredrock.model.research.viewmodel.SongViewModel
+import com.lytredrock.model.research.searchviewmodel.ArtistsViewModel
+import com.lytredrock.model.research.searchviewmodel.MVViewmodel
+import com.lytredrock.model.research.searchviewmodel.SongViewModel
 
 @Route(path = SEARCH_AROUTER)
 class SearchActivity : AppCompatActivity() {
@@ -47,7 +46,6 @@ class SearchActivity : AppCompatActivity() {
         iniActionBar()
         iniTabLayout()
         iniClick()
-        ARouter.getInstance().build("/mv/mvPlay").navigation()
     }
 
     private fun iniClick() {

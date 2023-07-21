@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lytredrock.model.research.adapter.RvMvAdapter
 import com.lytredrock.model.research.databinding.FragmentMVBinding
-import com.lytredrock.model.research.viewmodel.MVViewmodel
+import com.lytredrock.model.research.searchviewmodel.MVViewmodel
 import java.lang.NullPointerException
 
 

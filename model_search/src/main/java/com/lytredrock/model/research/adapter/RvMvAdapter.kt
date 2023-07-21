@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.lytredrock.model.research.R
@@ -64,6 +65,14 @@ class RvMvAdapter(val data: List<Mv>, private val activity: FragmentActivity) :
             } catch (e: NullPointerException) {
                 Log.d("NullPointerException", " 空指针异常")
             }
+        }
+        holder.itemView.setOnClickListener {
+            ARouter.getInstance()
+                .build("/mv/mvPlay")
+                .withString("mvUid",itemData.id.toString())
+                .withString("mvName",itemData.name)
+                .navigation()
+
         }
 
     }
