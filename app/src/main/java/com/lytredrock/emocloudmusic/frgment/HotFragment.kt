@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
-import com.lytredrock.emocloudmusic.R
 import com.lytredrock.emocloudmusic.adapter.FragmentAdapter
 import com.lytredrock.emocloudmusic.databinding.FragmentConmmnityBinding
+import com.lytredrock.emocloudmusic.viewmodel.SongChartViewModel
 
 /**
  * description ： TODO:类的作用
@@ -16,7 +17,9 @@ import com.lytredrock.emocloudmusic.databinding.FragmentConmmnityBinding
  * email : 2191288460@qq.com
  * date : 2023/7/15 19:52
  */
-class CommunityFragment:Fragment() {
+class HotFragment:Fragment() {
+
+
 
     private var _binding: FragmentConmmnityBinding? = null
     private val binding get() = _binding!!
@@ -27,7 +30,7 @@ class CommunityFragment:Fragment() {
         var fragments = ArrayList<BackFragment>()
         fragments.add(object : BackFragment {
             override fun back(): Fragment {
-                return HotCommentFragment()
+                return SongChartFragment()
             }
         })
         fragments.add(object : BackFragment {
@@ -45,11 +48,14 @@ class CommunityFragment:Fragment() {
 
         TabLayoutMediator(binding.tabLayout2, binding.vp2Hot) { tab, position ->
             when (position) {
-                0 -> tab.text = "热门评论"
+                0 -> tab.text = "歌榜"
                 1 -> tab.text = "热门歌手"
                 else -> tab.text = "热门歌单"
             }
         }.attach()
+
+
+
 
         return _binding?.root
     }
