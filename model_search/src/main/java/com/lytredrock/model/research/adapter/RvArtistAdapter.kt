@@ -65,13 +65,8 @@ class RvArtistAdapter(val data: List<Artist>, private val activity: FragmentActi
                 Log.d("NullPointerException", "artistAdapter");
             }
 
-
-            //这里可以进行监听事件
-//        holder.artistName.setOnClickListener {
-//            clickInterface?.onTitleClick(it, position)
-//        }
         }
 
 
     }
-    }
+}

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lytredrock.model.research.adapter.RvArtistAdapter
 import com.lytredrock.model.research.databinding.FragmentArtistsBinding
-import com.lytredrock.model.research.viewmodel.ArtistsViewModel
+import com.lytredrock.model.research.searchviewmodel.ArtistsViewModel
 
 
 class ArtistsFragment : Fragment() {
