@@ -1,13 +1,21 @@
 package com.lytredrock.emocloudmusic.frgment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import com.lytredrock.emocloudmusic.R
+import com.lytredrock.emocloudmusic.SongListActivity
+import com.lytredrock.emocloudmusic.adapter.HotSongListAdapter
+import com.lytredrock.emocloudmusic.adapter.RecommendSongListAdapter
 import com.lytredrock.emocloudmusic.databinding.FragmentConmmnityBinding
 import com.lytredrock.emocloudmusic.databinding.HotSonglistBinding
+import com.lytredrock.emocloudmusic.viewmodel.HotSingerViewModel
+import com.lytredrock.emocloudmusic.viewmodel.HotSongListViewModel
 
 /**
  * description ： TODO:类的作用
@@ -17,11 +25,28 @@ import com.lytredrock.emocloudmusic.databinding.HotSonglistBinding
  */
 class HotSongListFragment:Fragment() {
 
+    private val myViewModel by lazy { ViewModelProvider(this)[HotSongListViewModel::class.java] }
     private var _binding: HotSonglistBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = HotSonglistBinding.inflate(inflater, container, false)
+        myViewModel.apply {
+            getHotSongListInInternet()
+            hotSongListLifeData.observe(viewLifecycleOwner){
+                val myAdapter =HotSongListAdapter(it,requireActivity())
+                binding.rvHotSongList.adapter=myAdapter
+                binding.rvHotSongList.layoutManager= GridLayoutManager(requireContext(),3)
+                myAdapter.setOnclick(object : HotSongListAdapter.ClickInterface {
+                    override fun onImageviewClick(view: View, position: Int) {
+                        val intent = Intent(requireContext(), SongListActivity::class.java)
+                        intent.putExtra("id", it[position].id)
+                        intent.putExtra("name",it[position].name)
+                        startActivity(intent)
+                    }
 
+                })
+            }
+        }
 
         return binding.root
     }
