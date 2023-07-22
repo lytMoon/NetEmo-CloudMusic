@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/iv_mvArtist_pic_"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="20dp" />
 
         <LinearLayout
@@ -33,15 +33,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
-                android:textSize="20sp"
+                android:textSize="15sp"
+                android:textColor="@color/user"
                 tools:ignore="SmallSp" />
             <TextView
                 android:id="@+id/tv_artist_comment_mv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="normal"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="20dp"
-                android:textSize="20sp"
+                android:layout_marginLeft="17dp"
+                android:textSize="17sp"
                 tools:ignore="SmallSp" />
 
         </LinearLayout>
@@ -53,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:text="@string/line"
-        android:textColor="#DDBCBC"
+        android:textColor="@color/line"
         android:textSize="5dp" />
 
 

@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lytredrock.model.research.apisearch.SongCallBack
 import com.lytredrock.model.research.musicdata.Result
 import com.lytredrock.model.research.musicdata.SearchSongData
 import com.lytredrock.model.research.musicdata.Song
@@ -26,16 +25,7 @@ class SongViewModel : ViewModel() {
 
     //得到单曲的信息
     fun getSongInfo(keyword: String) {
-        SearchNetWorkUtil.receiveSongInfo(keyword, object : SongCallBack {
-            override fun onRespond(t: SearchSongData<Result>) {
-                _songData.postValue(t.result.songs)
-                Log.d("getSongInfo", "(SongViewModel.kt:30)-->> ${t.result.songs}");
-            }
-
-            override fun onFailed(e: String) {
-                Log.d("getSongInfo", "(SongViewModel.kt:36)-->> $e");
-            }
-        })
+        SearchNetWorkUtil.receiveSongInfo(keyword,_songData)
     }
 
 

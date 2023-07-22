@@ -4,9 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import apiservice.MvCommentsCallBack
-import apiservice.MvInfoCallBack
-import apiservice.MvUrlCallBack
 import mvdata.Data
 import mvdata.HotComment
 import mvdata.MvCommentsData
@@ -42,19 +39,7 @@ class MvPlayViewModel : ViewModel() {
      * 得到音乐的相关信息
      */
     fun getMvInfoData(key: String) {
-        MvNetWorkUtil.receiveMvInfo(key, object : MvInfoCallBack {
-            override fun onRespond(t: MvInfoData<Data>) {
-                _mvInfoData.postValue(listOf(t.data))
-
-                Log.d("getMvInfoDataViewModel", "(MvPlayViewModel.kt:33)-->> $_mvInfoData")
-            }
-
-            override fun onFailed(e: String) {
-
-                Log.d("getMvInfoDataViewModel", "(MvPlayViewModel.kt:35)-->> $e");
-            }
-
-        })
+        MvNetWorkUtil.receiveMvInfo(key, _mvInfoData)
     }
 
     /**
@@ -62,17 +47,7 @@ class MvPlayViewModel : ViewModel() {
      */
 
     fun getMvUrl(key: String) {
-        MvNetWorkUtil.receiveMvUrlInfo(key, object : MvUrlCallBack {
-            override fun onRespond(t: MvUrlData<UrlData>) {
-                Log.d("getMvUrlViewModel", "(MvPlayViewModel.kt:57)-->> ${t.data}");
-                _mvUrlData.postValue(listOf(t.data))
-            }
-
-            override fun onFailed(e: String) {
-                Log.d("getMvUrlViewModel", "(MvPlayViewModel.kt:60)-->> $e");
-            }
-
-        })
+        MvNetWorkUtil.receiveMvUrlInfo(key, _mvUrlData)
 
     }
 
@@ -80,16 +55,7 @@ class MvPlayViewModel : ViewModel() {
      * 返回得到的评论区的数据
      */
     fun getMvComments(key: String) {
-        MvNetWorkUtil.receiveMvComments(key, object : MvCommentsCallBack {
-            override fun onRespond(t: MvCommentsData<HotComment>) {
-                _mvCommentsData.postValue(t.hotComments)
-            }
-
-            override fun onFailed(e: String) {
-                Log.d("getMvCommentsViewModel", "(MvPlayViewModel.kt:87)-->> $e");
-            }
-
-        })
+        MvNetWorkUtil.receiveMvComments(key, _mvCommentsData)
 
     }
 

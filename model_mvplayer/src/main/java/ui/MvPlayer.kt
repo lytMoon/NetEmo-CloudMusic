@@ -5,9 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -24,18 +23,18 @@ import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
 import commentadapter.RvCommentAdapter
-import networkutils.MvNetWorkUtil
 import viewmodel.MvPlayViewModel
 import kotlin.properties.Delegates
+
 
 @Route(path = "/mv/mvPlay")
 class MvPlayer : AppCompatActivity() {
 
     @Autowired
     lateinit var mvUid: String
-
     @Autowired
     lateinit var mvName: String
+
     private lateinit var orientationUtils: OrientationUtils
     private var mPosition by Delegates.notNull<Long>()
 
@@ -50,6 +49,7 @@ class MvPlayer : AppCompatActivity() {
             layoutInflater
         )
     }
+
     //懒加载注入viewBinding
     private val rvBinding: BottomSheetLayoutBinding by lazy {
         BottomSheetLayoutBinding.inflate(
@@ -217,39 +217,50 @@ class MvPlayer : AppCompatActivity() {
          * 评论区点击事件的实现
          */
         mBinding.videoComment.setOnClickListener {
-            myViewModel.getMvComments(mvUid)
-            val bottomSheetDialog = BottomSheetDialog(this)
-            val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_layout, null)
-            bottomSheetDialog.setContentView(bottomSheetView)
-            // 设置 BottomSheetDialog 的一些参数
-            bottomSheetDialog.setCancelable(true)
-            bottomSheetDialog.behavior.peekHeight = 500
-            bottomSheetDialog.setCanceledOnTouchOutside(true)
-            bottomSheetDialog.behavior.isDraggable = true
-            bottomSheetDialog.show()
-
-
-            myViewModel.mvCommentsData.observe(this) {
-                try {
-                    Log.d("mvCommentsData","(MvPlayer.kt:233)-->> $it");
-                    rvBinding.rvComment.adapter = RvCommentAdapter(it,this)
-                    rvBinding.rvComment.layoutManager =
-                        GridLayoutManager(this, 1, RecyclerView.VERTICAL, false)
-                }
-                catch (e:java.lang.NullPointerException){
-                    Log.d("NullPointerException","(ArtistsFragment.kt:48)-->> ");
-                }
-
-            }
+            iniBottomSheet()
 
 
         }
 
-
+        /**
+         * 返回的点击事件
+         */
+        mBinding.videoExit.setOnClickListener {
+            finish()
+        }
 
     }
 
+    /**
+     * 使用了谷歌material库里面的一个bottomSheetDialog插件，里面封装了fragment（类似那种），对我们主视频播放的生命
+     * 周期没有影响，
+     */
+    private fun iniBottomSheet() {
+        myViewModel.getMvComments(mvUid)
+        val bottomSheetDialog = BottomSheetDialog(this)
+        val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_layout, null)
+        bottomSheetDialog.setContentView(bottomSheetView)
+        val recyclerView: RecyclerView = bottomSheetDialog.findViewById(R.id.rv_comment)!!
+        Log.d("mvUid", "(MvPlayer.kt:221)-->> $mvUid");
+        myViewModel.mvCommentsData.observe(this) {
+            try {
+                recyclerView.layoutManager = LinearLayoutManager(this)
+                recyclerView.adapter = RvCommentAdapter(it, this)
 
+
+            } catch (e: java.lang.NullPointerException) {
+                Log.d("NullPointerException", "空指针异常");
+            }
+        }
+        /**设置 BottomSheetDialog 的一些参数
+         */
+        bottomSheetDialog.setCancelable(true)
+        bottomSheetDialog.setCanceledOnTouchOutside(true)
+        bottomSheetDialog.behavior.isDraggable = true
+        bottomSheetDialog.behavior.peekHeight = 1500
+        bottomSheetDialog.show()
+
+    }
 }
 
 

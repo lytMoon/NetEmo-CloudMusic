@@ -1,8 +1,11 @@
 package com.lytredrock.model.research.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -49,6 +52,9 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun iniClick() {
+        /**
+         *
+         */
         mBinding.tvSearch.setOnClickListener {
             val key = mBinding.searchView.query.toString()
             if (TextUtils.isEmpty(key)) {
@@ -60,9 +66,23 @@ class SearchActivity : AppCompatActivity() {
             }
             Log.d("tvSearch", "(ResearchActivity.kt:41)-->> $key");
         }
+
+        /**
+         * 评论区的点击事件
+         */
+
+        mBinding.imBack.setOnClickListener {
+            finish()
+        }
+        /**
+         * 点击cardView的区域就开始打开评论区
+         */
+        mBinding.cardView.setOnClickListener {
+            mBinding.searchView.isIconified = false
+        }
+
+
     }
-
-
 
     private fun iniTabLayout() {
 
