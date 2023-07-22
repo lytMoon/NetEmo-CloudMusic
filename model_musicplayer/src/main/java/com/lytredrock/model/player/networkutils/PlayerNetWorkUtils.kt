@@ -1,8 +1,8 @@
 package com.lytredrock.model.player.networkutils
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.lytredrock.model.player.apiservice.ApiService
-import com.lytredrock.model.player.apiservice.UrlCallBack
 import com.lytredrock.model.player.playerData.Data
 import com.lytredrock.model.player.playerData.UrlData
 import io.reactivex.Observer
@@ -19,22 +19,21 @@ import io.reactivex.schedulers.Schedulers
  */
 object PlayerNetWorkUtils {
 
-    private val apiService= ServiceCreatorUtils.create(ApiService::class.java)
+    private val apiService = ServiceCreatorUtils.create(ApiService::class.java)
 
 
-
-    fun getUrl(keyword:String,callBack:UrlCallBack){
+    fun getUrl(keyword: String, _musicInfo: MutableLiveData<List<Data>>) {
 
         apiService.getMusicUrl(keyword)
             .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
             .observeOn(AndroidSchedulers.mainThread())//在安卓主线程（执行onNext的逻辑）
-            .subscribe(object:Observer<UrlData<Data>>{
+            .subscribe(object : Observer<UrlData<Data>> {
                 override fun onSubscribe(d: Disposable) {
 
                 }
 
                 override fun onError(e: Throwable) {
-                    callBack.onFailed(e.message.toString())
+
                 }
 
                 override fun onComplete() {
@@ -42,8 +41,8 @@ object PlayerNetWorkUtils {
                 }
 
                 override fun onNext(t: UrlData<Data>) {
-                    Log.d("getUrl","(PlayerNetWorkUtils.kt:44)-->> ${t.data}")
-                    callBack.onRespond(t)
+                    _musicInfo.postValue(t.data)
+                    Log.d("getUrl", "(PlayerNetWorkUtils.kt:44)-->> ${t.data}")
 
                 }
 
@@ -52,9 +51,6 @@ object PlayerNetWorkUtils {
 
 
     }
-
-
-
 
 
 }

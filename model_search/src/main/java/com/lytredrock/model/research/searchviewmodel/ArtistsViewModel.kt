@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lytredrock.model.research.apisearch.ArtistCallBack
 import com.lytredrock.model.research.musicdata.Artist
 import com.lytredrock.model.research.musicdata.ArtistResult
 import com.lytredrock.model.research.musicdata.SearchArtistData
@@ -23,18 +22,7 @@ class ArtistsViewModel : ViewModel() {
         get() = _artistData
 
     fun getArtistsInfo(keyword: String) {
-        SearchNetWorkUtil.receiveArtistsInfo(keyword, object : ArtistCallBack {
-            override fun onRespond(t: SearchArtistData<ArtistResult>) {
-
-                _artistData.postValue(t.result.artists)
-//                Log.d("ArtistsViewModel","(ArtistsViewModel.kt:30)-->> ${t.result.artists[0]}")
-            }
-
-            override fun onFailed(e: String) {
-                Log.d("ArtistsViewModel", "(ArtistsViewModel.kt:30)-->> $e");
-            }
-
-        })
+        SearchNetWorkUtil.receiveArtistsInfo(keyword,_artistData)
 
 
     }

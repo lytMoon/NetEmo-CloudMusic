@@ -10,8 +10,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
-import com.lytredrock.model.login.LoginViewModel
 import com.lytredrock.model.login.R
 import com.lytredrock.model.login.networkutils.NetWorkUtils
 import com.lytredrock.model.login.adapter.BasePagerAdapter
@@ -29,6 +27,7 @@ import com.lytredrock.model.login.logindata.QRLast
 /**
  * 登录类里面没有什么可以储存的数据，我这里的话没有使用viewModel接收数据，直接通过回调传过来返回的结果。
  * 做出判断（遗憾的是，尽管返回的数据显示你已经登录成功，但是始终是游客登录）
+ *这里由于没有使用viewModel,目前我不知道如果不使用回调如何把返回的String类型的数据传过来并且对布尔类型的数值进行判断
  */
 class LoginActivity : BaseActivity() {
 
@@ -45,10 +44,6 @@ class LoginActivity : BaseActivity() {
     //懒加载注入viewBinding
     private val mBinding: ActivityLoginBinding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
 
-    //懒加载注入viewmodel
-    val loginViewModel by lazy {
-        ViewModelProvider(this)[LoginViewModel::class.java]
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,7 +114,6 @@ class LoginActivity : BaseActivity() {
                 NetWorkUtils.receiveQRPic(NetWorkUtils.receivedNumber!!,
                     object : MusicInfoCallBack {
                         override fun onRespond(qrimg: String) {
-                            base64ToBitmap(qrimg)
                         }
 
                         override fun onFailed(e: String) {
