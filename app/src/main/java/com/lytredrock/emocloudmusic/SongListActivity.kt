@@ -40,7 +40,6 @@ class SongListActivity : BaseActivity() {
             getSongListInInternet(id)
             songLifeData.observe(this@SongListActivity){
                 Glide.with(this@SongListActivity).load(it[0].al.picUrl).into(myViewBinding.ivSongList)
-
                 myViewBinding.rvSongList.apply {
                     adapter=SongListAdapter(it,this@SongListActivity)
                     layoutManager=GridLayoutManager(this@SongListActivity,1)
