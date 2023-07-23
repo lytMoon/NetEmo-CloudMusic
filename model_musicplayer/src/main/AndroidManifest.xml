@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EmoCloudMusic">
         <activity
-            android:name=".PlayerActivity"
+            android:name=".ui.MusicPlayerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

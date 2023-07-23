@@ -4,6 +4,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.lytredrock.model.player.apiservice.ApiService
 import com.lytredrock.model.player.playerData.Data
+import com.lytredrock.model.player.playerData.Lrc
+import com.lytredrock.model.player.playerData.MusicLyricsData
+import com.lytredrock.model.player.playerData.MusicPlayInfoData
+import com.lytredrock.model.player.playerData.Song
 import com.lytredrock.model.player.playerData.UrlData
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,6 +26,9 @@ object PlayerNetWorkUtils {
     private val apiService = ServiceCreatorUtils.create(ApiService::class.java)
 
 
+    /**
+     * 获取音乐的播放链接
+     */
     fun getUrl(keyword: String, _musicInfo: MutableLiveData<List<Data>>) {
 
         apiService.getMusicUrl(keyword)
@@ -49,6 +56,60 @@ object PlayerNetWorkUtils {
 
             })
 
+
+    }
+
+    /**
+     * 获取音乐的相关信息
+     */
+    fun receiveMusicInfo(key: String, _musicInfo: MutableLiveData<List<Song>>) {
+        apiService.getMusicInfo(key)
+            .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
+            .observeOn(AndroidSchedulers.mainThread())//在安卓主线程（执行onNext的逻辑）
+            .subscribe(object : Observer<MusicPlayInfoData<Song>> {
+                override fun onSubscribe(d: Disposable) {
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.d(
+                        "receiveMusicInfo",
+                        "(PlayerNetWorkUtils.kt:72)-->> ${e.message.toString()}"
+                    );
+                }
+
+                override fun onComplete() {
+                }
+
+                override fun onNext(t: MusicPlayInfoData<Song>) {
+                    _musicInfo.postValue(t.songs)
+                    Log.d("receiveMusicInfo111", "(PlayerNetWorkUtils.kt:80)-->> ${t.songs}");
+                }
+
+            })
+    }
+
+    /**
+     * 获取音乐的歌词
+     */
+    fun receiveLyrics(key:String,_musicLyricsInfo: MutableLiveData<List<Lrc>>){
+        apiService.getMusicLyrics(key)
+            .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
+            .observeOn(AndroidSchedulers.mainThread())//在安卓主线程（执行onNext的逻辑）
+            .subscribe(object:Observer<MusicLyricsData<Lrc>>{
+                override fun onSubscribe(d: Disposable) {
+                }
+
+                override fun onError(e: Throwable) {
+                }
+
+                override fun onComplete() {
+                }
+
+                override fun onNext(t: MusicLyricsData<Lrc>) {
+                    _musicLyricsInfo.postValue(listOf(t.lrc))
+                }
+
+            })
 
     }
 
