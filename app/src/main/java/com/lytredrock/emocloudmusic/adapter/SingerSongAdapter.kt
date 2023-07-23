@@ -55,6 +55,7 @@ class SingerSongAdapter(val data: List<SingSongData.SingerSong>, private val act
             when(itemData.ar.size){
                 1->artist.text="${itemData.ar[0].name}-${itemData.al.name}"
                 2->artist.text="${itemData.ar[0].name}/${itemData.ar[1].name}-${itemData.al.name}"
+                else->artist.text="${itemData.ar[0].name}/${itemData.ar[1].name}/${itemData.ar[2].name}-${itemData.al.name}"
             }
             if(itemData.mv!=0){
                 Glide.with(activity).load(R.drawable.ic_broadcast).into(mv)
