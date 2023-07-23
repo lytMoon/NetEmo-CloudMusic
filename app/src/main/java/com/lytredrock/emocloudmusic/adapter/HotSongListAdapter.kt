@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lytredrock.emocloudmusic.R
 import com.lytredrock.emocloudmusic.data.HotSongListData
-import com.lytredrock.emocloudmusic.data.SongChart
 
 /**
  * description ： TODO:类的作用
@@ -19,7 +18,10 @@ import com.lytredrock.emocloudmusic.data.SongChart
  * email : 2191288460@qq.com
  * date : 2023/7/22 16:08
  */
-class HotSongListAdapter(val data: List<HotSongListData.Playlists>, private val activity: FragmentActivity) :
+class HotSongListAdapter(
+    val data: List<HotSongListData.Playlists>,
+    private val activity: FragmentActivity
+) :
     RecyclerView.Adapter<HotSongListAdapter.InnerHolder>() {
 
     private var clickInterface: ClickInterface? = null
@@ -32,9 +34,16 @@ class HotSongListAdapter(val data: List<HotSongListData.Playlists>, private val 
         this.clickInterface = clickInterface
     }
 
-    class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
-        val cover=root.findViewById<ImageView>(R.id.iv_hotSongList)
-        val name=root.findViewById<TextView>(R.id.tv_hotSongListName)
+
+    inner class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
+        val cover = root.findViewById<ImageView>(R.id.iv_hotSongList)
+        val name = root.findViewById<TextView>(R.id.tv_hotSongListName)
+        init {
+            cover.setOnClickListener {
+                clickInterface?.onImageviewClick(cover, absoluteAdapterPosition)
+            }
+        }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerHolder {
@@ -52,10 +61,7 @@ class HotSongListAdapter(val data: List<HotSongListData.Playlists>, private val 
         val itemData = data[position]
         holder.apply {
             Glide.with(activity).load(itemData.coverImgUrl).into(cover)
-            name.text=itemData.name
-        }
-        holder.cover.setOnClickListener{
-            clickInterface?.onImageviewClick(it, position)
+            name.text = itemData.name
         }
     }
 }

@@ -21,16 +21,21 @@ class RecommendSongListAdapter(val data:List<Result>, private val activity: Frag
 
     private var clickInterface: ClickInterface? = null
     interface ClickInterface {
-        fun  onImageviewClick( view:View,  position:Int)
+        fun  onImageviewClick( view:ImageView,  position:Int)
     }
 
     public fun setOnclick(clickInterface: ClickInterface) {
         this.clickInterface = clickInterface
     }
 
-    class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
+    inner class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
       val recommendSongList=root.findViewById<ImageView>(R.id.iv_recommendSongList)
         val tvrecommendSongList=root.findViewById<TextView>(R.id.tv_recommendSongList)
+        init {
+            recommendSongList.setOnClickListener{
+                clickInterface?.onImageviewClick(recommendSongList,absoluteAdapterPosition)
+            }
+        }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -47,8 +52,5 @@ class RecommendSongListAdapter(val data:List<Result>, private val activity: Frag
             tvrecommendSongList.text=itemData.name
             Glide.with(activity).load(itemData.picUrl).into(recommendSongList)
         }
-holder.recommendSongList.setOnClickListener{
-    clickInterface?.onImageviewClick(it, position)
-}
     }
 }

@@ -22,13 +22,14 @@
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 app:cardCornerRadius="14dp"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="56dp">
                 <ImageView
                     android:id="@+id/iv_SongList"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
+                    android:transitionName="ShareElement1"
                     app:layout_collapseMode="parallax" />
             </androidx.cardview.widget.CardView>
 

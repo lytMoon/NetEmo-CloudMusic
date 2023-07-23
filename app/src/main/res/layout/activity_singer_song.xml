@@ -30,7 +30,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
-                    app:layout_collapseMode="parallax" />
+                    app:layout_collapseMode="parallax"
+                    android:transitionName="ShareElement1"
+                    />
             </androidx.cardview.widget.CardView>
 
             <ImageView

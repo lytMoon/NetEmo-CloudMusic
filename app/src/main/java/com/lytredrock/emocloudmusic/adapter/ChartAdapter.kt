@@ -28,16 +28,21 @@ class ChartAdapter(val data: List<SongChart>, private val activity: FragmentActi
     private var clickInterface: ClickInterface? = null
 
     interface ClickInterface {
-        fun onImageviewClick(view: View, position: Int)
+        fun onImageviewClick(view: ImageView, position: Int)
     }
 
     fun setOnclick(clickInterface: ClickInterface) {
         this.clickInterface = clickInterface
     }
 
-    class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
+   inner class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
         val cover=root.findViewById<ImageView>(R.id.iv_cover)
         val chartName=root.findViewById<TextView>(R.id.chart_name)
+        init {
+            cover.setOnClickListener{
+                clickInterface?.onImageviewClick(cover, absoluteAdapterPosition)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerHolder {
@@ -56,9 +61,6 @@ class ChartAdapter(val data: List<SongChart>, private val activity: FragmentActi
         holder.apply {
             Glide.with(activity).load(itemData.coverImgUrl).into(cover)
         chartName.text=itemData.name
-        }
-        holder.cover.setOnClickListener{
-            clickInterface?.onImageviewClick(it, position)
         }
     }
 }
