@@ -1,6 +1,7 @@
 package com.lytredrock.model.player.fragment
 
 import RvLyricsAdapter
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.lytredrock.model.player.R
 import com.lytredrock.model.player.databinding.FragmentPageTwoBinding
 import com.lytredrock.model.player.viewmodel.MusicPlayerViewModel
 import java.lang.NullPointerException
@@ -38,6 +40,36 @@ class PageTwoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        iniLyrics()
+        iniClick()
+
+    }
+
+    private fun iniClick() {
+        mBinding.swapButton.setOnClickListener {
+            replaceFragment(PageOneFragment())
+        }
+    }
+
+    @SuppressLint("CommitTransaction", "ResourceType")
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = requireFragmentManager()
+        val transaction = fragmentManager.beginTransaction()
+        // 设置自定义动画
+        transaction.setCustomAnimations(
+            R.anim.fade_in,  // 新的Fragment进入动画
+            R.anim.fade_out,  // 旧的Fragment退出动画
+        )
+        transaction.replace(R.id.fragment_place_holder, fragment)
+        transaction.commit()
+
+    }
+
+
+    /**
+     * 更新歌词的方法
+     */
+    private fun iniLyrics() {
         viewModel.musicLyricsInfo.observe(requireActivity()) {
             val lyricsList = lyricsWithChinese(it[0].lyric)
             try {

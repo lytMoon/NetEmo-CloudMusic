@@ -37,5 +37,5 @@ interface ApiService {
      * 返回mv的评论
      */
     @GET("comment/mv")
-    fun getComments(@Query("id")id:String,@Query("limit")limit:Int=100):Observable<MvCommentsData<HotComment>>
+    fun getComments(@Query("id")id:String,@Query("limit")limit:Int=500):Observable<MvCommentsData<HotComment>>
 }

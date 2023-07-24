@@ -3,8 +3,9 @@ package com.lytredrock.model.player.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lytredrock.model.player.networkutils.PlayerNetWorkUtils
+import com.lytredrock.model.player.utils.PlayerNetWorkUtils
 import com.lytredrock.model.player.playerData.Data
+import com.lytredrock.model.player.playerData.HotComment
 import com.lytredrock.model.player.playerData.Lrc
 import com.lytredrock.model.player.playerData.Song
 
@@ -28,6 +29,10 @@ class MusicPlayerViewModel : ViewModel() {
     private val _musicLyricsInfo: MutableLiveData<List<Lrc>> = MutableLiveData()
     val musicLyricsInfo: LiveData<List<Lrc>>
         get() = _musicLyricsInfo
+    //储存歌曲的评论信息
+    private val _musicCommentsData: MutableLiveData<List<HotComment>> = MutableLiveData()
+    val musicCommentsData: LiveData<List<HotComment>>
+        get() = _musicCommentsData
 
 
     /**
@@ -52,5 +57,13 @@ class MusicPlayerViewModel : ViewModel() {
 
     fun getMusicLyrics(key:String){
         PlayerNetWorkUtils.receiveLyrics(key, _musicLyricsInfo)
+    }
+
+    /**
+     * 返回得到的评论区的数据
+     */
+    fun getMusicComments(key: String) {
+        PlayerNetWorkUtils.receiveMusicComments(key, _musicCommentsData)
+
     }
 }

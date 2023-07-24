@@ -6,8 +6,16 @@
     android:orientation="vertical"
     tools:context=".fragment.PageTwoFragment">
 
+    <ImageView
+        android:id="@+id/swap_button"
+        android:src="@drawable/swap_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="30dp"
+        android:layout_height="30dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_lyrics"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

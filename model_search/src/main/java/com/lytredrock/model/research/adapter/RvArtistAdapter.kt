@@ -25,20 +25,10 @@ import com.lytredrock.model.research.musicdata.Song
  */
 class RvArtistAdapter(val data: List<Artist>, private val activity: FragmentActivity) :
     RecyclerView.Adapter<RvArtistAdapter.InnerHolder>() {
-    private var clickInterface: ClickInterface? = null
-
-    interface ClickInterface {
-        fun onTitleClick(view: View, position: Int)
-    }
-
-
-    fun setOnclick(clickInterface: ClickInterface) {
-        this.clickInterface = clickInterface
-    }
 
     class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
         val artistPic: ImageView = root.findViewById(R.id.iv_artist_pic_fragment)
-        val artistName: TextView = root.findViewById<TextView>(R.id.tv_artist_name_fragment)
+        val artistName: TextView = root.findViewById(R.id.tv_artist_name_fragment)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerHolder {

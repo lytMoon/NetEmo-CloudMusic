@@ -24,17 +24,6 @@ import mvdata.HotComment
 class RvCommentAdapter(val data: List<HotComment>, private val activity: FragmentActivity) :
     RecyclerView.Adapter<RvCommentAdapter.InnerHolder>() {
 
-    private var clickInterface: ClickInterface? = null
-
-    interface ClickInterface {
-        fun onTitleClick(view: View, position: Int)
-    }
-
-
-    fun setOnclick(clickInterface: ClickInterface) {
-        this.clickInterface = clickInterface
-    }
-
     class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
         val mvName: TextView = root.findViewById(R.id.tv_artist_name_mv)
         val mvComment: TextView = root.findViewById(R.id.tv_artist_comment_mv)
