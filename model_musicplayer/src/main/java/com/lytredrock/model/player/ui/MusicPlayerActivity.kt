@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.lytredrock.lib.base.BaseUtils.myToast
 import com.lytredrock.lib.base.BaseUtils.transparentStatusBar
 import com.lytredrock.model.player.R
 import com.lytredrock.model.player.databinding.ActivityPlayerBinding
@@ -19,12 +20,14 @@ class MusicPlayerActivity : AppCompatActivity() {
     /**
      * 本来准备设置标记符，但是当你切换到第二个的时候，点击事件被vp拦截了，再次点击的时候不会切换回来（除非vp为空，所以放弃了这种判断方法）
      */
-//    //设置要切换fragment的标记符
+//    设置要切换fragment的标记符
 //    private var isFragmentOneDisplayed = true
 //    val FIRST_FRAGMENT_TAG = "first_fragment"
 //    val SECOND_FRAGMENT_TAG = "second_fragment"
 //    val currentFragmentTag =
 //        supportFragmentManager.findFragmentById(R.id.fragment_place_holder)?.tag
+
+    private var isMusicDisplayed = true
 
     //懒加载注入viewModel
     private val playerViewModel by lazy {
@@ -41,7 +44,7 @@ class MusicPlayerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(mBinding.root)
-        iniTab()
+        iniBar()
         iniBind()
         replaceFragment(PageOneFragment())
         iniClick()
@@ -52,12 +55,29 @@ class MusicPlayerActivity : AppCompatActivity() {
      * 下面是点击事件
      *
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun iniClick() {
         /**
          * 点击我们的制定区域，切换不同的fragment
          */
         mBinding.fragmentPlaceHolder.setOnClickListener {
             replaceFragment(PageTwoFragment())
+        }
+
+
+        mBinding.musicPlay.setOnClickListener {
+            if(isMusicDisplayed){
+                mBinding.musicPlay.setImageDrawable(getDrawable(R.drawable.play_icon))
+                isMusicDisplayed=false
+
+
+            }
+            else{
+                mBinding.musicPlay.setImageDrawable(getDrawable(R.drawable.pause_icon))
+                isMusicDisplayed=true
+
+
+            }
         }
 
     }
@@ -74,12 +94,10 @@ class MusicPlayerActivity : AppCompatActivity() {
         transaction.setCustomAnimations(
             R.anim.fade_in,  // 新的Fragment进入动画
             R.anim.fade_out,  // 旧的Fragment退出动画
-            R.anim.fade_in,  // 新的Fragment进入动画
-            R.anim.fade_out,
+
         )
         transaction.replace(R.id.fragment_place_holder, fragment)
-        // 将当前 Fragment 添加到返回栈中
-        transaction.addToBackStack(null)
+
         transaction.commit()
 
     }
@@ -87,9 +105,8 @@ class MusicPlayerActivity : AppCompatActivity() {
     /**
      * 开启沉浸式状态栏
      */
-    private fun iniTab() {
+    private fun iniBar() {
         transparentStatusBar(window, false)
-
     }
 
 

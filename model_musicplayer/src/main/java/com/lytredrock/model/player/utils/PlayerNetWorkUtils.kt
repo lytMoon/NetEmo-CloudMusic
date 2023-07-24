@@ -1,4 +1,4 @@
-package com.lytredrock.model.player.networkutils
+package com.lytredrock.model.player.utils
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData

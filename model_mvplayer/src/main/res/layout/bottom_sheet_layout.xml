@@ -9,7 +9,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Comments"
+        android:text="Comments(仅展示热门评论)"
         android:padding="16dp"
         android:textSize="18sp"
         android:textStyle="bold" />

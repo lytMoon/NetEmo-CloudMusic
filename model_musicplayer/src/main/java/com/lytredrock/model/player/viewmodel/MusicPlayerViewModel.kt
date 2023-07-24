@@ -3,7 +3,7 @@ package com.lytredrock.model.player.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lytredrock.model.player.networkutils.PlayerNetWorkUtils
+import com.lytredrock.model.player.utils.PlayerNetWorkUtils
 import com.lytredrock.model.player.playerData.Data
 import com.lytredrock.model.player.playerData.Lrc
 import com.lytredrock.model.player.playerData.Song

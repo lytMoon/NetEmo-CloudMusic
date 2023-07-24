@@ -1,4 +1,4 @@
-package com.lytredrock.model.player.networkutils
+package com.lytredrock.model.player.utils
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.Retrofit
