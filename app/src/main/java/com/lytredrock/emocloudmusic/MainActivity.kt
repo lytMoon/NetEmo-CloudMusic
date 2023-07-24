@@ -4,7 +4,6 @@ import BaseActivity
 import android.os.Bundle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import com.lytredrock.emocloudmusic.PageTransformer.MainPageTransformer
 import com.lytredrock.emocloudmusic.adapter.FragmentAdapter
 import com.lytredrock.emocloudmusic.databinding.ActivityMainBinding
 import com.lytredrock.emocloudmusic.frgment.BackFragment
@@ -45,7 +44,6 @@ class MainActivity : BaseActivity() {
             }
         })
         myViewBinding.vp2.adapter = FragmentAdapter(this, fragments)
-        myViewBinding.vp2.setPageTransformer(MainPageTransformer())
         myViewBinding.vp2.isUserInputEnabled = false
 
         myViewBinding.bottomNavigationView.setOnItemSelectedListener {
