@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
+import com.google.android.material.carousel.CarouselLayoutManager
 import com.lytredrock.emocloudmusic.SongListActivity
 import com.lytredrock.emocloudmusic.adapter.BannerAdapter
 import com.lytredrock.emocloudmusic.adapter.MainRvAdapter
@@ -69,8 +70,7 @@ class FindFragment : Fragment() {
             recommendSongListLifeData.observe(viewLifecycleOwner) {
                 val myAdapter = RecommendSongListAdapter(it, requireActivity())
                 binding.rvRecommendSongList.adapter = myAdapter
-                binding.rvRecommendSongList.layoutManager =
-                    GridLayoutManager(requireContext(), 1, RecyclerView.HORIZONTAL, false)
+                binding.rvRecommendSongList.layoutManager = CarouselLayoutManager()
                 myAdapter.setOnclick(object : RecommendSongListAdapter.ClickInterface {
                     override fun onImageviewClick(view: ImageView, position: Int) {
                         val bundle=ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),view,"ShareElement1").toBundle()

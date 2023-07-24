@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
-import com.lytredrock.emocloudmusic.PageTransformer.MainPageTransformer
 import com.lytredrock.emocloudmusic.adapter.FragmentAdapter
 import com.lytredrock.emocloudmusic.databinding.FragmentConmmnityBinding
 import com.lytredrock.emocloudmusic.viewmodel.SongChartViewModel
@@ -45,7 +44,6 @@ class HotFragment:Fragment() {
             }
         })
        binding.vp2Hot.adapter=FragmentAdapter(requireActivity(),fragments)
-//       binding.vp2Hot.setPageTransformer(MainPageTransformer())
 
         TabLayoutMediator(binding.tabLayout2, binding.vp2Hot) { tab, position ->
             when (position) {
