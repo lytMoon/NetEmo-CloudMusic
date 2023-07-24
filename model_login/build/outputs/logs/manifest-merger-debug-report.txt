@@ -4,9 +4,8 @@ ADDED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.
 INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:2:1-24:12
 INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:2:1-24:12
 INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:2:1-24:12
-MERGED from [:lib_base] C:\Users\29364\Desktop\emoCloud\lib_base\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:lib_utils] C:\Users\29364\Desktop\emoCloud\lib_utils\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.databinding:viewbinding:7.4.2] C:\Users\29364\.gradle\caches\transforms-3\6170efff5551651627a4151ad637b47c\transformed\jetified-viewbinding-7.4.2\AndroidManifest.xml:2:1-7:12
-MERGED from [:lib_netWork] C:\Users\29364\Desktop\emoCloud\lib_netWork\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.android.material:material:1.9.0] C:\Users\29364\.gradle\caches\transforms-3\62ebc3dbab22f6b31e9b924f8878f015\transformed\material-1.9.0\AndroidManifest.xml:17:1-26:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\29364\.gradle\caches\transforms-3\426e29c2454daa1353b04768867bf157\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\29364\.gradle\caches\transforms-3\bef98397d83ceb15b522fdcf658a207c\transformed\jetified-appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
@@ -74,8 +73,6 @@ INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManife
 		ADDED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:2:11-69
 uses-permission#android.permission.INTERNET
 ADDED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:3:5-67
-MERGED from [:lib_netWork] C:\Users\29364\Desktop\emoCloud\lib_netWork\build\intermediates\merged_manifest\debug\AndroidManifest.xml:7:5-67
-MERGED from [:lib_netWork] C:\Users\29364\Desktop\emoCloud\lib_netWork\build\intermediates\merged_manifest\debug\AndroidManifest.xml:7:5-67
 	android:name
 		ADDED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:3:22-64
 application
@@ -136,12 +133,10 @@ uses-sdk
 INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml
 INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml
-MERGED from [:lib_base] C:\Users\29364\Desktop\emoCloud\lib_base\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:lib_base] C:\Users\29364\Desktop\emoCloud\lib_base\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:lib_utils] C:\Users\29364\Desktop\emoCloud\lib_utils\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:lib_utils] C:\Users\29364\Desktop\emoCloud\lib_utils\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [androidx.databinding:viewbinding:7.4.2] C:\Users\29364\.gradle\caches\transforms-3\6170efff5551651627a4151ad637b47c\transformed\jetified-viewbinding-7.4.2\AndroidManifest.xml:5:5-44
 MERGED from [androidx.databinding:viewbinding:7.4.2] C:\Users\29364\.gradle\caches\transforms-3\6170efff5551651627a4151ad637b47c\transformed\jetified-viewbinding-7.4.2\AndroidManifest.xml:5:5-44
-MERGED from [:lib_netWork] C:\Users\29364\Desktop\emoCloud\lib_netWork\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:lib_netWork] C:\Users\29364\Desktop\emoCloud\lib_netWork\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.material:material:1.9.0] C:\Users\29364\.gradle\caches\transforms-3\62ebc3dbab22f6b31e9b924f8878f015\transformed\material-1.9.0\AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.android.material:material:1.9.0] C:\Users\29364\.gradle\caches\transforms-3\62ebc3dbab22f6b31e9b924f8878f015\transformed\material-1.9.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\29364\.gradle\caches\transforms-3\426e29c2454daa1353b04768867bf157\transformed\constraintlayout-2.1.4\AndroidManifest.xml:5:5-7:41

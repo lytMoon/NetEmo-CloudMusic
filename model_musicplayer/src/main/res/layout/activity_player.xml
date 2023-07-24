@@ -74,11 +74,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <ProgressBar
+    <SeekBar
         android:id="@+id/music_progress"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_marginTop="-60dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="-70dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        style="@style/CustomProgressBarStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +91,7 @@
         android:id="@+id/music_play"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginTop="-60dp"
+        android:layout_marginTop="-10dp"
         android:src="@drawable/pause_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,5 +99,10 @@
         app:layout_constraintTop_toBottomOf="@+id/music_progress" />
 
 
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/player_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

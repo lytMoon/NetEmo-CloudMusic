@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.lytredrock.model.player.apiservice.ApiService
 import com.lytredrock.model.player.playerData.Data
+import com.lytredrock.model.player.playerData.HotComment
 import com.lytredrock.model.player.playerData.Lrc
+import com.lytredrock.model.player.playerData.MusicCommentsData
 import com.lytredrock.model.player.playerData.MusicLyricsData
 import com.lytredrock.model.player.playerData.MusicPlayInfoData
 import com.lytredrock.model.player.playerData.Song
@@ -107,6 +109,33 @@ object PlayerNetWorkUtils {
 
                 override fun onNext(t: MusicLyricsData<Lrc>) {
                     _musicLyricsInfo.postValue(listOf(t.lrc))
+                }
+
+            })
+
+    }
+    /**
+     * 获取mv的评论
+     */
+
+    fun receiveMusicComments(key: String, _musicCommentsData: MutableLiveData<List<HotComment>>) {
+        apiService.getComments(key)
+            .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
+            .observeOn(AndroidSchedulers.mainThread())//在安卓主线程（执行onNext的逻辑）
+            .subscribe(object : Observer<MusicCommentsData<HotComment>> {
+                override fun onSubscribe(d: Disposable) {
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.d("receiveMvComments", "(MvNetWorkUtil.kt:99)-->> ${e.message.toString()}");
+                }
+
+                override fun onComplete() {
+                }
+
+                override fun onNext(t: MusicCommentsData<HotComment>) {
+                    _musicCommentsData.postValue(t.hotComments)
+                    Log.d("receiveMvComments", "(MvNetWorkUtil.kt:105)-->> ${t.hotComments}");
                 }
 
             })

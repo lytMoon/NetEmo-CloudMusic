@@ -32,6 +32,7 @@ class MvPlayer : AppCompatActivity() {
 
     @Autowired
     lateinit var mvUid: String
+
     @Autowired
     lateinit var mvName: String
 
@@ -246,8 +247,6 @@ class MvPlayer : AppCompatActivity() {
             try {
                 recyclerView.layoutManager = LinearLayoutManager(this)
                 recyclerView.adapter = RvCommentAdapter(it, this)
-
-
             } catch (e: java.lang.NullPointerException) {
                 Log.d("NullPointerException", "空指针异常");
             }

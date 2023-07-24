@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.lytredrock.model.login.model_login-mergeDebugResources-36:/values/values.xml",
+            "outputFile": "com.lytredrock.model.login.model_login-mergeDebugResources-35:/values/values.xml",
             "map": [
                 {
                     "source": "C:\\Users\\29364\\.gradle\\caches\\transforms-3\\0a60e80bb5b3deb2139fa794f9905e29\\transformed\\jetified-activity-1.6.0\\res\\values\\values.xml",

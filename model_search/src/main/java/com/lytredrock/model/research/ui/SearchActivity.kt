@@ -77,8 +77,6 @@ class SearchActivity : AppCompatActivity() {
         mBinding.cardView.setOnClickListener {
             mBinding.searchView.isIconified = false
         }
-
-
     }
 
     private fun iniTabLayout() {
