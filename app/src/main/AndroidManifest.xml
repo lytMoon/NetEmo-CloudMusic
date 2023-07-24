@@ -20,9 +20,14 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:name=".SongListActivity"
             android:exported="false" />
+
+        <activity android:name=".SingerSong"
+            android:exported="false"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+
         <activity
             android:name=".SplashActivity"
             android:exported="true">

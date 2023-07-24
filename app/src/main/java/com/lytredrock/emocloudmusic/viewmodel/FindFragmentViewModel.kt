@@ -32,7 +32,7 @@ class FindFragmentViewModel : ViewModel() {
         MutableLiveData<List<Result>>()
     }
 
-    fun getBallInFragment() {
+    fun getBallInFragment(){
         val retrofit = Retrofit.Builder().baseUrl("http://why.vin:2023/")
             .addConverterFactory(GsonConverterFactory.create()).build()
         val testService = retrofit.create(FindDataInterface::class.java)

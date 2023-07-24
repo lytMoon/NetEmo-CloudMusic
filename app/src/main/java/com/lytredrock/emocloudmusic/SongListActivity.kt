@@ -32,15 +32,15 @@ class SongListActivity : BaseActivity() {
 
         val id=intent.getLongExtra("id",0)
         val name=intent.getStringExtra("name")
+        val photo=intent.getStringExtra("photo")
 
 
         myViewBinding.collapsingToolbar.title = name
+        Glide.with(this@SongListActivity).load(photo).into(myViewBinding.ivSongList)
 
         myViewModel.apply {
             getSongListInInternet(id)
             songLifeData.observe(this@SongListActivity){
-                Glide.with(this@SongListActivity).load(it[0].al.picUrl).into(myViewBinding.ivSongList)
-
                 myViewBinding.rvSongList.apply {
                     adapter=SongListAdapter(it,this@SongListActivity)
                     layoutManager=GridLayoutManager(this@SongListActivity,1)

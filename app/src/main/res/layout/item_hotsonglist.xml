@@ -2,39 +2,37 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="200dp"
+    android:layout_width="110dp"
     android:layout_height="180dp">
 
+
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+        android:id="@+id/card1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         app:cardCornerRadius="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.275">
-        <ImageView
-            android:id="@+id/iv_cover"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:transitionName="ShareElement1"/>
+        app:layout_constraintVertical_bias="0.2">
 
+        <ImageView
+            android:id="@+id/iv_hotSongList"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:transitionName="ShareElement1"/>
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/chart_name"
-        android:layout_width="180dp"
+        android:id="@+id/tv_hotSongListName"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.96" />
-
+        app:layout_constraintTop_toBottomOf="@+id/card1"
+        app:layout_constraintVertical_bias="0.288" />
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-

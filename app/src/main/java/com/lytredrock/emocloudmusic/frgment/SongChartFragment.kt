@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -37,11 +39,13 @@ class SongChartFragment :Fragment(){
                 binding.rvChart.layoutManager= GridLayoutManager(requireContext(),2)
 
                 myAdapter.setOnclick(object : ChartAdapter.ClickInterface {
-                    override fun onImageviewClick(view: View, position: Int) {
+                    override fun onImageviewClick(view: ImageView, position: Int) {
+                        val bundle= ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),view,"ShareElement1").toBundle()
                         val intent = Intent(requireContext(), SongListActivity::class.java)
                         intent.putExtra("id", it[position].id)
                         intent.putExtra("name",it[position].name)
-                        startActivity(intent)
+                        intent.putExtra("photo",it[position].coverImgUrl)
+                        startActivity(intent,bundle)
                     }
 
                 })

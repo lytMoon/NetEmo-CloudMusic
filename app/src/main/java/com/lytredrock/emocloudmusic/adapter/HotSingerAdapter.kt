@@ -1,17 +1,21 @@
 package com.lytredrock.emocloudmusic.adapter
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.lytredrock.emocloudmusic.R
+import com.lytredrock.emocloudmusic.SingerSong
 import com.lytredrock.emocloudmusic.data.Artist
+
 
 /**
  * description ： TODO:类的作用
@@ -32,9 +36,18 @@ class HotSingerAdapter(val data: List<Artist>, private val activity: FragmentAct
         this.clickInterface = clickInterface
     }
 
-    class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
+    inner class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
         val photo = root.findViewById<ImageView>(R.id.iv_photo)
         val name = root.findViewById<TextView>(R.id.tv_name)
+        init {
+            itemView.setOnClickListener {
+                val intent = Intent(itemView.context, SingerSong::class.java)
+                intent.putExtra("photo",data[absoluteAdapterPosition].picUrl)
+                intent.putExtra("id", data[absoluteAdapterPosition].id)
+                intent.putExtra("name",data[absoluteAdapterPosition].name)
+                itemView.context.startActivity(intent)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerHolder {
@@ -53,6 +66,9 @@ class HotSingerAdapter(val data: List<Artist>, private val activity: FragmentAct
         holder.apply {
             Glide.with(activity).load(itemData.picUrl).into(photo)
             name.text=itemData.name
+
         }
     }
+
+
 }
