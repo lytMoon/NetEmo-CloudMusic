@@ -6,8 +6,7 @@ package com.lytredrock.emocloudmusic.data
  * email : 2191288460@qq.com
  * date : 2023/7/25 13:24
  */
-data class CollectData(
+data class DownloadSongData(
     val name:String?,
     val author:String?,
-    val mv:Int
 )

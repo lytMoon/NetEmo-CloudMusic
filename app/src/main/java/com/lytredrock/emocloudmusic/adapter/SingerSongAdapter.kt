@@ -15,6 +15,7 @@ import android.content.Context
 import android.content.Context.MODE_APPEND
 import android.content.Intent
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.lytredrock.emocloudmusic.Download
@@ -58,16 +59,35 @@ class SingerSongAdapter(val data: List<SingSongData.SingerSong>, private val act
                     .withString("mvName",data[absoluteAdapterPosition].name)
                     .navigation()
             }
+
+            itemView.setOnClickListener {
+                ARouter.getInstance()
+                    .build("/music/musicPlay")
+                    .withString("musicId",data[absoluteAdapterPosition].id.toString())
+                    .navigation()
+                Log.d("setOnClickListener",data[absoluteAdapterPosition].id.toString() )
+            }
+
             more.setOnClickListener {
                 val popupMenu = PopupMenu(itemView.context, more)
                 popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
                 popupMenu.setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
                         R.id.collect-> {
+                            val intent=Intent(itemView.context,
+                                com.lytredrock.emocloudmusic.Collect::class.java)
+                            intent.putExtra("name",data[absoluteAdapterPosition].name)
+                            intent.putExtra("author",data[absoluteAdapterPosition].ar[0].name)
+                            intent.putExtra("id",data[absoluteAdapterPosition].id)
+                            itemView.context.startActivity(intent)
                             true
                         }
                         R.id.download->{
-
+                            val intent=Intent(itemView.context,Download::class.java)
+                            intent.putExtra("id",data[absoluteAdapterPosition].id)
+                            intent.putExtra("name",data[absoluteAdapterPosition].name)
+                            intent.putExtra("author",data[absoluteAdapterPosition].ar[0].name)
+                            itemView.context.startActivity(intent)
                             true
                         }
 

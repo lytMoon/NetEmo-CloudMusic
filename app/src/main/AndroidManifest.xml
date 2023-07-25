@@ -24,6 +24,9 @@
             android:exported="true" />
 
         <activity
+            android:name=".Collect"
+            android:exported="false" />
+        <activity
             android:name=".Download"
             android:exported="false" />
         <activity
