@@ -44,6 +44,7 @@ dependencies {
 
     implementation implementation(project(':model_search',))
     implementation(project(':model_mvplayer'))
+    implementation(project(':model_musicplayer'))
 
     api 'com.alibaba:arouter-api:1.5.2'
 
