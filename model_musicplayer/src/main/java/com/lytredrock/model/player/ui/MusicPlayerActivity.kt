@@ -1,9 +1,13 @@
 package com.lytredrock.model.player.ui
 
 import android.annotation.SuppressLint
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.Handler
+import android.os.IBinder
 import android.os.Looper
 import android.util.Log
 import android.view.View
@@ -14,22 +18,56 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
+import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.lytredrock.lib.base.BaseUtils
+import com.lytredrock.lib.base.BaseUtils.myToast
 import com.lytredrock.lib.base.BaseUtils.transparentStatusBar
 import com.lytredrock.model.player.R
 import com.lytredrock.model.player.databinding.ActivityPlayerBinding
 import com.lytredrock.model.player.fragment.PageOneFragment
 import com.lytredrock.model.player.fragment.PageTwoFragment
 import com.lytredrock.model.player.playerData.MusicProgressData
+import com.lytredrock.model.player.utils.ServiceUtils.identifyNotify
 import com.lytredrock.model.player.viewmodel.MusicPlayerViewModel
 
 
+@Route(path = "/music/musicPlay")
 class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
+
+    @Autowired
+    lateinit var musicId: String
+
 
     private val musicProgressData: MutableLiveData<MusicProgressData> = MutableLiveData()
     private var isMusicDisplayed = true
     private lateinit var player: ExoPlayer
-    val handler = Handler(Looper.getMainLooper())//指定了一个新的线程
+    private lateinit var mBinder: MusicService.MusicBinder
+    private val  connection = object :  ServiceConnection{
+
+
+
+
+        /**
+         * activity 和 service 成功绑定的时候会调用
+         */
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            mBinder=service as MusicService.MusicBinder
+            mBinder.startPlay()
+            mBinder.getProgress()
+
+
+        }
+
+        /**
+         * service进程创建过程中崩溃或者被杀掉的时候会调用
+         */
+        override fun onServiceDisconnected(name: ComponentName?) {
+        }
+
+    }
+
+    val handler = Handler(Looper.getMainLooper())
     private val runnable = object : Runnable {
         override fun run() {
             // 获取MediaPlayer的当前播放进度
@@ -64,11 +102,14 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
         iniBind()
         transparentStatusBar(window, false)
         replaceFragment(PageOneFragment())
+        identifyNotify(this)
         iniUpData()//这个方法里面使用viewModel接受网络请求的道的数据，在fragment里面可以被观察到
         iniSeekBar()
         iniClick()
         playMusic()
     }
+
+
 
     /**
      * 这里用来更新我们的seekBar
@@ -121,6 +162,11 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
                     startActivity(Intent.createChooser(intent, "分享到"))
                 }
             }
+
+            R.id.iv_exist ->{
+                myToast("已经切换到后台服务",this)
+
+            }
         }
     }
 
@@ -131,6 +177,7 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
         mBinding.musicPlay.setOnClickListener(this)
         mBinding.fragmentPlaceHolder.setOnClickListener(this)
         mBinding.ivShare.setOnClickListener(this)
+        mBinding.ivExist.setOnClickListener(this)
         /**
          * 设置seekBar和音乐的联动
          *
@@ -142,6 +189,7 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
             }
 
+            @SuppressLint("UseCompatLoadingForDrawables")
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 if (!player.playWhenReady) {
                     val position = ((seekBar?.progress)?.times(player.duration) ?: 1) / 100
@@ -153,13 +201,9 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
                     val position = ((seekBar?.progress)?.times(player.duration) ?: 1) / 100
                     player.seekTo(position)
                 }
-
             }
-
         })
-
     }
-
 
     /**
      * 切换fragment
@@ -191,10 +235,11 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
         /**
          * 分别获取  评论 歌词 播放链接 音乐的信息
          */
-        playerViewModel.getMusicComments("1403318151")
-        playerViewModel.getMusicLyrics("1403318151")
-        playerViewModel.getMusicUrl("1403318151")
-        playerViewModel.getMusicInformation("1403318151")
+        Log.d("iniUpData","(MusicPlayerActivity.kt:240)-->> $musicId");
+        playerViewModel.getMusicComments(musicId)
+        playerViewModel.getMusicLyrics(musicId)
+        playerViewModel.getMusicUrl(musicId)
+        playerViewModel.getMusicInformation(musicId)
         playerViewModel.musicInfo.observe(this) {
             mBinding.tvMusicTitle.text = it[0].name
             when (it[0].ar.size) {
@@ -238,13 +283,38 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
 
 
     /**
+     * 这个是测试用的
+     */
+    override fun onPause() {
+        super.onPause()
+//        player.stop()
+//        player.release()
+    }
+
+    /**
      * finish方法里面释放我们的player和之前的handler
      */
     override fun finish() {
-        super.finish()
         handler.removeCallbacks(runnable)//释放我们的handler
         player.stop()
         player.release()
+        unbindService(connection)//解除绑定
+        val intent = Intent(this,MusicService::class.java)
+        var  url: String? = null
+        var  currentPosition: Int? = null
+        playerViewModel.musicUrlInfo.observe(this){
+            url=it[0].url
+        }
+        musicProgressData.observe(this){
+            currentPosition=it.currentPosition
+        }
+        intent.putExtra("musicUrl",url)
+        intent.putExtra("currentPosition",currentPosition)
+        Log.d("musicUrl","(MusicPlayerActivity.kt:165)-->> $url");
+        startService(intent)
+        bindService(intent,connection, Context.BIND_AUTO_CREATE)
+
+        super.finish()
     }
 
 }
@@ -254,6 +324,8 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
  * 下面的代码无用
  * 本来准备设置标记符，但是当你切换到第二个的时候，点击事件被vp拦截了，再次点击的时候不会切换回来（除非vp为空，所以放弃了这种判断方法）
  */
+
+
 //    设置要切换fragment的标记符
 //    private var isFragmentOneDisplayed = true
 //    val FIRST_FRAGMENT_TAG = "first_fragment"
