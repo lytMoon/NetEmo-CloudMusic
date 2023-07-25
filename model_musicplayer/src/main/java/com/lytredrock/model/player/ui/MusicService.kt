@@ -30,18 +30,16 @@ class MusicService : Service() {
     private val binder = MusicBinder()
 
     inner class MusicBinder : Binder() {
-        fun startPlay(url:String,current:Long) {
+        fun startPlay() {
             Log.d("MusicService", "(MusicService.kt:15)-->> 开始播放音乐")
             //填充媒体数据
             player.addMediaItem(MediaItem.fromUri(url))
             //准备播放
             player.prepare()
             //准备完成就开始播放
-            player.seekTo(current)
+            player.seekTo(currentPosition.toLong())
+            Log.d("TAG","(MusicService.kt:41)-->> ");
             player.playWhenReady = true
-
-
-
         }
 
         fun getProgress() {

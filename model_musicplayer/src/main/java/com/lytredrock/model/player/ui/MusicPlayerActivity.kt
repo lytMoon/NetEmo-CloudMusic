@@ -14,12 +14,12 @@ import android.view.View
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
+import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.lytredrock.lib.base.BaseUtils
 import com.lytredrock.lib.base.BaseUtils.myToast
 import com.lytredrock.lib.base.BaseUtils.transparentStatusBar
@@ -32,7 +32,13 @@ import com.lytredrock.model.player.utils.ServiceUtils.identifyNotify
 import com.lytredrock.model.player.viewmodel.MusicPlayerViewModel
 
 
+@Route(path = "/music/musicPlay")
 class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
+
+    @Autowired
+    lateinit var musicId: String
+
+
     private val musicProgressData: MutableLiveData<MusicProgressData> = MutableLiveData()
     private var isMusicDisplayed = true
     private lateinit var player: ExoPlayer
@@ -41,12 +47,13 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
+
         /**
          * activity 和 service 成功绑定的时候会调用
          */
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             mBinder=service as MusicService.MusicBinder
-         //   mBinder.startPlay()
+            mBinder.startPlay()
             mBinder.getProgress()
 
 
@@ -158,20 +165,7 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.iv_exist ->{
                 myToast("已经切换到后台服务",this)
-                val intent = Intent(this,MusicService::class.java)
-                var  url: String? = null
-                var  currentPosition: Int? = null
-                playerViewModel.musicUrlInfo.observe(this){
-                    url=it[0].url
-                }
-                musicProgressData.observe(this){
-                    currentPosition=it.currentPosition
-                }
-                intent.putExtra("musicUrl",url)
-                intent.putExtra("currentPosition",currentPosition)
-                Log.d("musicUrl","(MusicPlayerActivity.kt:165)-->> $url");
-                startService(intent)
-                bindService(intent,connection, Context.BIND_AUTO_CREATE)
+
             }
         }
     }
@@ -241,10 +235,11 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
         /**
          * 分别获取  评论 歌词 播放链接 音乐的信息
          */
-        playerViewModel.getMusicComments("1403318151")
-        playerViewModel.getMusicLyrics("1403318151")
-        playerViewModel.getMusicUrl("1403318151")
-        playerViewModel.getMusicInformation("1403318151")
+        Log.d("iniUpData","(MusicPlayerActivity.kt:240)-->> $musicId");
+        playerViewModel.getMusicComments(musicId)
+        playerViewModel.getMusicLyrics(musicId)
+        playerViewModel.getMusicUrl(musicId)
+        playerViewModel.getMusicInformation(musicId)
         playerViewModel.musicInfo.observe(this) {
             mBinding.tvMusicTitle.text = it[0].name
             when (it[0].ar.size) {
@@ -292,20 +287,34 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
      */
     override fun onPause() {
         super.onPause()
-        player.stop()
-        player.release()
+//        player.stop()
+//        player.release()
     }
 
     /**
      * finish方法里面释放我们的player和之前的handler
      */
     override fun finish() {
-        super.finish()
         handler.removeCallbacks(runnable)//释放我们的handler
         player.stop()
         player.release()
         unbindService(connection)//解除绑定
+        val intent = Intent(this,MusicService::class.java)
+        var  url: String? = null
+        var  currentPosition: Int? = null
+        playerViewModel.musicUrlInfo.observe(this){
+            url=it[0].url
+        }
+        musicProgressData.observe(this){
+            currentPosition=it.currentPosition
+        }
+        intent.putExtra("musicUrl",url)
+        intent.putExtra("currentPosition",currentPosition)
+        Log.d("musicUrl","(MusicPlayerActivity.kt:165)-->> $url");
+        startService(intent)
+        bindService(intent,connection, Context.BIND_AUTO_CREATE)
 
+        super.finish()
     }
 
 }

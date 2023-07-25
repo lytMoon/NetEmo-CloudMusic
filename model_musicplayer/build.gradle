@@ -1,19 +1,25 @@
 plugins {
-    id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
-
+if (!isDebug) {
+    apply plugin: 'com.android.library'
+} else {
+    apply plugin: 'com.android.application'
+}
 android {
     namespace 'com.lytredrock.model.player'
     compileSdk 33
 
 
-    viewBinding{
+    viewBinding {
         enabled = true
     }
 
     defaultConfig {
-        applicationId "com.lytredrock.model.player"
+        if (isDebug) {
+            applicationId "com.lytredrock.model.player"
+        }
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -29,14 +35,18 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
 }
-
+kapt{
+    arguments{
+        arg("AROUTER_MODULE_NAME",project.getName())
+    }
+}
 dependencies {
     implementation implementation(project(':lib_utils',))
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
@@ -53,7 +63,8 @@ dependencies {
     implementation 'androidx.media3:media3-ui:1.0.0-beta02'
 
 
-
+    implementation 'com.alibaba:arouter-api:1.5.2'
+    kapt  'com.alibaba:arouter-compiler:1.5.2'
 
 
     implementation 'androidx.core:core-ktx:1.8.0'
