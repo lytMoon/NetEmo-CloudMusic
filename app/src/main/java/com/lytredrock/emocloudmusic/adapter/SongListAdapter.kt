@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
+import com.lytredrock.emocloudmusic.Collect
 import com.lytredrock.emocloudmusic.Download
 import com.lytredrock.emocloudmusic.R
 import com.lytredrock.emocloudmusic.SongListActivity
@@ -65,10 +66,20 @@ class SongListAdapter(val data: List<Song>,private val activity: SongListActivit
                 popupMenu.setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
                         R.id.collect-> {
-
+                            val intent=Intent(itemView.context,Collect::class.java)
+                            intent.putExtra("name",data[absoluteAdapterPosition].name)
+                            intent.putExtra("author",data[absoluteAdapterPosition].ar[0].name)
+                            intent.putExtra("id",data[absoluteAdapterPosition].id)
+                            itemView.context.startActivity(intent)
                             true
-                        }
-
+                        }R.id.download->{
+                        val intent=Intent(itemView.context,Download::class.java)
+                        intent.putExtra("id",data[absoluteAdapterPosition].id)
+                        intent.putExtra("name",data[absoluteAdapterPosition].name)
+                        intent.putExtra("author",data[absoluteAdapterPosition].ar[0].name)
+                        itemView.context.startActivity(intent)
+                        true
+                    }
                         else -> false
                     }
                 }
