@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.lytredrock.model.research.R
 import com.lytredrock.model.research.musicdata.Song
 
@@ -49,5 +50,12 @@ class RvSongAdapter(val data: List<Song>, private val activity: FragmentActivity
                 Log.d("NullPointerException", "(RvSongAdapter.kt:59)-->> 空指针异常");
             }
         }
+        holder.itemView.setOnClickListener {
+            ARouter.getInstance()
+                .build("/music/musicPlay")
+                .withString("musicId",itemData.id.toString())
+                .navigation()
+        }
+
     }
 }

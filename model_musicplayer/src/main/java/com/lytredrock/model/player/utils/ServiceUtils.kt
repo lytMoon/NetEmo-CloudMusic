@@ -16,6 +16,7 @@ import androidx.core.app.NotificationManagerCompat
  * version: 1.0
  */
 object ServiceUtils {
+
     fun identifyNotify(context: AppCompatActivity){
         val notificationManager = NotificationManagerCompat.from(context)
         val areNotificationsEnabled = notificationManager.areNotificationsEnabled()
@@ -41,4 +42,7 @@ object ServiceUtils {
                 .show()
         }
     }
+
+
+
 }
