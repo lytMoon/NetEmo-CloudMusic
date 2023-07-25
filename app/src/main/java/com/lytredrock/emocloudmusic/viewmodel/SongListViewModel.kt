@@ -1,5 +1,6 @@
 package com.lytredrock.emocloudmusic.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lytredrock.emocloudmusic.data.Data
@@ -32,6 +33,9 @@ class SongListViewModel:ViewModel() {
                 call: retrofit2.Call<SongListData>, response: Response<SongListData>
             ) {
                 val data = response.body()
+                if (data != null) {
+                    Log.d("KKKKK", "onResponse:${data.songs[2].id} ")
+                }
                 if (data != null) {
                     songLifeData.postValue(data.songs)
                 }

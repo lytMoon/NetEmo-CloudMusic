@@ -1,5 +1,6 @@
 package com.lytredrock.emocloudmusic.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
+import com.lytredrock.emocloudmusic.Download
 import com.lytredrock.emocloudmusic.R
 import com.lytredrock.emocloudmusic.SongListActivity
 import com.lytredrock.emocloudmusic.data.Data
@@ -47,6 +49,8 @@ class SongListAdapter(val data: List<Song>,private val activity: SongListActivit
                     .withString("mvName",data[absoluteAdapterPosition].name)
                     .navigation()
             }
+
+            itemView
             more.setOnClickListener {
                 val popupMenu = PopupMenu(itemView.context, more)
                 popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
@@ -55,7 +59,15 @@ class SongListAdapter(val data: List<Song>,private val activity: SongListActivit
                         R.id.collect-> {
 
                             true
-                        }
+                        } R.id.download->{
+                        val intent = Intent(itemView.context, Download::class.java)
+                        intent.putExtra("id",data[absoluteAdapterPosition].id)
+                        intent.putExtra("name",data[absoluteAdapterPosition].name)
+                        intent.putExtra("mv",data[absoluteAdapterPosition].mv)
+                        intent.putExtra("author",data[absoluteAdapterPosition].ar[0].name)
+                        itemView.context.startActivity(intent)
+                        true
+                    }
 
                         else -> false
                     }
