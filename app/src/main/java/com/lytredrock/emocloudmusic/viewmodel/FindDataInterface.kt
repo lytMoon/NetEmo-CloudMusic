@@ -19,8 +19,8 @@ interface FindDataInterface {
 
 
     @GET("banner")
-    fun getInternetData2(@Query("type")type: Int ): Call<BannerData>
+    fun getInternetData2(@Query("type") type: Int): Call<BannerData>
 
-@GET("personalized")
+    @GET("personalized")
     fun getInternetData3(): Call<RecommendSongListData>
 }

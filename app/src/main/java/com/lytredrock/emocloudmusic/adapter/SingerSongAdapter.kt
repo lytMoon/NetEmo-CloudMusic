@@ -13,9 +13,11 @@ import com.lytredrock.emocloudmusic.R
 import com.lytredrock.emocloudmusic.SingerSong
 import android.content.Context
 import android.content.Context.MODE_APPEND
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import com.lytredrock.emocloudmusic.Download
 import com.lytredrock.emocloudmusic.SongListActivity
 import com.lytredrock.emocloudmusic.data.Collect
 import com.lytredrock.emocloudmusic.data.Data
@@ -65,7 +67,12 @@ class SingerSongAdapter(val data: List<SingSongData.SingerSong>, private val act
                             true
                         }
                         R.id.download->{
-
+                            val intent = Intent(itemView.context, Download::class.java)
+                            intent.putExtra("id",data[absoluteAdapterPosition].id)
+                            intent.putExtra("name",data[absoluteAdapterPosition].name)
+                            intent.putExtra("mv",data[absoluteAdapterPosition].mv)
+                            intent.putExtra("author",data[absoluteAdapterPosition].ar[0].name)
+                            itemView.context.startActivity(intent)
                             true
                         }
 

@@ -111,7 +111,7 @@
                 android:id="@+id/imageView6"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/ic_donwload"
+                android:src="@drawable/ic_download"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.84"

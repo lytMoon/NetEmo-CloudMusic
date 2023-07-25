@@ -32,7 +32,7 @@ class FindFragmentViewModel : ViewModel() {
         MutableLiveData<List<Result>>()
     }
 
-    fun getBallInFragment(){
+    fun getBallInFragment() {
         val retrofit = Retrofit.Builder().baseUrl("http://why.vin:2023/")
             .addConverterFactory(GsonConverterFactory.create()).build()
         val testService = retrofit.create(FindDataInterface::class.java)
@@ -62,6 +62,7 @@ class FindFragmentViewModel : ViewModel() {
                     bannerLifeData.postValue(data.banners)
                 }
             }
+
             override fun onFailure(call: retrofit2.Call<BannerData>, t: Throwable) {
             }
         })
@@ -73,13 +74,15 @@ class FindFragmentViewModel : ViewModel() {
         val testService = retrofit.create(FindDataInterface::class.java)
         testService.getInternetData3().enqueue(object : Callback<RecommendSongListData> {
             override fun onResponse(
-                call: retrofit2.Call<RecommendSongListData>, response: Response<RecommendSongListData>
+                call: retrofit2.Call<RecommendSongListData>,
+                response: Response<RecommendSongListData>
             ) {
                 val data = response.body()
                 if (data != null) {
-                 recommendSongListLifeData.postValue(data.result)
+                    recommendSongListLifeData.postValue(data.result)
                 }
             }
+
             override fun onFailure(call: retrofit2.Call<RecommendSongListData>, t: Throwable) {
             }
         })

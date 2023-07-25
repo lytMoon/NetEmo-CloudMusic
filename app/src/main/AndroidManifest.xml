@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -17,17 +17,18 @@
         android:theme="@style/Theme.EmoCloudMusic"
         tools:targetApi="31">
         <activity
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
-            android:name=".SongListActivity"
+            android:name=".Download"
             android:exported="false" />
-
-        <activity android:name=".SingerSong"
-            android:exported="false"/>
-
+        <activity
+            android:name=".SongListActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:exported="false" />
+        <activity
+            android:name=".SingerSong"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".SplashActivity"
             android:exported="true">

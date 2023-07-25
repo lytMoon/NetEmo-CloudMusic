@@ -1,7 +1,6 @@
 package com.lytredrock.emocloudmusic.viewmodel
 
 import com.lytredrock.emocloudmusic.data.HotSingerData
-import com.lytredrock.emocloudmusic.data.SongChartData
 import retrofit2.Call
 import retrofit2.http.GET
 
