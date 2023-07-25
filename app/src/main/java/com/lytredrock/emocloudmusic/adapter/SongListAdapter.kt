@@ -1,6 +1,8 @@
 package com.lytredrock.emocloudmusic.adapter
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,8 +51,14 @@ class SongListAdapter(val data: List<Song>,private val activity: SongListActivit
                     .withString("mvName",data[absoluteAdapterPosition].name)
                     .navigation()
             }
+            itemView.setOnClickListener {
+                ARouter.getInstance()
+                    .build("/music/musicPlay")
+                    .withString("musicId",data[absoluteAdapterPosition].id.toString())
+                    .navigation()
+                Log.d("setOnClickListener",data[absoluteAdapterPosition].id.toString() )
+            }
 
-            itemView
             more.setOnClickListener {
                 val popupMenu = PopupMenu(itemView.context, more)
                 popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
@@ -59,15 +67,7 @@ class SongListAdapter(val data: List<Song>,private val activity: SongListActivit
                         R.id.collect-> {
 
                             true
-                        } R.id.download->{
-                        val intent = Intent(itemView.context, Download::class.java)
-                        intent.putExtra("id",data[absoluteAdapterPosition].id)
-                        intent.putExtra("name",data[absoluteAdapterPosition].name)
-                        intent.putExtra("mv",data[absoluteAdapterPosition].mv)
-                        intent.putExtra("author",data[absoluteAdapterPosition].ar[0].name)
-                        itemView.context.startActivity(intent)
-                        true
-                    }
+                        }
 
                         else -> false
                     }
@@ -87,6 +87,7 @@ class SongListAdapter(val data: List<Song>,private val activity: SongListActivit
         return data.size
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onBindViewHolder(holder: InnerHolder, position: Int) {
         val itemData = data[position]
         holder.apply {

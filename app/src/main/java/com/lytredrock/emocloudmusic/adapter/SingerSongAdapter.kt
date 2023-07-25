@@ -67,12 +67,7 @@ class SingerSongAdapter(val data: List<SingSongData.SingerSong>, private val act
                             true
                         }
                         R.id.download->{
-                            val intent = Intent(itemView.context, Download::class.java)
-                            intent.putExtra("id",data[absoluteAdapterPosition].id)
-                            intent.putExtra("name",data[absoluteAdapterPosition].name)
-                            intent.putExtra("mv",data[absoluteAdapterPosition].mv)
-                            intent.putExtra("author",data[absoluteAdapterPosition].ar[0].name)
-                            itemView.context.startActivity(intent)
+
                             true
                         }
 
