@@ -2,6 +2,7 @@ package com.lytredrock.model.player.ui
 
 import android.annotation.SuppressLint
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
@@ -13,6 +14,8 @@ import android.view.View
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.media3.common.MediaItem
@@ -35,13 +38,17 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var player: ExoPlayer
     private lateinit var mBinder: MusicService.MusicBinder
     private val  connection = object :  ServiceConnection{
+
+
+
         /**
          * activity 和 service 成功绑定的时候会调用
          */
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             mBinder=service as MusicService.MusicBinder
-            mBinder.startPlay()
+         //   mBinder.startPlay()
             mBinder.getProgress()
+
 
         }
 
@@ -152,8 +159,19 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
             R.id.iv_exist ->{
                 myToast("已经切换到后台服务",this)
                 val intent = Intent(this,MusicService::class.java)
+                var  url: String? = null
+                var  currentPosition: Int? = null
+                playerViewModel.musicUrlInfo.observe(this){
+                    url=it[0].url
+                }
+                musicProgressData.observe(this){
+                    currentPosition=it.currentPosition
+                }
+                intent.putExtra("musicUrl",url)
+                intent.putExtra("currentPosition",currentPosition)
+                Log.d("musicUrl","(MusicPlayerActivity.kt:165)-->> $url");
                 startService(intent)
-                finish()
+                bindService(intent,connection, Context.BIND_AUTO_CREATE)
             }
         }
     }
@@ -269,6 +287,9 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
+    /**
+     * 这个是测试用的
+     */
     override fun onPause() {
         super.onPause()
         player.stop()

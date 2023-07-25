@@ -105,7 +105,6 @@ class SearchActivity : AppCompatActivity() {
         }
         val vpFragmentAdapter = VpFragmentAdapter(this, fragmentList)
         mBinding.viewPager2.adapter = vpFragmentAdapter
-
         TabLayoutMediator(mBinding.tabLayout, mBinding.viewPager2) { tab, position ->
             when (position) {
                 0 -> tab.text = "单曲"
