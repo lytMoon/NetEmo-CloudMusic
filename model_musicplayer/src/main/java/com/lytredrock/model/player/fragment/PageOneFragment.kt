@@ -2,11 +2,8 @@ package com.lytredrock.model.player.fragment
 
 import RvCommentAdapter
 import android.annotation.SuppressLint
-import android.app.DownloadManager
-import android.content.Context
-import android.net.Uri
+
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,7 +12,6 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +21,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.lytredrock.lib.base.BaseUtils.myToast
 import com.lytredrock.model.player.R
 import com.lytredrock.model.player.databinding.FragmentPageOneBinding
-import com.lytredrock.model.player.utils.DownLoadUtils
 import com.lytredrock.model.player.viewmodel.MusicPlayerViewModel
 
 class PageOneFragment : Fragment() {
@@ -57,30 +52,14 @@ class PageOneFragment : Fragment() {
         iniClick()
     }
 
-    @SuppressLint("CheckResult")
+    @SuppressLint("CheckResult", "Range")
     private fun iniClick() {
         mBinding.ivComments.setOnClickListener {
             iniComments()
         }
         mBinding.ivDownload.setOnClickListener {
             myToast("下载",requireContext())
-            playerViewModel.musicUrlInfo.observe(requireActivity()){
-                val name =it[0].id.toString()+".mp3"
-                val uri = Uri.parse("音乐文件的 URL")
-                val request = DownloadManager.Request(uri)
-                    .setTitle("音乐文件名")
-                    .setDescription("正在下载...")
-                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                    .setAllowedOverMetered(true)
-                    .setAllowedOverRoaming(true)
-                    .setVisibleInDownloadsUi(true)
-                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC, name)
-                val downloadManager =  activity?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-                val downloadId = downloadManager.enqueue(request)
-                Log.d("name","(PageOneFragment.kt:63)-->> $name")
 
-
-            }
         }
     }
 
