@@ -5,6 +5,8 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.content.SharedPreferences
+import android.os.Binder
 import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
@@ -13,6 +15,7 @@ import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.postDelayed
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -38,30 +41,21 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
 
     @Autowired
     lateinit var musicId: String
-
     private val musicProgressData: MutableLiveData<MusicProgressData> = MutableLiveData()
-    private var isMusicDisplayed = true
-    private lateinit var player: ExoPlayer
+    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var mBinder: MusicService.MusicBinder
-    private val  connection = object :  ServiceConnection{
-
-
-
-
+    private val connection = object : ServiceConnection {
         /**
          * activity 和 service 成功绑定的时候会调用
          */
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            mBinder=service as MusicService.MusicBinder
+            //初始化mBinder对象
+            mBinder = service as MusicService.MusicBinder
             mBinder.startPlay()
-            mBinder.getProgress()
-
-
+            handler.postDelayed(runnable, 1000)
         }
 
-        /**
-         * service进程创建过程中崩溃或者被杀掉的时候会调用
-         */
+        //service进程创建过程中崩溃或者被杀掉的时候会调用
         override fun onServiceDisconnected(name: ComponentName?) {
         }
 
@@ -70,46 +64,66 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
     val handler = Handler(Looper.getMainLooper())
     private val runnable = object : Runnable {
         override fun run() {
-            // 获取MediaPlayer的当前播放进度
-            val currentPlayer = player
-            //获取进度并通知
-            val currentPosition = currentPlayer.currentPosition.toInt()
-            val bufferedPosition = currentPlayer.bufferedPosition.toInt()
-            val duration = currentPlayer.duration.toInt()
-            Log.d("currentPlayer", "(MusicPlayerActivity.kt:48)-->> $duration");
-            updateData(currentPosition, bufferedPosition, duration)
+            updateProgress()
             // 继续安排下一次定时任务
             handler.postDelayed(this, 1000) // 每隔1秒执行一次
         }
     }
 
+    private fun updateProgress() {
+        val currentPosition = mBinder.getCurrentPosition()
+        val bufferedPosition = mBinder.getBufferedPosition()
+        val duration = mBinder.getDuration()
+        Log.d("currentPlayer", "(MusicPlayerActivity.kt:48)-->> $duration")
+        updateData(currentPosition, bufferedPosition, duration)
+    }
 
-    //懒加载注入viewModel
+    //懒加载注入viewModel和viewBinding
     private val playerViewModel by lazy {
         ViewModelProvider(this)[MusicPlayerViewModel::class.java]
     }
-
-    //懒加载注入viewBinding
     private val mBinding: ActivityPlayerBinding by lazy {
         ActivityPlayerBinding.inflate(
             layoutInflater
         )
     }
 
+    @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(mBinding.root)
         ARouter.getInstance().inject(this@MusicPlayerActivity)
-        iniBind()
+        iniSp()
         transparentStatusBar(window, false)
         replaceFragment(PageOneFragment())
         identifyNotify(this)
         iniUpData()//这个方法里面使用viewModel接受网络请求的道的数据，在fragment里面可以被观察到
-        iniSeekBar()
-        iniClick()
-        playMusic()
+        iniSeekBar()//同步进度条
+        iniClick()//实现点击方法
+        iniSendMsg()//把音乐放在service里面播放
     }
 
+    private fun iniSp() {
+        sharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        if (::musicId.isInitialized) {
+            Log.d("852852", "(MusicPlayerActivity.kt:106)-->> 非空");
+            val editor = sharedPreferences.edit()
+            editor.putString("my_key", musicId)
+            editor.apply()
+        }
+    }
+
+    private fun iniSendMsg() {
+        val intent = Intent(this, MusicService::class.java)
+        playerViewModel.musicUrlInfo.observe(this) {
+            // 存储数据
+            intent.putExtra("musicUrl", it[0].url)
+            Log.d("musicUrl", "(MusicPlayerActivity.kt:118)-->> ${it[0].url}");
+            startService(intent)
+            bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        }
+
+    }
 
 
     /**
@@ -125,11 +139,6 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun iniBind() {
-        player = ExoPlayer.Builder(this).build()
-        mBinding.playerView.player = player
-    }
-
 
     /**
      * 这里实现点击事件,分别是播放暂停的切换和初始化fragment
@@ -138,22 +147,20 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.music_play -> {
-                if (isMusicDisplayed) {
+                if (mBinder.isPlaying()) {
                     mBinding.musicPlay.setImageDrawable(getDrawable(R.drawable.play_icon))
-                    isMusicDisplayed = false
-                    player.playWhenReady = false
+                    mBinder.stop()
 
                 } else {
                     mBinding.musicPlay.setImageDrawable(getDrawable(R.drawable.pause_icon))
-                    isMusicDisplayed = true
-                    player.playWhenReady = true
+                    mBinder.start()
                 }
             }
 
             R.id.fragment_place_holder -> replaceFragment(PageTwoFragment())
 
-            R.id.iv_share ->{
-                BaseUtils.myToast("分享", this)
+            R.id.iv_share -> {
+                myToast("分享", this)
                 //下面是采用系统的分享工具
                 playerViewModel.musicUrlInfo.observe(this) {
                     val intent = Intent(Intent.ACTION_SEND)
@@ -164,9 +171,9 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
 
-            R.id.iv_exist ->{
-                myToast("已经切换到后台服务",this)
-
+            R.id.iv_exist -> {
+                myToast("已经切换到后台服务", this)
+                finish()
             }
         }
     }
@@ -192,16 +199,10 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
 
             @SuppressLint("UseCompatLoadingForDrawables")
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                if (!player.playWhenReady) {
-                    val position = ((seekBar?.progress)?.times(player.duration) ?: 1) / 100
-                    player.seekTo(position)
-                    mBinding.musicPlay.setImageDrawable(getDrawable(R.drawable.pause_icon))
-                    isMusicDisplayed = true
-                    player.playWhenReady = true
-                } else {
-                    val position = ((seekBar?.progress)?.times(player.duration) ?: 1) / 100
-                    player.seekTo(position)
-                }
+                val position = ((seekBar?.progress)?.times(mBinder.getDuration()) ?: 1) / 100
+                mBinder.seekTo(position.toLong())
+                mBinder.start()
+                mBinding.musicPlay.setImageDrawable(getDrawable(R.drawable.pause_icon))
             }
         })
     }
@@ -230,47 +231,40 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
      */
 
 
-
     @SuppressLint("SetTextI18n")
     private fun iniUpData() {
         /**
          * 分别获取  评论 歌词 播放链接 音乐的信息
          */
-        Log.d("iniUpData","(MusicPlayerActivity.kt:240)-->> $musicId");
-        playerViewModel.getMusicComments(musicId)
-        playerViewModel.getMusicLyrics(musicId)
-        playerViewModel.getMusicUrl(musicId)
-        playerViewModel.getMusicInformation(musicId)
-        playerViewModel.musicInfo.observe(this) {
-            mBinding.tvMusicTitle.text = it[0].name
-            when (it[0].ar.size) {
-                1 -> mBinding.tvArtistName.text = it[0].ar[0].name
-                2 -> mBinding.tvArtistName.text = it[0].ar[0].name + "/" + it[0].ar[1].name
+        if (!::musicId.isInitialized) {
+            Log.d("852852", "(MusicPlayerActivity.kt:112)-->> 空");
+            val music = sharedPreferences.getString("my_key", "").toString()
+            Log.d("852852", "(MusicPlayerActivity.kt:109)-->> $music")
+            playerViewModel.getMusicComments(music)
+            playerViewModel.getMusicLyrics(music)
+            playerViewModel.getMusicUrl(music)
+            playerViewModel.getMusicInformation(music)
+            playerViewModel.musicInfo.observe(this) {
+                mBinding.tvMusicTitle.text = it[0].name
+                when (it[0].ar.size) {
+                    1 -> mBinding.tvArtistName.text = it[0].ar[0].name
+                    2 -> mBinding.tvArtistName.text = it[0].ar[0].name + "/" + it[0].ar[1].name
+                }
+            }
+        } else {
+            Log.d("iniUpData", "(MusicPlayerActivity.kt:240)-->> $musicId");
+            playerViewModel.getMusicComments(musicId)
+            playerViewModel.getMusicLyrics(musicId)
+            playerViewModel.getMusicUrl(musicId)
+            playerViewModel.getMusicInformation(musicId)
+            playerViewModel.musicInfo.observe(this) {
+                mBinding.tvMusicTitle.text = it[0].name
+                when (it[0].ar.size) {
+                    1 -> mBinding.tvArtistName.text = it[0].ar[0].name
+                    2 -> mBinding.tvArtistName.text = it[0].ar[0].name + "/" + it[0].ar[1].name
+                }
             }
         }
-    }
-
-    /**
-     * 播放音乐
-     */
-    private fun playMusic() {
-        val player = mBinding.playerView.player
-        playerViewModel.musicUrlInfo.observe(this) {
-            val url = it[0].url
-            Log.d("playMusic", "(PlayerActivity.kt:47)-->> ${it[0].url}");
-            //填充媒体数据
-            player?.addMediaItem(MediaItem.fromUri(url))
-            //准备播放
-            player?.prepare()
-            //准备完成就开始播放
-            if (player != null) {
-                player.playWhenReady = true
-            }
-            // 启动定时任务，每隔1秒更新一次播放进度
-            handler.postDelayed(runnable, 1000)
-        }
-
-
     }
 
 
@@ -284,37 +278,11 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
 
 
     /**
-     * 这个是测试用的
-     */
-    override fun onPause() {
-        super.onPause()
-//        player.stop()
-//        player.release()
-    }
-
-    /**
      * finish方法里面释放我们的player和之前的handler
      */
     override fun finish() {
         handler.removeCallbacks(runnable)//释放我们的handler
-        player.stop()
-        player.release()
         unbindService(connection)//解除绑定
-        val intent = Intent(this,MusicService::class.java)
-        var  url: String? = null
-        var  currentPosition: Int? = null
-        playerViewModel.musicUrlInfo.observe(this){
-            url=it[0].url
-        }
-        musicProgressData.observe(this){
-            currentPosition=it.currentPosition
-        }
-        intent.putExtra("musicUrl",url)
-        intent.putExtra("currentPosition",currentPosition)
-        Log.d("musicUrl","(MusicPlayerActivity.kt:165)-->> $url");
-        startService(intent)
-        bindService(intent,connection, Context.BIND_AUTO_CREATE)
-
         super.finish()
     }
 
