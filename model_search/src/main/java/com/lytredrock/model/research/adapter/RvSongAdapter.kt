@@ -20,16 +20,7 @@ import com.lytredrock.model.research.musicdata.Song
 class RvSongAdapter(val data: List<Song>, private val activity: FragmentActivity) :
     RecyclerView.Adapter<RvSongAdapter.InnerHolder>() {
 
-    private var clickInterface: ClickInterface? = null
 
-    interface ClickInterface {
-        fun onTitleClick(view: View, position: Int)
-    }
-
-
-    fun setOnclick(clickInterface: ClickInterface) {
-        this.clickInterface = clickInterface
-    }
 
     class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
         val musicName: TextView = root.findViewById<TextView>(R.id.tv_music_name)
@@ -53,18 +44,10 @@ class RvSongAdapter(val data: List<Song>, private val activity: FragmentActivity
             try {
                 musicName.text = itemData.name
                 musicInfo.text = itemData.album.name
-
                 artistName.text = itemData.artists[0].name
+            } catch (e: NullPointerException) {
+                Log.d("NullPointerException", "(RvSongAdapter.kt:59)-->> 空指针异常");
             }
-            catch (e: NullPointerException){
-                Log.d("NullPointerException","(RvSongAdapter.kt:59)-->> 空指针异常");
-            }
-
-//            val temp = itemData.
-//            Glide.with(activity).load(temp).into(ivfind)
         }
-//        holder.artistName.setOnClickListener {
-//            clickInterface?.onTitleClick(it, position)
-//        }
     }
 }

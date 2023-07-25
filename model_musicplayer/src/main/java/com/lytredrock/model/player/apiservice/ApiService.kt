@@ -1,7 +1,9 @@
 package com.lytredrock.model.player.apiservice
 
 import com.lytredrock.model.player.playerData.Data
+import com.lytredrock.model.player.playerData.HotComment
 import com.lytredrock.model.player.playerData.Lrc
+import com.lytredrock.model.player.playerData.MusicCommentsData
 import com.lytredrock.model.player.playerData.MusicLyricsData
 import com.lytredrock.model.player.playerData.MusicPlayInfoData
 import com.lytredrock.model.player.playerData.Song
@@ -20,10 +22,10 @@ import retrofit2.http.Query
 interface ApiService {
 
     /**
-     * 返回音乐的播放链接（.MP3格式）
+     * 返回音乐的播放链接（.MP3格式）,设置无损音质
      */
     @GET("song/url/v1")
-    fun getMusicUrl(@Query("id")id:String,@Query("level")level:String="exhigh"): Observable<UrlData<Data>>
+    fun getMusicUrl(@Query("id")id:String,@Query("level")level:String="lossless"): Observable<UrlData<Data>>
 
 
     /**
@@ -37,6 +39,11 @@ interface ApiService {
      */
     @GET("lyric")
     fun getMusicLyrics(@Query("id")id:String):Observable<MusicLyricsData<Lrc>>
-
-
+    /**
+     * 返回歌曲的评论
+     */
+    @GET("comment/music")
+    fun getComments(@Query("id")id:String,@Query("limit")limit:Int=500):Observable<MusicCommentsData<HotComment>>
 }
+
+

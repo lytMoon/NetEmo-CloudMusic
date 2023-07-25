@@ -24,17 +24,6 @@ import com.lytredrock.model.research.musicdata.Mv
 class RvMvAdapter(val data: List<Mv>, private val activity: FragmentActivity) :
     RecyclerView.Adapter<RvMvAdapter.InnerHolder>() {
 
-    private var clickInterface: ClickInterface? = null
-
-    interface ClickInterface {
-        fun onTitleClick(view: View, position: Int)
-    }
-
-
-    fun setOnclick(clickInterface: ClickInterface) {
-        this.clickInterface = clickInterface
-    }
-
     class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
         val mvName: TextView = root.findViewById(R.id.tv_mv_title)
         val mvAuthorName: TextView = root.findViewById(R.id.tv_mv_author_name)
@@ -57,9 +46,7 @@ class RvMvAdapter(val data: List<Mv>, private val activity: FragmentActivity) :
             try {
                 holder.mvAuthorName.text = itemData.artistName
                 holder.mvName.text = itemData.name
-                Glide.with(activity)
-                    .load(itemData.cover)
-                    .transform(RoundedCorners(20))
+                Glide.with(activity).load(itemData.cover).transform(RoundedCorners(20))
                     .into(holder.mvPic)
 
             } catch (e: NullPointerException) {
@@ -67,12 +54,11 @@ class RvMvAdapter(val data: List<Mv>, private val activity: FragmentActivity) :
             }
         }
         holder.itemView.setOnClickListener {
-            ARouter.getInstance()
+            ARouter
+                .getInstance()
                 .build("/mv/mvPlay")
-                .withString("mvUid",itemData.id.toString())
-                .withString("mvName",itemData.name)
-                .navigation()
-
+                .withString("mvUid", itemData.id.toString())
+                .withString("mvName", itemData.name).navigation()
         }
 
     }
