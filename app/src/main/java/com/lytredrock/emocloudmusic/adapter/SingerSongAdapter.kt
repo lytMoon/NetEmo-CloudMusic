@@ -65,7 +65,6 @@ class SingerSongAdapter(val data: List<SingSongData.SingerSong>, private val act
                     .build("/music/musicPlay")
                     .withString("musicId",data[absoluteAdapterPosition].id.toString())
                     .navigation()
-                Log.d("setOnClickListener",data[absoluteAdapterPosition].id.toString() )
             }
 
             more.setOnClickListener {

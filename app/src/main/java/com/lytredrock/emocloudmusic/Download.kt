@@ -8,8 +8,6 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
-import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -31,7 +29,7 @@ class Download : BaseActivity() {
     private val myViewModel by lazy { ViewModelProvider(this)[DownloadViewModel::class.java] }
 
     val downloadedSongs = mutableListOf<DownloadSongData>()
-    val clearSongs=mutableListOf<DownloadSongData>()
+    val clearSongs = mutableListOf<DownloadSongData>()
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,43 +40,44 @@ class Download : BaseActivity() {
         val author = intent.getStringExtra("author")
         val downloadedSong = DownloadSongData(name, author)
         myViewModel.apply {
-            getDownloadDataInInternet(id, "exhigh")
-            downloadDataLifeData.observe(this@Download){
-                startDownload(it[0].url, "${name}.mp3")
+            if (id != 0) {
+                getDownloadDataInInternet(id, "exhigh")
+                downloadDataLifeData.observe(this@Download) {
+                    startDownload(it[0].url, "${name}.mp3")
+                }
             }
         }
 
         val helper = DownloadSongDataHelper(this)
-        helper.addDownloadSongData(downloadedSong)
+        if (id != 0) {
+            helper.addDownloadSongData(downloadedSong)
+        }
         downloadedSongs.addAll(helper.getAllDownloadSongData())
-        Log.d("GGG", "onCreate: $downloadedSongs")
-         if(id!=0){
-             myViewBinding.rvDownload.apply {
-                 adapter = DownloadAdapter(downloadedSongs)
-                 layoutManager = LinearLayoutManager(this@Download)
-             }
-         }
+
+        myViewBinding.rvDownload.apply {
+            adapter = DownloadAdapter(downloadedSongs)
+            layoutManager = LinearLayoutManager(this@Download)
+        }
+
 
         myViewBinding.ivClearDownload.setOnClickListener {
-           AlertDialog.Builder(this).apply {
-               setTitle("下载记录")
-               setMessage("是否清空下载记录")
-               setCancelable(false)
-               setPositiveButton("是"){
-                       dialog, _ ->
-                   helper.clearDownloadSongData()
-                   myViewBinding.rvDownload.apply {
-                       adapter = DownloadAdapter(clearSongs)
-                       layoutManager = LinearLayoutManager(this@Download)
-                   }
-                   dialog.dismiss()
-               }
-               setNegativeButton("否"){
-                       dialog, _ ->
-                   dialog.dismiss()
+            AlertDialog.Builder(this).apply {
+                setTitle("下载记录")
+                setMessage("是否清空下载记录")
+                setCancelable(false)
+                setPositiveButton("是") { dialog, _ ->
+                    helper.clearDownloadSongData()
+                    myViewBinding.rvDownload.apply {
+                        adapter = DownloadAdapter(clearSongs)
+                        layoutManager = LinearLayoutManager(this@Download)
+                    }
+                    dialog.dismiss()
+                }
+                setNegativeButton("否") { dialog, _ ->
+                    dialog.dismiss()
 
-               }
-           }.show()
+                }
+            }.show()
         }
     }
 
@@ -92,7 +91,8 @@ class Download : BaseActivity() {
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED) // 在下载过程中和下载完成后都显示通知栏
 
         // 设置文件保存路径和文件名
-        val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val downloadDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val fileExtension = MimeTypeMap.getFileExtensionFromUrl(downloadUrl)
         val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension)
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
@@ -107,8 +107,10 @@ class Download : BaseActivity() {
             while (downloading) {
                 val cursor = downloadManager.query(query)
                 if (cursor?.moveToFirst() == true) {
-                    val downloaded = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
-                    val total = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
+                    val downloaded =
+                        cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
+                    val total =
+                        cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
                     val progress = (downloaded.toFloat() / total.toFloat() * 100).toInt()
 
                     if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {

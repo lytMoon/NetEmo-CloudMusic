@@ -9,6 +9,7 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.lytredrock.emocloudmusic.R
 import com.lytredrock.emocloudmusic.data.Collect
 import com.lytredrock.emocloudmusic.helper.CollectDataHelper
@@ -69,6 +70,12 @@ class CollectAdapter(
                     }
                 }
                 popupMenu.show()
+            }
+            itemView.setOnClickListener {
+                ARouter.getInstance()
+                    .build("/music/musicPlay")
+                    .withString("musicId",data[absoluteAdapterPosition].id.toString())
+                    .navigation()
             }
         }
     }
