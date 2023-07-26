@@ -11,9 +11,7 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1,
-      "versionName": "1.0",
-      "outputFile": "AndroidManifest.xml"
+      "outputFile": "../../merged_manifest/debug/AndroidManifest.xml"
     }
   ],
   "elementType": "File"

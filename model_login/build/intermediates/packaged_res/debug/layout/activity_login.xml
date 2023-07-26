@@ -30,12 +30,12 @@
             android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"
             app:tabGravity="center"
-            app:tabIndicatorColor="#ff678f"
+            app:tabIndicatorColor="@color/common"
             app:tabIndicatorFullWidth="false"
             app:tabIndicatorHeight="2dp"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="#ff678f"
-            app:tabTextColor="#333333"
+            app:tabSelectedTextColor="@color/common"
+            app:tabTextColor="@color/black"
             app:tabUnboundedRipple="true" />
         <!--这里使用viewpager跟xml文件绑定-->
         <androidx.viewpager.widget.ViewPager
