@@ -57,6 +57,7 @@
       <androidx.constraintlayout.widget.ConstraintLayout
           android:layout_width="match_parent"
           android:layout_height="80dp"
+          android:background="@color/white"
           app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
@@ -67,18 +68,31 @@
              android:id="@+id/iv_broadcast"
              android:layout_width="50dp"
              android:layout_height="50dp"
-             android:src="@drawable/ic_broadcast"
+             android:src="@drawable/ic_stop"
              app:layout_constraintBottom_toBottomOf="parent"
              app:layout_constraintEnd_toEndOf="parent"
              app:layout_constraintHorizontal_bias="0.86"
              app:layout_constraintStart_toStartOf="parent"
              app:layout_constraintTop_toTopOf="parent"
              app:layout_constraintVertical_bias="0.52" />
+         <ImageView
+             android:id="@+id/iv_stop"
+             android:layout_width="50dp"
+             android:layout_height="50dp"
+             android:src="@drawable/ic_broadcast"
+             android:visibility="gone"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintHorizontal_bias="0.86"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent"
+             app:layout_constraintVertical_bias="0.52"/>
 
          <ImageView
              android:id="@+id/iv_findSong"
              android:layout_width="50dp"
              android:layout_height="50dp"
+             android:src="@drawable/ic_record"
              app:layout_constraintBottom_toBottomOf="parent"
              app:layout_constraintEnd_toEndOf="parent"
              app:layout_constraintHorizontal_bias="0.08"
@@ -87,10 +101,9 @@
              app:layout_constraintVertical_bias="0.52" />
 
          <TextView
-             android:id="@+id/tv_findSongNmae"
+             android:id="@+id/tv_findSongName"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="gnwegn"
              app:layout_constraintBottom_toBottomOf="parent"
              app:layout_constraintEnd_toEndOf="parent"
              app:layout_constraintHorizontal_bias="0.25"
@@ -102,7 +115,6 @@
              android:id="@+id/tv_findSongAuthor"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="anfaebf"
              app:layout_constraintBottom_toBottomOf="parent"
              app:layout_constraintEnd_toEndOf="parent"
              app:layout_constraintHorizontal_bias="0.25"

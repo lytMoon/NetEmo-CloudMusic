@@ -37,7 +37,7 @@ class FindFragment : Fragment() {
 
     private val binding: FragmentFindBinding by lazy { FragmentFindBinding.inflate(layoutInflater) }
 
-    val timer=Timer()
+    private val timer=Timer()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {

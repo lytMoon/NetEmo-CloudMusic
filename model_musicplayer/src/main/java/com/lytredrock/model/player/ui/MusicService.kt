@@ -30,6 +30,9 @@ class MusicService : Service() {
     private lateinit var player: ExoPlayer
     private lateinit var url: String
     private lateinit var isTop: String
+    private lateinit var musicName: String
+    private lateinit var musicAuthorName: String
+    private lateinit var musicImgUrl: String
     var tag: String = "0"
     private val binder = MusicBinder()
 
@@ -80,6 +83,23 @@ class MusicService : Service() {
         fun isPlaying(): Boolean {
             return player.isPlaying
         }
+
+        fun getMusicImgUrl():String{
+            return musicImgUrl
+        }
+        fun getMusicName():String{
+            return musicName
+        }
+        fun getMusicAuthor():String{
+            return musicAuthorName
+        }
+
+        fun getIsTop():String{
+            return isTop
+        }
+
+
+
 
 
         override fun onPlaybackStateChanged(playbackState: @Renderer.State Int) {
@@ -149,9 +169,13 @@ class MusicService : Service() {
         url = intent?.getStringExtra("musicUrl").toString()
         isTop = intent?.getStringExtra("is_ok").toString()
         tag = intent?.getStringExtra("flag").toString()
+        musicName = intent?.getStringExtra("musicName").toString()
+        musicAuthorName = intent?.getStringExtra("musicAuthorName").toString()
+        musicImgUrl = intent?.getStringExtra("musicImgUrl").toString()
         Log.d("555525", "(MusicService.kt:97)-->> $url");
         Log.d("555526", "(MusicService.kt:97)-->> $isTop");
         Log.d("555527", "(MusicService.kt:97)-->> $tag");
+        Log.d("555528", "onStartCommand: ${musicName}$musicAuthorName$musicImgUrl")
         return super.onStartCommand(intent, flags, startId)
     }
 
