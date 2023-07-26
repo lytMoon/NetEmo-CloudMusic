@@ -22,10 +22,10 @@ import retrofit2.http.Query
 interface ApiService {
 
     /**
-     * 返回音乐的播放链接（.MP3格式）,设置无损音质
+     * 返回音乐的播放链接（.MP3格式）,设置超清母带（测试中）
      */
     @GET("song/url/v1")
-    fun getMusicUrl(@Query("id")id:String,@Query("level")level:String="lossless"): Observable<UrlData<Data>>
+    fun getMusicUrl(@Query("id")id:String,@Query("level")level:String="jymaster"): Observable<UrlData<Data>>
 
 
     /**

@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.BitmapFactory
 import android.os.Binder
 import android.os.Build
@@ -14,7 +15,9 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.Renderer
 import com.lytredrock.model.player.R
 
 
@@ -26,21 +29,25 @@ class MusicService : Service() {
 
     private lateinit var player: ExoPlayer
     private lateinit var url: String
+    private lateinit var isTop: String
+    var tag: String = "0"
     private val binder = MusicBinder()
 
-    inner class MusicBinder : Binder() {
+    inner class MusicBinder : Binder(), Player.Listener {
+
         fun startPlay() {
-            if (player.playWhenReady) {
+            player.addListener(this)
+
+
+            /**
+             * 判断是不是点的上面的前台服务，如果不是就重新播放音乐（肯定切换新的音乐了）
+             */
+            if (isTop != "1") {
                 player.clearMediaItems()
                 player.addMediaItem(MediaItem.fromUri(url))
                 player.prepare()
                 player.playWhenReady = true
-            } else {
-                player.addMediaItem(MediaItem.fromUri(url))
-                player.prepare()
-                player.playWhenReady = true
             }
-            Log.d("MusicService", "(MusicService.kt:15)-->> 开始播放音乐")
         }
 
         fun getCurrentPosition(): Int {
@@ -73,11 +80,22 @@ class MusicService : Service() {
         fun isPlaying(): Boolean {
             return player.isPlaying
         }
+
+
+        override fun onPlaybackStateChanged(playbackState: @Renderer.State Int) {
+            super.onPlaybackStateChanged(playbackState)
+            if (playbackState == Player.STATE_ENDED) {
+                player.seekToDefaultPosition()
+                player.play()
+            }
+        }
+
+
     }
 
 
     /**
-     * 通过onBind（）方法，activity才能和service进行通信
+     * 通过onBind（）方法，activity才能和service进行通信(创建自己的binder类，让activity持有引用)
      */
     override fun onBind(intent: Intent): IBinder {
         return binder
@@ -86,7 +104,6 @@ class MusicService : Service() {
     override fun onCreate() {
         super.onCreate()
         player = ExoPlayer.Builder(this).build()
-
         iniNotify()
 
 
@@ -106,16 +123,19 @@ class MusicService : Service() {
             )
             manager.createNotificationChannel(channel)
         }
-
+        //if (tag!="1"){
         val intent = Intent(this, MusicPlayerActivity::class.java)
         val pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         val notification = NotificationCompat.Builder(this, "my_service")
             .setContentTitle("emoCloud")
+            .setContentText("李伊侗和苟云东的音乐播放服务持续生效中")
             .setSmallIcon(R.drawable.musiclogo)
             .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.musiclogo))
             .setContentIntent(pi)
+            .setOngoing(true)  // 设置通知为持续显示
             .build()
         startForeground(1, notification)
+        //  }
 
     }
 
@@ -127,12 +147,19 @@ class MusicService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         url = intent?.getStringExtra("musicUrl").toString()
+        isTop = intent?.getStringExtra("is_ok").toString()
+        tag = intent?.getStringExtra("flag").toString()
         Log.d("555525", "(MusicService.kt:97)-->> $url");
+        Log.d("555526", "(MusicService.kt:97)-->> $isTop");
+        Log.d("555527", "(MusicService.kt:97)-->> $tag");
         return super.onStartCommand(intent, flags, startId)
     }
 
 
 }
+
+
+
 
 
 

@@ -16,6 +16,7 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 /**
  * description ：
@@ -35,6 +36,7 @@ object SearchNetWorkUtil {
     fun receiveSongInfo(keywords: String, _songData: MutableLiveData<List<Song>>) {
         Log.d("receiveSongInfo", "(SearchNetWorkUtil.kt:36)-->> $keywords");
         apiService.getSongInfo(keywords)
+            .delay(1, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
             .observeOn(AndroidSchedulers.mainThread())//在安卓主线程（执行onNext的逻辑）
             .subscribe(object : Observer<SearchSongData<Result>> {
@@ -73,6 +75,7 @@ object SearchNetWorkUtil {
     fun receiveArtistsInfo(keywords: String, _artistData: MutableLiveData<List<Artist>>) {
 
         apiService.getArtistInfo(keywords)
+            .delay(1, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
             .observeOn(AndroidSchedulers.mainThread())//在安卓主线程（执行onNext的逻辑）
             .subscribe(object : Observer<SearchArtistData<ArtistResult>> {
@@ -101,6 +104,7 @@ object SearchNetWorkUtil {
 
     fun receiveMVInfo(keywords: String, _mvData: MutableLiveData<List<Mv>>) {
         apiService.getMVInfo(keywords)
+            .delay(1, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
             .observeOn(AndroidSchedulers.mainThread())//在安卓主线程（执行onNext的逻辑）
             .subscribe(object : Observer<MVData<MVResult>> {
