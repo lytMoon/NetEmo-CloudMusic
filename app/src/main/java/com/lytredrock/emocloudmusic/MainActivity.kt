@@ -4,6 +4,7 @@ import BaseActivity
 import android.os.Bundle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.lytredrock.emocloudmusic.adapter.FragmentAdapter
 import com.lytredrock.emocloudmusic.databinding.ActivityMainBinding
 import com.lytredrock.emocloudmusic.frgment.BackFragment
@@ -11,7 +12,7 @@ import com.lytredrock.emocloudmusic.frgment.HotFragment
 import com.lytredrock.emocloudmusic.frgment.FindFragment
 import com.lytredrock.emocloudmusic.frgment.MineFragment
 
-
+@Route(path = "/apk/xyz")
 class MainActivity : BaseActivity() {
     private val myViewBinding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(

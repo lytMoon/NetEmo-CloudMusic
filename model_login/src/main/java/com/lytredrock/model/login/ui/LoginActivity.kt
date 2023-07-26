@@ -1,8 +1,9 @@
 package com.lytredrock.model.login.ui
 
-import BaseActivity
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
@@ -10,6 +11,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
+import com.lytredrock.lib.base.BaseUtils.myToast
+import com.lytredrock.lib.base.BaseUtils.transparentStatusBar
 import com.lytredrock.model.login.R
 import com.lytredrock.model.login.networkutils.NetWorkUtils
 import com.lytredrock.model.login.adapter.BasePagerAdapter
@@ -29,18 +35,15 @@ import com.lytredrock.model.login.logindata.QRLast
  * 做出判断（遗憾的是，尽管返回的数据显示你已经登录成功，但是始终是游客登录）
  *这里由于没有使用viewModel,目前我不知道如果不使用回调如何把返回的String类型的数据传过来并且对布尔类型的数值进行判断
  */
-class LoginActivity : BaseActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginAdapter: BasePagerAdapter
     private val titlesList = arrayListOf<String>()
     private val viewsList = arrayListOf<View>()
     private lateinit var phoneNum: String
     private lateinit var codeNumber: String
-
-
     private lateinit var qrCodeBinding: ItemQrcodeLoginBinding
     private lateinit var identifyBinding: ItemCodeLoginBinding
-
     //懒加载注入viewBinding
     private val mBinding: ActivityLoginBinding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
 
@@ -92,6 +95,7 @@ class LoginActivity : BaseActivity() {
          * 弹窗口信息
          */
         qrCodeBinding.btMsg.setOnClickListener {
+
             // 创建一个Dialog对象
             val dialog = Dialog(this)
             // 设置Dialog的内容视图
@@ -129,9 +133,10 @@ class LoginActivity : BaseActivity() {
         qrCodeBinding.loginButton.setOnClickListener {
             if (NetWorkUtils.receivedNumber != null) {
                 NetWorkUtils.receiveQRState(NetWorkUtils.receivedNumber!!, object : qrCallBack {
+                    @SuppressLint("CommitPrefEdits")
                     override fun onRespond(data: QRLast) {
                         myToast(data.message, this@LoginActivity)
-                        //下面跳转模块，同时
+                        finish()
                     }
 
                     override fun onFailed(e: String) {
@@ -158,19 +163,13 @@ class LoginActivity : BaseActivity() {
                 identifyBinding.btLogin.isEnabled = true
                 NetWorkUtils.receiveCodeNum(phoneNum, object : PhoneNumCallBack {
                     override fun onRespond(d: CodeNum) {
-
-
                     }
-
                     override fun onFailed(e: String) {
-
                     }
-
                 })
             } else {
                 myToast("请输入阿拉伯数字", this)
             }
-
         }
 
         identifyBinding.btLogin.setOnClickListener {
@@ -178,23 +177,21 @@ class LoginActivity : BaseActivity() {
             Log.d("codeNumber", "(LoginActivity.kt:140)-->> $phoneNum,$codeNumber");
             if (::phoneNum.isInitialized && ::codeNumber.isInitialized) {
                 NetWorkUtils.receiveCodeState(phoneNum, codeNumber, object : IVerifyCodeInfo {
+                    @SuppressLint("CommitPrefEdits")
                     override fun onRespond(flag: Boolean) {
                         if (flag) {
-                            myToast("登录成功", this@LoginActivity)
+                            myToast("登录成功(很遗憾由于某种原因，只能游客登录)", this@LoginActivity)
+                            finish()
                         }
                     }
-
                     override fun onFailed(e: String?) {
                         myToast("登录失败，请检查您的验证码", this@LoginActivity)
                         Log.d("TAG", "(LoginActivity.kt:150)-->> $e")
                     }
-
                 })
             } else {
                 myToast("请正确填写信息", this)
             }
-
-
         }
     }
 
