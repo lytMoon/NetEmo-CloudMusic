@@ -50,6 +50,12 @@ dependencies {
     api 'com.alibaba:arouter-api:1.5.2'
 
 
+    //下面使用了第三方库播放器
+    implementation 'androidx.media3:media3-exoplayer:1.0.0-beta02'
+    implementation 'androidx.media3:media3-ui:1.0.0-beta02'
+
+
+
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'

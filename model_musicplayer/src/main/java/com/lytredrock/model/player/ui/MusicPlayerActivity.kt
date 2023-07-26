@@ -122,10 +122,16 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
             // 存储数据
             intent.putExtra("musicUrl", it[0].url)
             intent.putExtra("is_ok", isTop)
+
             startService(intent)
             bindService(intent, connection, Context.BIND_AUTO_CREATE)
         }
-
+        playerViewModel.musicInfo.observe(this){
+            intent.putExtra("musicName",it[0].name)
+            intent.putExtra("musicAuthorName",it[0].ar[0].name)
+            intent.putExtra("musicImgUrl",it[0].al.picUrl)
+            startService(intent)
+        }
     }
 
     /**
