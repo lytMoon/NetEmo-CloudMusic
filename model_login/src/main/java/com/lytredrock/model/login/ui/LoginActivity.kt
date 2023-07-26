@@ -143,9 +143,7 @@ class LoginActivity : AppCompatActivity() {
 
                         myToast(e, this@LoginActivity)
                         Log.d("TAG", "(LoginActivity.kt:123)-->> $e")
-
                     }
-
                 })
 
             }
