@@ -126,6 +126,7 @@ class MainActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        unbindService(connection)//解除绑定
         timer.cancel()
     }
 }

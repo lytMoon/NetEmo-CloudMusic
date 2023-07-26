@@ -84,22 +84,21 @@ class MusicService : Service() {
             return player.isPlaying
         }
 
-        fun getMusicImgUrl():String{
+        fun getMusicImgUrl(): String {
             return musicImgUrl
         }
-        fun getMusicName():String{
+
+        fun getMusicName(): String {
             return musicName
         }
-        fun getMusicAuthor():String{
+
+        fun getMusicAuthor(): String {
             return musicAuthorName
         }
 
-        fun getIsTop():String{
+        fun getIsTop(): String {
             return isTop
         }
-
-
-
 
 
         override fun onPlaybackStateChanged(playbackState: @Renderer.State Int) {
@@ -131,7 +130,7 @@ class MusicService : Service() {
 
     private fun iniNotify() {
         /**
-         * 开启前台服务，更安全,
+         * 开启前台服务，更安全
          */
         Log.d("MusicService", "(MusicService.kt:15)-->> onCreate ");
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -148,7 +147,7 @@ class MusicService : Service() {
         val pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         val notification = NotificationCompat.Builder(this, "my_service")
             .setContentTitle("emoCloud")
-            .setContentText("李伊侗和苟云东的音乐播放服务持续生效中")
+            .setContentText("音乐播放服务持续生效中")
             .setSmallIcon(R.drawable.musiclogo)
             .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.musiclogo))
             .setContentIntent(pi)

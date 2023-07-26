@@ -50,7 +50,8 @@ kapt{
 }
 
 dependencies {
-    implementation implementation(project(':lib_utils',))
+    implementation implementation(project(':lib_utils'))
+    implementation implementation(project(':model_musicplayer'))
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -69,6 +70,9 @@ dependencies {
     //完整版引入
     implementation 'com.github.CarGuo.GSYVideoPlayer:GSYVideoPlayer:v8.4.0-release-jitpack'
 
+    //下面使用了第三方库播放器
+    implementation 'androidx.media3:media3-exoplayer:1.0.0-beta02'
+    implementation 'androidx.media3:media3-ui:1.0.0-beta02'
 
 
     implementation 'androidx.core:core-ktx:1.8.0'

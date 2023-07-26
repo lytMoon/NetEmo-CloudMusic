@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.lytredrock.model.research.apisearch.ApiService
 import com.lytredrock.model.research.musicdata.Artist
 import com.lytredrock.model.research.musicdata.ArtistResult
+import com.lytredrock.model.research.musicdata.ArtistSong
 import com.lytredrock.model.research.musicdata.MVData
 import com.lytredrock.model.research.musicdata.MVResult
+import com.lytredrock.model.research.musicdata.MusicArtistData
 import com.lytredrock.model.research.musicdata.Mv
 import com.lytredrock.model.research.musicdata.Result
 import com.lytredrock.model.research.musicdata.SearchArtistData
@@ -128,4 +130,30 @@ object SearchNetWorkUtil {
 
     }
 
+    /**
+     * 得到歌手的热门歌曲
+     */
+    fun receiveArtistMusic(id: String, _artistData: MutableLiveData<List<ArtistSong>>) {
+
+        apiService.getArtistMusic(id)
+            .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
+            .observeOn(AndroidSchedulers.mainThread())//在安卓主线程（执行onNext的逻辑）
+            .subscribe(object : Observer<MusicArtistData<ArtistSong>> {
+                override fun onSubscribe(d: Disposable) {
+                }
+
+                override fun onError(e: Throwable) {
+                }
+
+                override fun onComplete() {
+                }
+
+                override fun onNext(t: MusicArtistData<ArtistSong>) {
+                    _artistData.postValue(t.songs)
+                    Log.d("85555","(SearchNetWorkUtil.kt:151)-->> ${t.songs}");
+                }
+
+            })
+
+    }
 }

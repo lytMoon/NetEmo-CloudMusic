@@ -126,10 +126,10 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
             startService(intent)
             bindService(intent, connection, Context.BIND_AUTO_CREATE)
         }
-        playerViewModel.musicInfo.observe(this){
-            intent.putExtra("musicName",it[0].name)
-            intent.putExtra("musicAuthorName",it[0].ar[0].name)
-            intent.putExtra("musicImgUrl",it[0].al.picUrl)
+        playerViewModel.musicInfo.observe(this) {
+            intent.putExtra("musicName", it[0].name)
+            intent.putExtra("musicAuthorName", it[0].ar[0].name)
+            intent.putExtra("musicImgUrl", it[0].al.picUrl)
             startService(intent)
         }
     }
@@ -183,8 +183,9 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
                 myToast("已经切换到后台服务", this)
                 finish()
             }
-            R.id.iv_love ->{
-                myToast("功能还在完善中",this)
+
+            R.id.iv_love -> {
+                myToast("功能还在完善中", this)
             }
 
         }
@@ -289,10 +290,6 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
         handler.removeCallbacks(runnable)//释放我们的handler
         unbindService(connection)//解除绑定
         myToast("已经切换到后台服务", this)
-//        val intent = Intent(this, MusicService::class.java)
-//        isExsitActivity="0"
-//        intent.putExtra("flag", isExsitActivity)
-//        startService(intent)
         super.finish()
     }
 
