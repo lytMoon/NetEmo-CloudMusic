@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.BitmapFactory
+import android.graphics.Path
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
@@ -35,6 +36,8 @@ import com.lytredrock.model.login.logindata.QRLast
  * 做出判断（遗憾的是，尽管返回的数据显示你已经登录成功，但是始终是游客登录）
  *这里由于没有使用viewModel,目前我不知道如果不使用回调如何把返回的String类型的数据传过来并且对布尔类型的数值进行判断
  */
+
+@Route(path = "/login/start")
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginAdapter: BasePagerAdapter
@@ -118,6 +121,7 @@ class LoginActivity : AppCompatActivity() {
                 NetWorkUtils.receiveQRPic(NetWorkUtils.receivedNumber!!,
                     object : MusicInfoCallBack {
                         override fun onRespond(qrimg: String) {
+                            base64ToBitmap(qrimg)
                         }
 
                         override fun onFailed(e: String) {
@@ -136,6 +140,7 @@ class LoginActivity : AppCompatActivity() {
                     @SuppressLint("CommitPrefEdits")
                     override fun onRespond(data: QRLast) {
                         myToast(data.message, this@LoginActivity)
+                        myToast("登录成功(很遗憾由于某种原因，只能游客登录)", this@LoginActivity)
                         finish()
                     }
 
