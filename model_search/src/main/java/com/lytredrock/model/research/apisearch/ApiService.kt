@@ -1,8 +1,10 @@
 package com.lytredrock.model.research.apisearch
 
 import com.lytredrock.model.research.musicdata.ArtistResult
+import com.lytredrock.model.research.musicdata.ArtistSong
 import com.lytredrock.model.research.musicdata.MVData
 import com.lytredrock.model.research.musicdata.MVResult
+import com.lytredrock.model.research.musicdata.MusicArtistData
 import com.lytredrock.model.research.musicdata.Result
 import com.lytredrock.model.research.musicdata.SearchArtistData
 import com.lytredrock.model.research.musicdata.SearchSongData
@@ -44,5 +46,11 @@ interface ApiService {
         @Query("keywords") keywords: String,
         @Query("type") type: Int = 1004
     ): Observable<MVData<MVResult>>
+
+    /**
+     * 返回歌手的热门50首歌曲
+     */
+    @GET("artist/top/song")
+    fun getArtistMusic(@Query("id")id:String):Observable<MusicArtistData<ArtistSong>>
 
 }

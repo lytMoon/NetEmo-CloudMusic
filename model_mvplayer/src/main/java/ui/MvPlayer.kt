@@ -1,8 +1,12 @@
 package ui
 
 import android.annotation.SuppressLint
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +23,7 @@ import com.lytredrock.lib.base.BaseUtils.transparentStatusBar
 import com.lytredrock.model.mvplayer.R
 import com.lytredrock.model.mvplayer.databinding.ActivityMvPlayerBinding
 import com.lytredrock.model.mvplayer.databinding.BottomSheetLayoutBinding
+import com.lytredrock.model.player.ui.MusicService
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
@@ -50,12 +55,23 @@ class MvPlayer : AppCompatActivity() {
             layoutInflater
         )
     }
+    private lateinit var mBinder: MusicService.MusicBinder
+    private val connection = object : ServiceConnection {
+        /**
+         * activity 和 service 成功绑定的时候会调用
+         */
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            //初始化mBinder对象
+            mBinder = service as MusicService.MusicBinder
+            mBinder.stop()
+            Log.d("852255","(MvPlayer.kt:66)-->> ${mBinder.getDuration()}");
+        }
 
-    //懒加载注入viewBinding
-    private val rvBinding: BottomSheetLayoutBinding by lazy {
-        BottomSheetLayoutBinding.inflate(
-            layoutInflater
-        )
+        //service进程创建过程中崩溃或者被杀掉的时候会调用
+        override fun onServiceDisconnected(name: ComponentName?) {
+            Log.d("8522555","(MvPlayer.kt:71)-->> ");
+        }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,10 +79,17 @@ class MvPlayer : AppCompatActivity() {
         setContentView(mBinding.root)
         ARouter.getInstance().inject(this@MvPlayer)
         iniPlayer()
+        iniStartService()
         iniBar()
         iniClick()
         iniUpInfo(mvUid)
         iniPlayMv(mvUid, mvName)
+    }
+
+    private fun iniStartService() {
+        val intent = Intent(this, MusicService::class.java)
+        startService(intent)
+        bindService(intent, connection, Context.BIND_AUTO_CREATE)
     }
 
 
@@ -76,7 +99,6 @@ class MvPlayer : AppCompatActivity() {
     private fun iniPlayMv(uid: String, mvName: String) {
         myViewModel.getMvUrl(uid)
         myViewModel.mvUrlData.observe(this) {
-
             mBinding.iVideoPlayer.setUp(it[0].url, false, mvName)
             mBinding.iVideoPlayer.startPlayLogic()
         }
@@ -258,6 +280,20 @@ class MvPlayer : AppCompatActivity() {
         bottomSheetDialog.behavior.isDraggable = true
         bottomSheetDialog.behavior.peekHeight = 1500
         bottomSheetDialog.show()
+
+    }
+
+    override fun finish() {
+        mBinding.iVideoPlayer.release()
+        /**
+         * 很遗憾，安卓杀后台杀得很厉害，我们这边设置进入service的时候音乐暂停，但是并没有停止
+         * 退出的时候在播放，可是在实验中发现如果mv播放的时间太久了，音乐暂停的状态会被刷新或者摧毁
+         * 可能会出现闪退
+         * 这里我还不知道如何解决。
+         */
+        mBinder.start()
+        unbindService(connection)//解除绑定
+        super.finish()
 
     }
 }

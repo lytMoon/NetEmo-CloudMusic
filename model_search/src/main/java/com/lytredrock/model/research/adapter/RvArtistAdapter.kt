@@ -1,13 +1,16 @@
 package com.lytredrock.model.research.adapter
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -15,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.lytredrock.model.research.R
 import com.lytredrock.model.research.musicdata.Artist
 import com.lytredrock.model.research.musicdata.Song
+import com.lytredrock.model.research.ui.ArtistShowActivity
 
 /**
  * description ：
@@ -55,6 +59,16 @@ class RvArtistAdapter(val data: List<Artist>, private val activity: FragmentActi
                 Log.d("NullPointerException", "artistAdapter");
             }
 
+        }
+        /**
+         * 设置点击事件
+         */
+        holder.itemView.setOnClickListener {
+            ARouter.getInstance()
+                .build("/artist/music")
+                .withString("id",itemData.id.toString())
+                .withString("picUrl",itemData.img1v1Url)
+                .navigation()
         }
 
 
