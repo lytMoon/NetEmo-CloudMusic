@@ -2,6 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="musicColor">#9CA7E4</color>
+    <color name="musicColor">#5F5454</color>
     <color name="musicInfoColor">#CDC8B9</color>
 </resources>

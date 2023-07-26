@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
 
 /**
- * description ：这里检查一下是否打开通知权限。
+ * description ：这里检查一下是否打开通知权限。(起初是)
  * author : lytMoon
  * email : yytds@foxmail.com
  * date : 2023/7/25 12:46
@@ -40,6 +40,7 @@ object ServiceUtils {
                 }
                 .setNegativeButton("取消", null)
                 .show()
+
         }
     }
 

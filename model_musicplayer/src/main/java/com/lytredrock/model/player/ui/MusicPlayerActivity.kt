@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.SharedPreferences
-import android.os.Binder
 import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
@@ -15,16 +14,12 @@ import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.postDelayed
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.media3.common.MediaItem
-import androidx.media3.exoplayer.ExoPlayer
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.lytredrock.lib.base.BaseUtils
 import com.lytredrock.lib.base.BaseUtils.myToast
 import com.lytredrock.lib.base.BaseUtils.transparentStatusBar
 import com.lytredrock.model.player.R
@@ -38,6 +33,7 @@ import com.lytredrock.model.player.viewmodel.MusicPlayerViewModel
 
 @Route(path = "/music/musicPlay")
 class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
+
 
     @Autowired
     lateinit var musicId: String
@@ -93,38 +89,44 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(mBinding.root)
         ARouter.getInstance().inject(this@MusicPlayerActivity)
-        iniSp()
         transparentStatusBar(window, false)
         replaceFragment(PageOneFragment())
+        iniPlayMusic()
         identifyNotify(this)
-        iniUpData()//这个方法里面使用viewModel接受网络请求的道的数据，在fragment里面可以被观察到
         iniSeekBar()//同步进度条
         iniClick()//实现点击方法
-        iniSendMsg()//把音乐放在service里面播放
+
     }
 
-    private fun iniSp() {
+    @SuppressLint("CommitPrefEdits")
+    private fun iniPlayMusic() {
         sharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
         if (::musicId.isInitialized) {
             Log.d("852852", "(MusicPlayerActivity.kt:106)-->> 非空");
-            val editor = sharedPreferences.edit()
             editor.putString("my_key", musicId)
             editor.apply()
+            iniUpData()
+            iniSendMsg("0")
+        } else {
+            Log.d("852852", "(MusicPlayerActivity.kt:115)-->> 空");
+            //没有初始化的时候做个记号
+            iniUpData()
+            iniSendMsg("1")
         }
     }
 
-    private fun iniSendMsg() {
+    private fun iniSendMsg(isTop: String) {
         val intent = Intent(this, MusicService::class.java)
         playerViewModel.musicUrlInfo.observe(this) {
             // 存储数据
             intent.putExtra("musicUrl", it[0].url)
-            Log.d("musicUrl", "(MusicPlayerActivity.kt:118)-->> ${it[0].url}");
+            intent.putExtra("is_ok", isTop)
             startService(intent)
             bindService(intent, connection, Context.BIND_AUTO_CREATE)
         }
 
     }
-
 
     /**
      * 这里用来更新我们的seekBar
@@ -175,6 +177,10 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
                 myToast("已经切换到后台服务", this)
                 finish()
             }
+            R.id.iv_love ->{
+                myToast("功能还在完善中",this)
+            }
+
         }
     }
 
@@ -219,16 +225,10 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
         transaction.setCustomAnimations(
             R.anim.fade_in,  // 新的Fragment进入动画
             R.anim.fade_out,  // 旧的Fragment退出动画
-
         )
         transaction.replace(R.id.fragment_place_holder, fragment)
         transaction.commit()
-
     }
-
-    /**
-     * 开启沉浸式状态栏
-     */
 
 
     @SuppressLint("SetTextI18n")
@@ -271,11 +271,10 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
     /**
      * 这里我们使用liveData更新数据，每次都通过新的数据类进行过滤。最终把更新的数据值传递到我们的liveData里面
      */
-    fun updateData(currentPosition: Int, bufferedPosition: Int, duration: Int) {
+    private fun updateData(currentPosition: Int, bufferedPosition: Int, duration: Int) {
         val newData = MusicProgressData(currentPosition, bufferedPosition, duration)
         musicProgressData.value = newData
     }
-
 
     /**
      * finish方法里面释放我们的player和之前的handler
@@ -283,8 +282,14 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
     override fun finish() {
         handler.removeCallbacks(runnable)//释放我们的handler
         unbindService(connection)//解除绑定
+        myToast("已经切换到后台服务", this)
+//        val intent = Intent(this, MusicService::class.java)
+//        isExsitActivity="0"
+//        intent.putExtra("flag", isExsitActivity)
+//        startService(intent)
         super.finish()
     }
+
 
 }
 
