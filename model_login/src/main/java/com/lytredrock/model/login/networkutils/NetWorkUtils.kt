@@ -31,56 +31,14 @@ import com.lytredrock.model.login.apiservice.PhoneNumCallBack as PhoneNumCallBac
  */
 object NetWorkUtils {
     var receivedNumber: String? = null
-    var qrUrl:String ? = null
+    var qrUrl: String? = null
+    private val apiService = ServiceCreatorUtils.create(ApiService::class.java)
 
-
-    private val apiService= ServiceCreatorUtils.create(ApiService::class.java)
-
-//    //  得到音乐评论的liveData
-//    private val _musicComments: MutableLiveData<List<Comment>> = MutableLiveData()
-//    val musicComments: LiveData<List<Comment>>
-//        get() = _musicComments
-
-
-
-    /***
-     * 获取音乐信息的评论，这里接受一个id参数，（指定了评论获取100条，如果影响效果后面再改）
-     */
-    @SuppressLint("CheckResult")
-    fun receiveMusicComments(id:Int){
-       apiService.getMusicComments(id)
-        /***
-         * 下面使用了Rxjava
-         */
-           .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
-           .observeOn(mainThread())//在安卓主线程（执行onNext的逻辑）
-           .subscribe(object : Observer<MusicComment<Comment>> {
-               override fun onSubscribe(d: Disposable) {
-
-               }
-
-               override fun onError(e: Throwable) {
-                   Log.d("receiveMusicComments", "(BaseViewModel.kt:69)-->> " + e.message);
-               }
-
-               override fun onComplete() {
-
-               }
-
-               override fun onNext(t: MusicComment<Comment>) {
-//                   _musicComments.postValue(t.comments)
-                   val list =t.comments
-                   for (it in list)
-                       Log.d("receiveMusicComments", "(BaseViewModel.kt:45)-->> " + it.content)
-               }
-
-           })
-   }
 
     /**
      * 发送请求，得到二维码的key值
      */
-    fun ReceiveQRKey(){
+    fun ReceiveQRKey() {
         apiService.qrKeyGet()
             .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
             .observeOn(mainThread())//在安卓主线程（执行onNext的逻辑）
@@ -98,7 +56,7 @@ object NetWorkUtils {
 
                 override fun onNext(t: QRKey<QRData>) {
 
-                   receivedNumber= t.data.unikey
+                    receivedNumber = t.data.unikey
                     Log.d("ReceiveQRKey", "(BaseViewModel.kt:90)-->> $receivedNumber")
                 }
 
@@ -110,11 +68,11 @@ object NetWorkUtils {
      * 得到图片相关信息
      */
 
-    fun receiveQRPic(key:String,callBack: MusicInfoCallBack){
+    fun receiveQRPic(key: String, callBack: MusicInfoCallBack) {
         apiService.qrCreat(key)
             .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
             .observeOn(mainThread())//在安卓主线程（执行onNext的逻辑）
-            .subscribe(object: Observer<QRPic<QRPicData>> {
+            .subscribe(object : Observer<QRPic<QRPicData>> {
                 override fun onSubscribe(d: Disposable) {
 
                 }
@@ -140,11 +98,11 @@ object NetWorkUtils {
     /**
      * 验证二维码扫码状态
      */
-    fun receiveQRState(key:String,callBack: qrCallBack){
+    fun receiveQRState(key: String, callBack: qrCallBack) {
         apiService.qrLogin(key)
             .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
             .observeOn(mainThread())//在安卓主线程（执行onNext的逻辑）
-            .subscribe(object:Observer<QRLast>{
+            .subscribe(object : Observer<QRLast> {
                 override fun onSubscribe(d: Disposable) {
                 }
 
@@ -157,11 +115,11 @@ object NetWorkUtils {
                 }
 
                 override fun onNext(t: QRLast) {
-                    when(t.code){
-                        800-> callBack.onFailed("二维码过期")
-                        801-> callBack.onFailed("等待扫码")
-                        802-> callBack.onFailed("待确认")
-                        803-> callBack.onRespond(t)
+                    when (t.code) {
+                        800 -> callBack.onFailed("二维码过期")
+                        801 -> callBack.onFailed("等待扫码")
+                        802 -> callBack.onFailed("待确认")
+                        803 -> callBack.onRespond(t)
                     }
 
                 }
@@ -175,7 +133,7 @@ object NetWorkUtils {
      * 获得手机验证码
      */
 
-    fun receiveCodeNum(phoneNum: String, callBack: PhoneNumCallBack1){
+    fun receiveCodeNum(phoneNum: String, callBack: PhoneNumCallBack1) {
         apiService.codeSend(phoneNum)
             .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
             .observeOn(mainThread())//在安卓主线程（执行onNext的逻辑）
@@ -186,7 +144,7 @@ object NetWorkUtils {
 
                 override fun onError(e: Throwable) {
                     callBack.onFailed(e.message.toString())
-                    Log.d("receiveCodeNum","(NetWorkUtils.kt:151)-->>${e.message} ");
+                    Log.d("receiveCodeNum", "(NetWorkUtils.kt:151)-->>${e.message} ");
                 }
 
                 override fun onComplete() {
@@ -204,12 +162,12 @@ object NetWorkUtils {
     /**
      * 验证验证码
      */
-    fun receiveCodeState(phone:String,captcha:String,callBack: IVerifyCodeInfo){
+    fun receiveCodeState(phone: String, captcha: String, callBack: IVerifyCodeInfo) {
 
-        apiService.codeIdentify(phone,captcha)
+        apiService.codeIdentify(phone, captcha)
             .subscribeOn(Schedulers.newThread())//新开一个线程进行请求
             .observeOn(mainThread())//在安卓主线程（执行onNext的逻辑）
-            .subscribe(object : Observer<CodeData>{
+            .subscribe(object : Observer<CodeData> {
                 override fun onSubscribe(d: Disposable) {
                 }
 
@@ -221,8 +179,11 @@ object NetWorkUtils {
                 }
 
                 override fun onNext(t: CodeData) {
-     Log.d("receiveCodeState","(NetWorkUtils.kt:184)-->> ${t.code},${t.data},${t.message}");
-                  callBack.onRespond(t.data)//这里的data是true或者false类型的
+                    Log.d(
+                        "receiveCodeState",
+                        "(NetWorkUtils.kt:184)-->> ${t.code},${t.data},${t.message}"
+                    );
+                    callBack.onRespond(t.data)//这里的data是true或者false类型的
                 }
 
 
@@ -230,9 +191,6 @@ object NetWorkUtils {
 
 
     }
-
-
-
 
 
 }
