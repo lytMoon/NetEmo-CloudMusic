@@ -1,5 +1,6 @@
 package com.lytredrock.emocloudmusic.frgment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import androidx.core.view.GravityCompat
 import com.lytredrock.emocloudmusic.adapter.SingerSongAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.lytredrock.emocloudmusic.Collect
+import com.lytredrock.emocloudmusic.Download
 import com.lytredrock.emocloudmusic.R
 import com.lytredrock.emocloudmusic.databinding.FragmentFindBinding
 import com.lytredrock.emocloudmusic.databinding.FragmentMineBinding
@@ -26,6 +29,16 @@ class MineFragment:Fragment() {
     private val binding get() = _binding!!
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentMineBinding.inflate(inflater, container, false)
+        binding.ivHead.bringToFront()
+        binding.ivCollect.setOnClickListener {
+            val intent=Intent(requireContext(),Collect::class.java)
+            startActivity(intent)
+        }
+        binding.ivDownloadRecord.setOnClickListener {
+            val intent=Intent(requireContext(),Download::class.java)
+            startActivity(intent)
+        }
+
         return _binding?.root
 
     }

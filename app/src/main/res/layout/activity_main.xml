@@ -48,7 +48,68 @@
           app:layout_constraintHorizontal_bias="0.0"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
-          app:layout_constraintVertical_bias="1.0" />
+          app:layout_constraintVertical_bias="1.0" >
+
+
+
+      </androidx.viewpager2.widget.ViewPager2>
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="80dp"
+          app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="1.0">
+
+         <ImageView
+             android:id="@+id/iv_broadcast"
+             android:layout_width="50dp"
+             android:layout_height="50dp"
+             android:src="@drawable/ic_broadcast"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintHorizontal_bias="0.86"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent"
+             app:layout_constraintVertical_bias="0.52" />
+
+         <ImageView
+             android:id="@+id/iv_findSong"
+             android:layout_width="50dp"
+             android:layout_height="50dp"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintHorizontal_bias="0.08"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent"
+             app:layout_constraintVertical_bias="0.52" />
+
+         <TextView
+             android:id="@+id/tv_findSongNmae"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="gnwegn"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintHorizontal_bias="0.25"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent"
+             app:layout_constraintVertical_bias="0.32" />
+
+         <TextView
+             android:id="@+id/tv_findSongAuthor"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="anfaebf"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintHorizontal_bias="0.25"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent"
+             app:layout_constraintVertical_bias="0.7" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
    </androidx.constraintlayout.widget.ConstraintLayout>
    <com.google.android.material.navigation.NavigationView

@@ -29,8 +29,6 @@ class Collect : AppCompatActivity() {
         val collectSong= Collect(name,author,id)
 
 
-
-
         val helper = CollectDataHelper(this)
         if(!helper.isCollectExists(collectSong)&&id!=0) {
             helper.addCollect(collectSong)

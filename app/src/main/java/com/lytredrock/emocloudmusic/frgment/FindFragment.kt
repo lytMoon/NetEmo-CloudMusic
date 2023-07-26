@@ -46,7 +46,6 @@ class FindFragment : Fragment() {
             getBannerInFragment(1)
             bannerLifeData.observe(viewLifecycleOwner) {
                 for (element in it) {
-                    Log.d("KKKKK", "onCreateView: ")
                     val itemFragment = ItemFragment()
                     val bundle = Bundle()
                     bundle.putString("data", element.pic)
