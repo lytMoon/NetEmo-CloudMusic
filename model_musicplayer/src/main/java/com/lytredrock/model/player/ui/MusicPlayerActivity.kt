@@ -164,7 +164,6 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             R.id.iv_exist -> {
-                myToast("已经切换到后台服务", this)
                 finish()
             }
 
