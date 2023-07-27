@@ -139,7 +139,7 @@ class PageOneFragment : Fragment() {
      */
     private fun changeAnimation() {
         playerViewModel.musicProgressData.observe(requireActivity()) {
-            if (!it.isPlaying) {
+            if (it.isPlaying) {
                 animator.pause()
             } else {
                 animator.resume()
