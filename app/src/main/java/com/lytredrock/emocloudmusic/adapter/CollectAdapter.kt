@@ -63,10 +63,10 @@ class CollectAdapter(
                         }
 
                         R.id.collect_download -> {
-                            val intent= Intent(itemView.context, Download::class.java)
-                            intent.putExtra("id",data[absoluteAdapterPosition].id)
-                            intent.putExtra("name",data[absoluteAdapterPosition].name)
-                            intent.putExtra("author",data[absoluteAdapterPosition].author)
+                            val intent = Intent(itemView.context, Download::class.java)
+                            intent.putExtra("id", data[absoluteAdapterPosition].id)
+                            intent.putExtra("name", data[absoluteAdapterPosition].name)
+                            intent.putExtra("author", data[absoluteAdapterPosition].author)
                             itemView.context.startActivity(intent)
                             true
                         }
@@ -80,7 +80,7 @@ class CollectAdapter(
             itemView.setOnClickListener {
                 ARouter.getInstance()
                     .build("/music/musicPlay")
-                    .withString("musicId",data[absoluteAdapterPosition].id.toString())
+                    .withString("musicId", data[absoluteAdapterPosition].id.toString())
                     .navigation()
             }
         }

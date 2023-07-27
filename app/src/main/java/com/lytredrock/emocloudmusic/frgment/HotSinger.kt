@@ -25,9 +25,7 @@ class HotSinger : Fragment() {
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = HotSingerBinding.inflate(inflater, container, false)
         myViewModel.apply {
@@ -42,8 +40,7 @@ class HotSinger : Fragment() {
     }
 
     public override fun onViewCreated(
-        view: android.view.View,
-        savedInstanceState: android.os.Bundle?
+        view: android.view.View, savedInstanceState: android.os.Bundle?
     ) {
 
         super.onViewCreated(view, savedInstanceState)

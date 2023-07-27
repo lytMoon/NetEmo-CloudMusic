@@ -1,8 +1,8 @@
 package com.lytredrock.emocloudmusic
 
 import android.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lytredrock.emocloudmusic.adapter.CollectAdapter
 import com.lytredrock.emocloudmusic.adapter.DownloadAdapter
@@ -19,23 +19,23 @@ class Collect : AppCompatActivity() {
         )
     }
     val collectedSongs = mutableListOf<Collect>()
-    val clearSongs=mutableListOf<DownloadSongData>()
+    val clearSongs = mutableListOf<DownloadSongData>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(myViewBinding.root)
         val name = intent.getStringExtra("name")
         val author = intent.getStringExtra("author")
-        val id=intent.getIntExtra("id",0)
-        val collectSong= Collect(name,author,id)
+        val id = intent.getIntExtra("id", 0)
+        val collectSong = Collect(name, author, id)
 
 
         val helper = CollectDataHelper(this)
-        if(!helper.isCollectExists(collectSong)&&id!=0) {
+        if (!helper.isCollectExists(collectSong) && id != 0) {
             helper.addCollect(collectSong)
         }
         collectedSongs.addAll(helper.getAllCollects())
         myViewBinding.rvCollect.apply {
-            adapter = CollectAdapter(collectedSongs,helper,this@Collect)
+            adapter = CollectAdapter(collectedSongs, helper, this@Collect)
             layoutManager = LinearLayoutManager(this@Collect)
         }
 
@@ -45,8 +45,7 @@ class Collect : AppCompatActivity() {
                 setTitle("收藏歌单")
                 setMessage("是否清空收藏歌单")
                 setCancelable(false)
-                setPositiveButton("是"){
-                        dialog, _ ->
+                setPositiveButton("是") { dialog, _ ->
                     helper.clearDatabase()
                     myViewBinding.rvCollect.apply {
                         adapter = DownloadAdapter(clearSongs)
@@ -54,8 +53,7 @@ class Collect : AppCompatActivity() {
                     }
                     dialog.dismiss()
                 }
-                setNegativeButton("否"){
-                        dialog, _ ->
+                setNegativeButton("否") { dialog, _ ->
                     dialog.dismiss()
                 }
             }.show()

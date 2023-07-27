@@ -9,13 +9,13 @@ import android.app.Application
  * @date 2023/7/14
  * @Description:
  */
-open class BaseApp:Application() {
+open class BaseApp : Application() {
     companion object {
         lateinit var mContext: BaseApp
     }
 
     override fun onCreate() {
         super.onCreate()
-        mContext=this
+        mContext = this
     }
 }

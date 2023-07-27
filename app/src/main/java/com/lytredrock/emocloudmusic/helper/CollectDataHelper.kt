@@ -14,7 +14,8 @@ import com.lytredrock.emocloudmusic.data.Collect
  * email : 2191288460@qq.com
  * date : 2023/7/25 21:24
  */
-class CollectDataHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class CollectDataHelper(context: Context) :
+    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_VERSION = 1
@@ -26,7 +27,8 @@ class CollectDataHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        val createTableQuery = "CREATE TABLE $TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY, $KEY_NAME TEXT, $KEY_AUTHOR TEXT)"
+        val createTableQuery =
+            "CREATE TABLE $TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY, $KEY_NAME TEXT, $KEY_AUTHOR TEXT)"
         db.execSQL(createTableQuery)
     }
 
@@ -60,9 +62,11 @@ class CollectDataHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         cursor?.close()
         return collectList
     }
+
     fun clearDatabase() {
         writableDatabase.delete(TABLE_NAME, null, null)
     }
+
     fun isCollectExists(collect: Collect): Boolean {
         val selectQuery = "SELECT * FROM $TABLE_NAME WHERE $KEY_ID = ?"
         val cursor: Cursor? = readableDatabase.rawQuery(selectQuery, arrayOf(collect.id.toString()))
@@ -70,6 +74,7 @@ class CollectDataHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         cursor?.close()
         return exists
     }
+
     fun removeCollect(collect: Collect) {
         val whereClause = "$KEY_ID = ?"
         val whereArgs = arrayOf(collect.id.toString())

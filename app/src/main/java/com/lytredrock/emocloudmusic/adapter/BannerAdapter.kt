@@ -20,7 +20,7 @@ class BannerAdapter(
     }
 
     override fun createFragment(position: Int): Fragment {
-            return fragments[position].back()
+        return fragments[position].back()
     }
 
 }

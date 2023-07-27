@@ -21,25 +21,29 @@ import com.lytredrock.emocloudmusic.viewmodel.MineFragmentViewModel
  * email : 2191288460@qq.com
  * date : 2023/7/15 17:47
  */
-class MineFragment:Fragment() {
+class MineFragment : Fragment() {
     private val myViewModel by lazy { ViewModelProvider(this)[MineFragmentViewModel::class.java] }
     private var _binding: FragmentMineBinding? = null
     val handler = Handler(Looper.getMainLooper())
     private val runnable = object : Runnable {
         override fun run() {
-            binding.tvMineName.text="游客"
+            binding.tvMineName.text = "游客"
         }
     }
     private val binding get() = _binding!!
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = FragmentMineBinding.inflate(inflater, container, false)
         binding.ivHead.bringToFront()
         binding.ivCollect.setOnClickListener {
-            val intent=Intent(requireContext(),Collect::class.java)
+            val intent = Intent(requireContext(), Collect::class.java)
             startActivity(intent)
         }
         binding.ivDownloadRecord.setOnClickListener {
-            val intent=Intent(requireContext(),Download::class.java)
+            val intent = Intent(requireContext(), Download::class.java)
             startActivity(intent)
         }
 
@@ -47,7 +51,7 @@ class MineFragment:Fragment() {
             ARouter.getInstance()
                 .build("/login/start")
                 .navigation()
-            handler.postDelayed(runnable,1000)
+            handler.postDelayed(runnable, 1000)
 
         }
 
@@ -55,10 +59,14 @@ class MineFragment:Fragment() {
 
     }
 
-    public override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
+    public override fun onViewCreated(
+        view: android.view.View,
+        savedInstanceState: android.os.Bundle?
+    ) {
 
         super.onViewCreated(view, savedInstanceState)
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

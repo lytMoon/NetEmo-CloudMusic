@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lytredrock.emocloudmusic.adapter.FragmentAdapter
 import com.lytredrock.emocloudmusic.databinding.FragmentConmmnityBinding
-import com.lytredrock.emocloudmusic.viewmodel.SongChartViewModel
 
 /**
  * description ： TODO:类的作用
@@ -17,13 +15,16 @@ import com.lytredrock.emocloudmusic.viewmodel.SongChartViewModel
  * email : 2191288460@qq.com
  * date : 2023/7/15 19:52
  */
-class HotFragment:Fragment() {
-
+class HotFragment : Fragment() {
 
 
     private var _binding: FragmentConmmnityBinding? = null
     private val binding get() = _binding!!
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = FragmentConmmnityBinding.inflate(inflater, container, false)
 
 
@@ -43,7 +44,7 @@ class HotFragment:Fragment() {
                 return HotSongListFragment()
             }
         })
-       binding.vp2Hot.adapter=FragmentAdapter(requireActivity(),fragments)
+        binding.vp2Hot.adapter = FragmentAdapter(requireActivity(), fragments)
 
         TabLayoutMediator(binding.tabLayout2, binding.vp2Hot) { tab, position ->
             when (position) {
@@ -59,10 +60,14 @@ class HotFragment:Fragment() {
         return _binding?.root
     }
 
-    public override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
+    public override fun onViewCreated(
+        view: android.view.View,
+        savedInstanceState: android.os.Bundle?
+    ) {
 
         super.onViewCreated(view, savedInstanceState)
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
