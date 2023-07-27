@@ -28,6 +28,7 @@ import com.lytredrock.lib.base.BaseUtils.myToast
 import com.lytredrock.model.player.R
 import com.lytredrock.model.player.databinding.FragmentPageOneBinding
 import com.lytredrock.model.player.ui.MusicService
+import com.lytredrock.model.player.utils.ServiceUtils.downloadMusic
 import com.lytredrock.model.player.viewmodel.MusicPlayerViewModel
 
 class PageOneFragment : Fragment() {
@@ -67,7 +68,9 @@ class PageOneFragment : Fragment() {
             iniComments()
         }
         mBinding.ivDownload.setOnClickListener {
-            myToast("功能完善中", requireContext())
+            playerViewModel.musicUrlInfo.observe(requireActivity()){
+                downloadMusic(requireContext(),it[0].url,it[0].id.toString(),"歌曲正在下载")
+            }
         }
         mBinding.ivLove.setOnClickListener {
             myToast("功能正在完善中", requireContext())

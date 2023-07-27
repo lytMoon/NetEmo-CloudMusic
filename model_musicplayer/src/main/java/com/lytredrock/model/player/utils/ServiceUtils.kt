@@ -1,7 +1,10 @@
 package com.lytredrock.model.player.utils
 
 import android.app.Activity
+import android.app.DownloadManager
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
@@ -42,6 +45,21 @@ object ServiceUtils {
                 .show()
 
         }
+    }
+
+
+    fun downloadMusic(context: Context, url: String, title: String, description: String) {
+        val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val downloadUri = Uri.parse(url)
+
+        val request = DownloadManager.Request(downloadUri)
+            .setTitle(title)
+            .setDescription(description)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setAllowedOverMetered(true)
+            .setAllowedOverRoaming(true)
+
+        downloadManager.enqueue(request)
     }
 
 

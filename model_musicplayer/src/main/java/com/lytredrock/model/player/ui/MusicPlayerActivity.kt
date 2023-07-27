@@ -29,6 +29,7 @@ import com.lytredrock.model.player.fragment.PageTwoFragment
 import com.lytredrock.model.player.playerData.MusicProgressData
 import com.lytredrock.model.player.utils.ServiceUtils.identifyNotify
 import com.lytredrock.model.player.viewmodel.MusicPlayerViewModel
+import java.lang.Exception
 import java.lang.NullPointerException
 
 
@@ -67,8 +68,13 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun updateProgress() {
-        mBinding.musicProgress.progress =
-            (mBinder.getCurrentPosition() * 100 / mBinder.getDuration())
+        try {
+            mBinding.musicProgress.progress =
+                (mBinder.getCurrentPosition() * 100 / mBinder.getDuration())
+        } catch (e: Exception) {
+            Log.d("TAG", "(MusicPlayerActivity.kt:74)-->> ");
+        }
+
     }
 
     //懒加载注入viewModel和viewBinding
@@ -86,11 +92,9 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(mBinding.root)
         ARouter.getInstance().inject(this@MusicPlayerActivity)
-        val hahaha= intent.getStringExtra("need")
-        Log.d("595965","(MusicPlayerActivity.kt:90)-->> $hahaha")
+        iniPlayMusic()
         transparentStatusBar(window, false)
         replaceFragment(PageOneFragment())
-        iniPlayMusic()
         identifyNotify(this)
         iniClick()//实现点击方法
 
@@ -146,15 +150,22 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.music_play -> {
-                val isPlay = mBinder.isPlaying()
-                updateData(!isPlay)
-                if (mBinder.isPlaying()) {
-                    mBinding.musicPlay.setImageDrawable(getDrawable(R.drawable.play_icon))
-                    mBinder.stop()
-
-                } else {
-                    mBinding.musicPlay.setImageDrawable(getDrawable(R.drawable.pause_icon))
-                    mBinder.start()
+                try {
+                    if (mBinder.isPlaying()) {
+                        mBinding.musicPlay.setImageDrawable(getDrawable(R.drawable.play_icon))
+                        mBinder.stop()
+                    } else {
+                        mBinding.musicPlay.setImageDrawable(getDrawable(R.drawable.pause_icon))
+                        mBinder.start()
+                    }
+                } catch (e: Exception) {
+                    Log.d("TAG", "(MusicPlayerActivity.kt:153)-->> ");
+                }
+                try {
+                    val isPlay = mBinder.isPlaying()
+                    updateData(!isPlay)
+                } catch (e: Exception) {
+                    Log.d("TAG", "(MusicPlayerActivity.kt:165)-->> ");
                 }
             }
 
@@ -204,10 +215,14 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
 
             @SuppressLint("UseCompatLoadingForDrawables")
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                val position = ((seekBar?.progress)?.times(mBinder.getDuration()) ?: 1) / 100
-                mBinder.seekTo(position.toLong())
-                mBinder.start()
-                mBinding.musicPlay.setImageDrawable(getDrawable(R.drawable.pause_icon))
+                try {
+                    val position = ((seekBar?.progress)?.times(mBinder.getDuration()) ?: 1) / 100
+                    mBinder.seekTo(position.toLong())
+                    mBinder.start()
+                    mBinding.musicPlay.setImageDrawable(getDrawable(R.drawable.pause_icon))
+                } catch (e: Exception) {
+                    Log.d("TAG", "(MusicPlayerActivity.kt:218)-->> ");
+                }
             }
         })
     }
@@ -289,8 +304,13 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
      */
     override fun finish() {
         super.finish()
-        handler.removeCallbacks(runnable)//释放我们的handler
-        unbindService(connection)//解除绑定
+        try {
+            handler.removeCallbacks(runnable)//释放我们的handler
+            unbindService(connection)//解除绑定
+        } catch (e: Exception) {
+            Log.d("TAG", "(MusicPlayerActivity.kt:313)-->> ");
+        }
+
         myToast("已经切换到后台服务", this)
     }
 
