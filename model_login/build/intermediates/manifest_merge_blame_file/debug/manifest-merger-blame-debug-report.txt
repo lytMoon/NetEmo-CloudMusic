@@ -3,13 +3,13 @@
 3    package="com.lytredrock.model.login" >
 4
 5    <uses-sdk android:minSdkVersion="24" />
-5-->C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml
+5-->E:\emoCloud\model_login\src\main\AndroidManifest.xml
 6
 7    <application>
-7-->C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:3:5-7:15
+7-->E:\emoCloud\model_login\src\main\AndroidManifest.xml:3:5-7:15
 8        <activity android:name="com.lytredrock.model.login.ui.LoginActivity" >
-8-->C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:4:9-6:16
-8-->C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:5:13-45
+8-->E:\emoCloud\model_login\src\main\AndroidManifest.xml:4:9-6:16
+8-->E:\emoCloud\model_login\src\main\AndroidManifest.xml:5:13-45
 9        </activity>
 10    </application>
 11

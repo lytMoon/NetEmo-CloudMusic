@@ -1,6 +1,7 @@
 package com.lytredrock.emocloudmusic.adapter
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
+import com.lytredrock.emocloudmusic.Download
 import com.lytredrock.emocloudmusic.R
 import com.lytredrock.emocloudmusic.data.Collect
 import com.lytredrock.emocloudmusic.helper.CollectDataHelper
@@ -61,7 +63,11 @@ class CollectAdapter(
                         }
 
                         R.id.collect_download -> {
-
+                            val intent= Intent(itemView.context, Download::class.java)
+                            intent.putExtra("id",data[absoluteAdapterPosition].id)
+                            intent.putExtra("name",data[absoluteAdapterPosition].name)
+                            intent.putExtra("author",data[absoluteAdapterPosition].author)
+                            itemView.context.startActivity(intent)
                             true
                         }
 

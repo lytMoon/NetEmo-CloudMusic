@@ -63,7 +63,6 @@
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
           app:layout_constraintVertical_bias="1.0">
-
          <ImageView
              android:id="@+id/iv_broadcast"
              android:layout_width="50dp"
@@ -71,10 +70,11 @@
              android:src="@drawable/ic_stop"
              app:layout_constraintBottom_toBottomOf="parent"
              app:layout_constraintEnd_toEndOf="parent"
-             app:layout_constraintHorizontal_bias="0.86"
+             app:layout_constraintHorizontal_bias="0.9"
              app:layout_constraintStart_toStartOf="parent"
              app:layout_constraintTop_toTopOf="parent"
              app:layout_constraintVertical_bias="0.52" />
+
          <ImageView
              android:id="@+id/iv_stop"
              android:layout_width="50dp"
@@ -83,10 +83,10 @@
              android:visibility="gone"
              app:layout_constraintBottom_toBottomOf="parent"
              app:layout_constraintEnd_toEndOf="parent"
-             app:layout_constraintHorizontal_bias="0.86"
+             app:layout_constraintHorizontal_bias="0.9"
              app:layout_constraintStart_toStartOf="parent"
              app:layout_constraintTop_toTopOf="parent"
-             app:layout_constraintVertical_bias="0.52"/>
+             app:layout_constraintVertical_bias="0.52" />
 
          <ImageView
              android:id="@+id/iv_findSong"
@@ -102,25 +102,29 @@
 
          <TextView
              android:id="@+id/tv_findSongName"
-             android:layout_width="wrap_content"
+             android:layout_width="230dp"
              android:layout_height="wrap_content"
+             android:textSize="20dp"
+             android:textStyle="bold"
              app:layout_constraintBottom_toBottomOf="parent"
              app:layout_constraintEnd_toEndOf="parent"
-             app:layout_constraintHorizontal_bias="0.25"
+             app:layout_constraintHorizontal_bias="0.49"
              app:layout_constraintStart_toStartOf="parent"
              app:layout_constraintTop_toTopOf="parent"
-             app:layout_constraintVertical_bias="0.32" />
+             app:layout_constraintVertical_bias="0.16000003" />
 
          <TextView
              android:id="@+id/tv_findSongAuthor"
-             android:layout_width="wrap_content"
+             android:layout_width="230dp"
              android:layout_height="wrap_content"
+             android:textSize="20dp"
+             android:textStyle="bold"
              app:layout_constraintBottom_toBottomOf="parent"
              app:layout_constraintEnd_toEndOf="parent"
-             app:layout_constraintHorizontal_bias="0.25"
+             app:layout_constraintHorizontal_bias="0.49"
              app:layout_constraintStart_toStartOf="parent"
              app:layout_constraintTop_toTopOf="parent"
-             app:layout_constraintVertical_bias="0.7" />
+             app:layout_constraintVertical_bias="0.77" />
       </androidx.constraintlayout.widget.ConstraintLayout>
 
    </androidx.constraintlayout.widget.ConstraintLayout>

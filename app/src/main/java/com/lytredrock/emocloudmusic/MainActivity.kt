@@ -10,6 +10,9 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
@@ -55,6 +58,14 @@ class MainActivity : BaseActivity() {
         setContentView(myViewBinding.root)
         transparentStatusBar(window, false)
         iniBind()
+
+        val rotateAnimation = RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+        rotateAnimation.duration = 2000
+        rotateAnimation.repeatCount = Animation.INFINITE
+        rotateAnimation.interpolator = LinearInterpolator()
+        myViewBinding.ivFindSong.startAnimation(rotateAnimation)
+
+
         myViewBinding.ivSlideMenu.bringToFront()
         myViewBinding.ivSlideMenu.setOnClickListener {
             myViewBinding.drawerLayout.openDrawer(GravityCompat.START)
@@ -75,15 +86,24 @@ class MainActivity : BaseActivity() {
             }
         }
 
+
+
         timer.schedule(object : TimerTask() {
             @SuppressLint("SuspiciousIndentation")
             override fun run() {
                 runOnUiThread {
                         myViewBinding.tvFindSongName.text=mBinder.getMusicName()
                         myViewBinding.tvFindSongAuthor.text=mBinder.getMusicAuthor()
+                    if(mBinder.getIsTop()=="0"){
+                        myViewBinding.ivFindSong.startAnimation(rotateAnimation)
+                    }else{
+                        myViewBinding.ivFindSong.clearAnimation()
+                    }
                 }
             }
-        }, 1000, 1000)
+        }, 100, 1000)
+
+
 
         val fragments = ArrayList<BackFragment>()
         fragments.add(object : BackFragment {
