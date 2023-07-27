@@ -8,35 +8,38 @@
 
 p1：从app模块跳转到我的搜索模块
 
-![1690446900253](C:\Users\29364\Documents\Tencent Files\2936437824\FileRecv\MobileFile\1690446900253.gif)
+![1690446900253](https://github.com/lytMoon/emoCloud/assets/117186626/350df4fb-1a15-433f-94ae-758bd413148f)
+
 
 p2：
 
-![1690447021241](C:\Users\29364\Documents\Tencent Files\2936437824\FileRecv\MobileFile\1690447021241.gif)
+![1690447021241](https://github.com/lytMoon/emoCloud/assets/117186626/f39435db-5bd5-4c01-a8b8-5ffd712d4369)
+
 
 
 
 p3:
 
 
+![1690447136139](https://github.com/lytMoon/emoCloud/assets/117186626/ac376206-7553-46ff-8edb-05c262c17be2)
 
-![1690447136139](C:\Users\29364\Documents\Tencent Files\2936437824\FileRecv\MobileFile\1690447136139.gif)
 
 p4:
 
+![1690447798812](https://github.com/lytMoon/emoCloud/assets/117186626/00434cbd-052f-4b5a-ae76-d28433e261ce)
 
-
-![1690447798812](C:\Users\29364\Documents\Tencent Files\2936437824\FileRecv\MobileFile\1690447798812.gif)
 
 p5:
 
-![1690448289818](C:\Users\29364\Documents\Tencent Files\2936437824\FileRecv\MobileFile\1690448289818.gif)
+![1690448289818](https://github.com/lytMoon/emoCloud/assets/117186626/7f299572-cbc2-4bec-b58a-7546ad9084ab)
+
+
 
 p6:
 
 
 
-![1690448368337](C:\Users\29364\Documents\Tencent Files\2936437824\FileRecv\MobileFile\1690448368337.gif)
+![1690448368337](https://github.com/lytMoon/emoCloud/assets/117186626/94785b01-998e-436d-94d0-8534e896858d)
 
 
 
@@ -48,14 +51,16 @@ p6:
 
 ### model_login
 
-功能图如下：![1690448983024](C:\Users\29364\Documents\Tencent Files\2936437824\FileRecv\MobileFile\1690448983024.gif)
+功能图如下：![1690448983024](https://github.com/lytMoon/emoCloud/assets/117186626/68726990-92cc-4a94-b072-a2d54a3ebb72)
+
 
 
 这是我第一个开始制作的模块。这个模块我个人认为是我做的最不好的一个模块，有很多的方面，我们先来看一下具体的实现逻辑。
 
-![image-20230727171306107](C:\Users\29364\AppData\Roaming\Typora\typora-user-images\image-20230727171306107.png)
+![B6O{K1_75 15@%OZFVZB6@O](https://github.com/lytMoon/emoCloud/assets/117186626/dcbf7114-abbc-4f2c-9fe9-656b1080776c)
 
-大致的分包情况如下。我们把网络请求封装在了networkUtils里面，在ui界面处理登录的具体逻辑。首先是点击生成二维码的按钮，会生成一张二维码图片，这里的具体实现是：点击按钮的时候，会进行两次网络请求，第一次拿到key，第二次通过key得到服务器返回的二维码的base64的相关信息，再通过我们自己定义的base64转成bitmap的方法，把二维码图片显示在ui上，最后用户扫码后点击登录按钮，我们会再次发送网络请求检查一下是否扫码和用户状态。这里需要做很多的逻辑处理，我用了很多的if else语句，导致代码很是膨胀，看起来有点难懂。手机号的登录方式也大致如此。这里的逻辑处理我写的很拉胯（自我感觉），但是这个模块还有下面的一些问题。
+
+大致的分包情况如上。我们把网络请求封装在了networkUtils里面，在ui界面处理登录的具体逻辑。首先是点击生成二维码的按钮，会生成一张二维码图片，这里的具体实现是：点击按钮的时候，会进行两次网络请求，第一次拿到key，第二次通过key得到服务器返回的二维码的base64的相关信息，再通过我们自己定义的base64转成bitmap的方法，把二维码图片显示在ui上，最后用户扫码后点击登录按钮，我们会再次发送网络请求检查一下是否扫码和用户状态。这里需要做很多的逻辑处理，我用了很多的if else语句，导致代码很是膨胀，看起来有点难懂。手机号的登录方式也大致如此。这里的逻辑处理我写的很拉胯（自我感觉），但是这个模块还有下面的一些问题。
 
 最开始写的就是**model_login**,网络请求的框架是Retrofit和Rxjava联动，最后接口返回的数据通过回调的方式传到主activity里面，其实这里我不应该写太多的接口回调，当我意识到的时候，这个模块改起来已经很麻烦了，（**除了这个登录模块，其他的模块全部删除了网络请求的接口回调**，观察者模式的本质也是接口回调。）因为登录接口返回的数据很简单，数据接受类也很简单，我**当时没有设置viewmodel层**，直接把数据返回给了主activity。当时的逻辑处理很多，重新该的话已经很麻烦了，所以我就没有在登录模块上重新翻新。很遗憾。
 
@@ -67,7 +72,7 @@ p6:
 
 
 
-![1690454476884](C:\Users\29364\Documents\Tencent Files\2936437824\FileRecv\MobileFile\1690454476884.gif)
+![1690454476884](https://github.com/lytMoon/emoCloud/assets/117186626/f10f72d7-2e18-4afe-9272-fbbfd58a49fe)
 
 
 
@@ -83,11 +88,12 @@ p6:
 
 
 
-![Screenshot_2023-07-27-18-46-46-011_com.lytredrock](C:\Users\29364\Documents\Tencent Files\2936437824\FileRecv\MobileFile\Screenshot_2023-07-27-18-46-46-011_com.lytredrock.jpg)
+![Screenshot_2023-07-27-18-46-46-011_com lytredrock](https://github.com/lytMoon/emoCloud/assets/117186626/0faf804d-772e-4e3d-9932-a654f4af8723)
+
 
 播放器用的是第三方的库，ui自己搭建。
 
-![Screenshot_2023-07-27-18-48-18-118_com.lytredrock](C:\Users\29364\Documents\Tencent Files\2936437824\FileRecv\MobileFile\Screenshot_2023-07-27-18-48-18-118_com.lytredrock.jpg)
+![Screenshot_2023-07-27-18-48-18-118_com lytredrock](https://github.com/lytMoon/emoCloud/assets/117186626/8256c22a-3de6-470a-b2dc-b9ac4d2425a8)
 
 为了实现抖音那种评论区的效果，我使用了material 的bottomsheetdialog。里面封装了fragment，不影响视频的播放。
 
@@ -98,7 +104,7 @@ p6:
 
 
 
-![img](file:///C:\Users\29364\Documents\Tencent Files\2936437824\Image\C2C\_-724492641__101e2f6c65b60a4bd3f6b3af85ea082b_1659933538_Screenshot_2023-07-27-18-56-56-484_com.lytredrock_0_xg_0.jpg)
+![_-724492641__101e2f6c65b60a4bd3f6b3af85ea082b_1659933538_Screenshot_2023-07-27-18-56-56-484_com lytredrock_0_xg_0](https://github.com/lytMoon/emoCloud/assets/117186626/713ba6f4-2ac0-4618-a63d-a60f1064c6bf)
 
 这里的布局是这样的：
 顶部导航栏是在activity里面，中间音乐播放的界面是fragment，下面又是
