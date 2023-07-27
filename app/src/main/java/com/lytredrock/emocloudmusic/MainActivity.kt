@@ -15,6 +15,7 @@ import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import com.alibaba.android.arouter.launcher.ARouter
 import com.lytredrock.emocloudmusic.adapter.FragmentAdapter
 import com.lytredrock.emocloudmusic.databinding.ActivityMainBinding
 import com.lytredrock.emocloudmusic.frgment.BackFragment
@@ -26,17 +27,17 @@ import java.util.Timer
 import java.util.TimerTask
 
 class MainActivity : BaseActivity() {
-    private lateinit var mBinder: MusicService.MusicBinder
+    private lateinit var myBinder: MusicService.MusicBinder
 
     private val timer = Timer()
 
-    private val connection = object : ServiceConnection {
+    private val myConnection = object : ServiceConnection {
         /**
          * activity 和 service 成功绑定的时候会调用
          */
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             //初始化mBinder对象
-            mBinder = service as MusicService.MusicBinder
+            myBinder = service as MusicService.MusicBinder
         }
 
         //service进程创建过程中崩溃或者被杀掉的时候会调用
@@ -74,21 +75,32 @@ class MainActivity : BaseActivity() {
         myViewBinding.ivSlideMenu.bringToFront()
         myViewBinding.ivSlideMenu.setOnClickListener {
             myViewBinding.drawerLayout.openDrawer(GravityCompat.START)
+            Log.d("59529","(MainActivity.kt:88)-->>${myBinder.getDuration()} ");
+
+
         }
 
         myViewBinding.ivBroadcast.setOnClickListener {
-            if (mBinder.getIsTop() == "0") {
-                mBinder.stop()
+            if (myBinder.isPlaying()) {
+                myBinder.stop()
                 myViewBinding.ivStop.visibility = View.VISIBLE
                 myViewBinding.ivBroadcast.visibility = View.GONE
             }
         }
         myViewBinding.ivStop.setOnClickListener {
-            if (mBinder.getIsTop() == "0") {
-                mBinder.start()
+            if (!myBinder.isPlaying()) {
+                myBinder.start()
                 myViewBinding.ivStop.visibility = View.GONE
                 myViewBinding.ivBroadcast.visibility = View.VISIBLE
             }
+        }
+        /**
+         * 利用ARouter跳转
+         */
+        myViewBinding.constraint.setOnClickListener {
+            ARouter.getInstance()
+                .build("/music/musicPlay")
+                .navigation()
         }
 
 
@@ -97,9 +109,9 @@ class MainActivity : BaseActivity() {
             @SuppressLint("SuspiciousIndentation")
             override fun run() {
                 runOnUiThread {
-                    myViewBinding.tvFindSongName.text = mBinder.getMusicName()
-                    myViewBinding.tvFindSongAuthor.text = mBinder.getMusicAuthor()
-                    if (mBinder.getIsTop() == "0") {
+                    myViewBinding.tvFindSongName.text = myBinder.getMusicName()
+                    myViewBinding.tvFindSongAuthor.text = myBinder.getMusicAuthor()
+                    if (myBinder.isPlaying()) {
                         myViewBinding.ivFindSong.startAnimation(rotateAnimation)
                     } else {
                         myViewBinding.ivFindSong.clearAnimation()
@@ -145,12 +157,12 @@ class MainActivity : BaseActivity() {
     private fun iniBind() {
         val intent = Intent(this, MusicService::class.java)
         startService(intent)
-        bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        bindService(intent, myConnection, Context.BIND_AUTO_CREATE)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        unbindService(connection)//解除绑定
+        unbindService(myConnection)//解除绑定
         timer.cancel()
     }
 }

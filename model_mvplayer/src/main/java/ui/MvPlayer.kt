@@ -22,7 +22,6 @@ import com.lytredrock.lib.base.BaseUtils.myToast
 import com.lytredrock.lib.base.BaseUtils.transparentStatusBar
 import com.lytredrock.model.mvplayer.R
 import com.lytredrock.model.mvplayer.databinding.ActivityMvPlayerBinding
-import com.lytredrock.model.mvplayer.databinding.BottomSheetLayoutBinding
 import com.lytredrock.model.player.ui.MusicService
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
@@ -55,16 +54,16 @@ class MvPlayer : AppCompatActivity() {
             layoutInflater
         )
     }
-    private lateinit var mBinder: MusicService.MusicBinder
-    private val connection = object : ServiceConnection {
+    private lateinit var mvBinder: MusicService.MusicBinder
+    private val mvConnection = object : ServiceConnection {
         /**
          * activity 和 service 成功绑定的时候会调用
          */
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             //初始化mBinder对象
-            mBinder = service as MusicService.MusicBinder
-            mBinder.stop()
-            Log.d("852255","(MvPlayer.kt:66)-->> ${mBinder.getDuration()}");
+            mvBinder = service as MusicService.MusicBinder
+            mvBinder.stop()
+            Log.d("852255","(MvPlayer.kt:66)-->> ${mvBinder.getDuration()}");
         }
 
         //service进程创建过程中崩溃或者被杀掉的时候会调用
@@ -89,7 +88,7 @@ class MvPlayer : AppCompatActivity() {
     private fun iniStartService() {
         val intent = Intent(this, MusicService::class.java)
         startService(intent)
-        bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        bindService(intent, mvConnection, Context.BIND_AUTO_CREATE)
     }
 
 
@@ -292,8 +291,8 @@ class MvPlayer : AppCompatActivity() {
          * 可能会出现闪退
          * 这里我还不知道如何解决。
          */
-        mBinder.start()
-        unbindService(connection)//解除绑定
+        mvBinder.start()
+        unbindService(mvConnection)//解除绑定
     }
 }
 

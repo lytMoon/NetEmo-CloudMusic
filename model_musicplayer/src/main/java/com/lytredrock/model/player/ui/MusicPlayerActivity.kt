@@ -57,7 +57,7 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    val handler = Handler(Looper.getMainLooper())
+    private val handler = Handler(Looper.getMainLooper())
     private val runnable = object : Runnable {
         override fun run() {
             updateProgress()
@@ -86,6 +86,8 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(mBinding.root)
         ARouter.getInstance().inject(this@MusicPlayerActivity)
+        val hahaha= intent.getStringExtra("need")
+        Log.d("595965","(MusicPlayerActivity.kt:90)-->> $hahaha")
         transparentStatusBar(window, false)
         replaceFragment(PageOneFragment())
         iniPlayMusic()
@@ -236,7 +238,7 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
         if (!::musicId.isInitialized) {
             try {
                 Log.d("852852", "(MusicPlayerActivity.kt:112)-->> 空");
-                val music = sharedPreferences.getString("my_key", "").toString()
+                val music = sharedPreferences.getString("my_key", "1486264538").toString()
                 Log.d("852852", "(MusicPlayerActivity.kt:109)-->> $music")
                 playerViewModel.getMusicComments(music)
                 playerViewModel.getMusicLyrics(music)
@@ -290,9 +292,6 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
         handler.removeCallbacks(runnable)//释放我们的handler
         unbindService(connection)//解除绑定
         myToast("已经切换到后台服务", this)
-        val intent = Intent(this, MusicService::class.java)
-        intent.putExtra("justOK", "0")
-        startService(intent)
     }
 
 

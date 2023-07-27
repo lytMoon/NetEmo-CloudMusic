@@ -9,6 +9,7 @@ import java.util.Timer
 import java.util.TimerTask
 
 class SplashActivity : BaseActivity() {
+    private val timer = Timer()
     private val myViewBinding: ActivitySplashBinding by lazy {
         ActivitySplashBinding.inflate(
             layoutInflater
@@ -31,7 +32,7 @@ class SplashActivity : BaseActivity() {
         Glide.with(this).load(R.drawable.splash).into(myViewBinding.ivSplash)
 
 
-        Timer().schedule(object : TimerTask() {
+        timer.schedule(object : TimerTask() {
             @SuppressLint("SuspiciousIndentation")
             override fun run() {
                 if (boolean)
@@ -39,5 +40,10 @@ class SplashActivity : BaseActivity() {
                 finish()
             }
         }, 4000)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer.cancel()
     }
 }
