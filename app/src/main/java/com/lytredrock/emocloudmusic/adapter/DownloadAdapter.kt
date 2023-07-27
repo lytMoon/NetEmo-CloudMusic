@@ -31,8 +31,8 @@ class DownloadAdapter(val data: List<DownloadSongData>) :
     }
 
     inner class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
-       val name=root.findViewById<TextView>(R.id.tv_downloadName)
-        val author=root.findViewById<TextView>(R.id.tv_downloadAuthor)
+        val name = root.findViewById<TextView>(R.id.tv_downloadName)
+        val author = root.findViewById<TextView>(R.id.tv_downloadAuthor)
 
     }
 
@@ -50,8 +50,8 @@ class DownloadAdapter(val data: List<DownloadSongData>) :
     override fun onBindViewHolder(holder: InnerHolder, position: Int) {
         val itemData = data[position]
         holder.apply {
-            name.text=itemData.name
-            author.text=itemData.author
+            name.text = itemData.name
+            author.text = itemData.author
         }
     }
 }

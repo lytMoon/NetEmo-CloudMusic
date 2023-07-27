@@ -38,6 +38,7 @@ class HotSongListAdapter(
     inner class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
         val cover = root.findViewById<ImageView>(R.id.iv_hotSongList)
         val name = root.findViewById<TextView>(R.id.tv_hotSongListName)
+
         init {
             cover.setOnClickListener {
                 clickInterface?.onImageviewClick(cover, absoluteAdapterPosition)

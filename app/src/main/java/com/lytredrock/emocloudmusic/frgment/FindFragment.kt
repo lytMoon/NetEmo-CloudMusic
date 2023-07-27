@@ -3,7 +3,6 @@ package com.lytredrock.emocloudmusic.frgment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +36,7 @@ class FindFragment : Fragment() {
 
     private val binding: FragmentFindBinding by lazy { FragmentFindBinding.inflate(layoutInflater) }
 
-    private val timer=Timer()
+    private val timer = Timer()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -72,12 +71,16 @@ class FindFragment : Fragment() {
                 binding.rvRecommendSongList.layoutManager = CarouselLayoutManager()
                 myAdapter.setOnclick(object : RecommendSongListAdapter.ClickInterface {
                     override fun onImageviewClick(view: ImageView, position: Int) {
-                        val bundle=ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),view,"ShareElement1").toBundle()
+                        val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            requireActivity(),
+                            view,
+                            "ShareElement1"
+                        ).toBundle()
                         val intent = Intent(requireContext(), SongListActivity::class.java)
                         intent.putExtra("id", it[position].id)
-                        intent.putExtra("name",it[position].name)
-                        intent.putExtra("photo",it[position].picUrl)
-                        startActivity(intent,bundle)
+                        intent.putExtra("name", it[position].name)
+                        intent.putExtra("photo", it[position].picUrl)
+                        startActivity(intent, bundle)
                     }
 
                 })
@@ -103,7 +106,9 @@ class FindFragment : Fragment() {
 
                     fragments.size - 1 -> activity?.runOnUiThread { binding.vpFind.currentItem = 0 }
 
-                    else ->  activity?.runOnUiThread {binding.vpFind.currentItem =++binding.vpFind.currentItem}
+                    else -> activity?.runOnUiThread {
+                        binding.vpFind.currentItem = ++binding.vpFind.currentItem
+                    }
                 }
             }
 
@@ -119,6 +124,7 @@ class FindFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         timer.cancel()

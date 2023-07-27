@@ -15,8 +15,6 @@ import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import com.alibaba.android.arouter.launcher.ARouter
-import com.bumptech.glide.Glide
 import com.lytredrock.emocloudmusic.adapter.FragmentAdapter
 import com.lytredrock.emocloudmusic.databinding.ActivityMainBinding
 import com.lytredrock.emocloudmusic.frgment.BackFragment
@@ -59,7 +57,14 @@ class MainActivity : BaseActivity() {
         transparentStatusBar(window, false)
         iniBind()
 
-        val rotateAnimation = RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+        val rotateAnimation = RotateAnimation(
+            0f,
+            360f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f
+        )
         rotateAnimation.duration = 2000
         rotateAnimation.repeatCount = Animation.INFINITE
         rotateAnimation.interpolator = LinearInterpolator()
@@ -72,17 +77,17 @@ class MainActivity : BaseActivity() {
         }
 
         myViewBinding.ivBroadcast.setOnClickListener {
-            if(mBinder.getIsTop()=="0"){
-               mBinder.stop()
-                myViewBinding.ivStop.visibility= View.VISIBLE
-                myViewBinding.ivBroadcast.visibility=View.GONE
+            if (mBinder.getIsTop() == "0") {
+                mBinder.stop()
+                myViewBinding.ivStop.visibility = View.VISIBLE
+                myViewBinding.ivBroadcast.visibility = View.GONE
             }
         }
         myViewBinding.ivStop.setOnClickListener {
-            if(mBinder.getIsTop()=="0"){
+            if (mBinder.getIsTop() == "0") {
                 mBinder.start()
-                myViewBinding.ivStop.visibility= View.GONE
-                myViewBinding.ivBroadcast.visibility=View.VISIBLE
+                myViewBinding.ivStop.visibility = View.GONE
+                myViewBinding.ivBroadcast.visibility = View.VISIBLE
             }
         }
 
@@ -92,17 +97,16 @@ class MainActivity : BaseActivity() {
             @SuppressLint("SuspiciousIndentation")
             override fun run() {
                 runOnUiThread {
-                        myViewBinding.tvFindSongName.text=mBinder.getMusicName()
-                        myViewBinding.tvFindSongAuthor.text=mBinder.getMusicAuthor()
-                    if(mBinder.getIsTop()=="0"){
+                    myViewBinding.tvFindSongName.text = mBinder.getMusicName()
+                    myViewBinding.tvFindSongAuthor.text = mBinder.getMusicAuthor()
+                    if (mBinder.getIsTop() == "0") {
                         myViewBinding.ivFindSong.startAnimation(rotateAnimation)
-                    }else{
+                    } else {
                         myViewBinding.ivFindSong.clearAnimation()
                     }
                 }
             }
         }, 100, 1000)
-
 
 
         val fragments = ArrayList<BackFragment>()

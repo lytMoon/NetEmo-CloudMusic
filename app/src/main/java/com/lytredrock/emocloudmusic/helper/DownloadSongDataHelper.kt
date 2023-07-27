@@ -15,7 +15,8 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.lytredrock.emocloudmusic.data.DownloadSongData
 
-class DownloadSongDataHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class DownloadSongDataHelper(context: Context) :
+    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_VERSION = 1
@@ -26,7 +27,8 @@ class DownloadSongDataHelper(context: Context) : SQLiteOpenHelper(context, DATAB
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        val createTableQuery = "CREATE TABLE $TABLE_DOWNLOAD_SONG_DATA ($KEY_NAME TEXT, $KEY_AUTHOR TEXT)"
+        val createTableQuery =
+            "CREATE TABLE $TABLE_DOWNLOAD_SONG_DATA ($KEY_NAME TEXT, $KEY_AUTHOR TEXT)"
         db.execSQL(createTableQuery)
     }
 
@@ -38,6 +40,7 @@ class DownloadSongDataHelper(context: Context) : SQLiteOpenHelper(context, DATAB
     fun clearDownloadSongData() {
         writableDatabase.delete(TABLE_DOWNLOAD_SONG_DATA, null, null)
     }
+
     fun addDownloadSongData(downloadSongData: DownloadSongData) {
         val values = ContentValues()
         values.put(KEY_NAME, downloadSongData.name)

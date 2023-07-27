@@ -26,7 +26,7 @@ class MainRvAdapter(val data: List<Data>, private val activity: FragmentActivity
         fun onTitleClick(view: View, position: Int)
     }
 
-     fun setOnclick(clickInterface: ClickInterface) {
+    fun setOnclick(clickInterface: ClickInterface) {
         this.clickInterface = clickInterface
     }
 

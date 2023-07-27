@@ -1,5 +1,6 @@
 package com.lytredrock.emocloudmusic.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,24 +10,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
+import com.lytredrock.emocloudmusic.Download
 import com.lytredrock.emocloudmusic.R
 import com.lytredrock.emocloudmusic.SingerSong
-import android.content.Context
-import android.content.Context.MODE_APPEND
-import android.content.Intent
-import android.content.SharedPreferences
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
-import com.lytredrock.emocloudmusic.Download
-import com.lytredrock.emocloudmusic.SongListActivity
-import com.lytredrock.emocloudmusic.data.Collect
-import com.lytredrock.emocloudmusic.data.Data
 import com.lytredrock.emocloudmusic.data.SingSongData
-import com.lytredrock.emocloudmusic.data.Song
-import com.lytredrock.emocloudmusic.frgment.MineFragment
-import com.lytredrock.emocloudmusic.viewmodel.FindFragmentViewModel
-import com.lytredrock.emocloudmusic.viewmodel.MineFragmentViewModel
 
 /**
  * description ： TODO:类的作用
@@ -46,24 +33,25 @@ class SingerSongAdapter(val data: List<SingSongData.SingerSong>, private val act
         this.clickInterface = clickInterface
     }
 
-   inner class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
-        val mv=root.findViewById<ImageView>(R.id.iv_singerMv)
-        val songName=root.findViewById<TextView>(R.id.tv_songName)
-        val artist=root.findViewById<TextView>(R.id.tv_Sing)
-       val more=root.findViewById<ImageView>(R.id.iv_more)
+    inner class InnerHolder(root: View) : RecyclerView.ViewHolder(root) {
+        val mv = root.findViewById<ImageView>(R.id.iv_singerMv)
+        val songName = root.findViewById<TextView>(R.id.tv_songName)
+        val artist = root.findViewById<TextView>(R.id.tv_Sing)
+        val more = root.findViewById<ImageView>(R.id.iv_more)
+
         init {
             mv.setOnClickListener {
                 ARouter.getInstance()
                     .build("/mv/mvPlay")
-                    .withString("mvUid",data[absoluteAdapterPosition].mv.toString())
-                    .withString("mvName",data[absoluteAdapterPosition].name)
+                    .withString("mvUid", data[absoluteAdapterPosition].mv.toString())
+                    .withString("mvName", data[absoluteAdapterPosition].name)
                     .navigation()
             }
 
             itemView.setOnClickListener {
                 ARouter.getInstance()
                     .build("/music/musicPlay")
-                    .withString("musicId",data[absoluteAdapterPosition].id.toString())
+                    .withString("musicId", data[absoluteAdapterPosition].id.toString())
                     .navigation()
             }
 
@@ -72,20 +60,23 @@ class SingerSongAdapter(val data: List<SingSongData.SingerSong>, private val act
                 popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
                 popupMenu.setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
-                        R.id.collect-> {
-                            val intent=Intent(itemView.context,
-                                com.lytredrock.emocloudmusic.Collect::class.java)
-                            intent.putExtra("name",data[absoluteAdapterPosition].name)
-                            intent.putExtra("author",data[absoluteAdapterPosition].ar[0].name)
-                            intent.putExtra("id",data[absoluteAdapterPosition].id)
+                        R.id.collect -> {
+                            val intent = Intent(
+                                itemView.context,
+                                com.lytredrock.emocloudmusic.Collect::class.java
+                            )
+                            intent.putExtra("name", data[absoluteAdapterPosition].name)
+                            intent.putExtra("author", data[absoluteAdapterPosition].ar[0].name)
+                            intent.putExtra("id", data[absoluteAdapterPosition].id)
                             itemView.context.startActivity(intent)
                             true
                         }
-                        R.id.download->{
-                            val intent=Intent(itemView.context,Download::class.java)
-                            intent.putExtra("id",data[absoluteAdapterPosition].id)
-                            intent.putExtra("name",data[absoluteAdapterPosition].name)
-                            intent.putExtra("author",data[absoluteAdapterPosition].ar[0].name)
+
+                        R.id.download -> {
+                            val intent = Intent(itemView.context, Download::class.java)
+                            intent.putExtra("id", data[absoluteAdapterPosition].id)
+                            intent.putExtra("name", data[absoluteAdapterPosition].name)
+                            intent.putExtra("author", data[absoluteAdapterPosition].ar[0].name)
                             itemView.context.startActivity(intent)
                             true
                         }
@@ -112,16 +103,19 @@ class SingerSongAdapter(val data: List<SingSongData.SingerSong>, private val act
     override fun onBindViewHolder(holder: InnerHolder, position: Int) {
         val itemData = data[position]
         holder.apply {
-            songName.text=itemData.name
-            when(itemData.ar.size){
-                1->artist.text="${itemData.ar[0].name}-${itemData.al.name}"
-                2->artist.text="${itemData.ar[0].name}/${itemData.ar[1].name}-${itemData.al.name}"
-                else->artist.text="${itemData.ar[0].name}/${itemData.ar[1].name}/${itemData.ar[2].name}-${itemData.al.name}"
+            songName.text = itemData.name
+            when (itemData.ar.size) {
+                1 -> artist.text = "${itemData.ar[0].name}-${itemData.al.name}"
+                2 -> artist.text =
+                    "${itemData.ar[0].name}/${itemData.ar[1].name}-${itemData.al.name}"
+
+                else -> artist.text =
+                    "${itemData.ar[0].name}/${itemData.ar[1].name}/${itemData.ar[2].name}-${itemData.al.name}"
             }
-            if(itemData.mv!=0){
+            if (itemData.mv != 0) {
                 Glide.with(activity).load(R.drawable.ic_broadcast).into(mv)
-            }else{
-                mv.visibility=View.GONE
+            } else {
+                mv.visibility = View.GONE
             }
         }
 
