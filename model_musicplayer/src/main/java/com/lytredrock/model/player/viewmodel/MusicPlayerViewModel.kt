@@ -7,6 +7,7 @@ import com.lytredrock.model.player.utils.PlayerNetWorkUtils
 import com.lytredrock.model.player.playerData.Data
 import com.lytredrock.model.player.playerData.HotComment
 import com.lytredrock.model.player.playerData.Lrc
+import com.lytredrock.model.player.playerData.MusicProgressData
 import com.lytredrock.model.player.playerData.Song
 
 /**
@@ -17,6 +18,13 @@ import com.lytredrock.model.player.playerData.Song
  * version: 1.0
  */
 class MusicPlayerViewModel : ViewModel() {
+
+    /**
+     * 这个livedata直接用于数据更新，不会进行网络请求，只储存音乐播放进度的值，
+     * 不private
+     */
+     val musicProgressData: MutableLiveData<MusicProgressData> = MutableLiveData()
+
 
     private val _musicUrlInfo: MutableLiveData<List<Data>> = MutableLiveData()
     val musicUrlInfo: LiveData<List<Data>>

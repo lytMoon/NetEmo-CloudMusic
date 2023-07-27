@@ -8,5 +8,5 @@ package com.lytredrock.model.player.playerData
  * date : 2023/7/24 17:07
  * version: 1.0
  */
-data class MusicProgressData( val currentPosition : Int, val bufferedPosition : Int, val duration : Int)
+data class MusicProgressData( val isPlaying:Boolean)
 
