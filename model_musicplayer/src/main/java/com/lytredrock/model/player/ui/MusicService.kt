@@ -41,7 +41,6 @@ class MusicService : Service() {
         fun startPlay() {
             player.addListener(this)
 
-
             /**
              * 判断是不是点的上面的前台服务，如果不是就重新播放音乐（肯定切换新的音乐了）
              */
@@ -159,9 +158,9 @@ class MusicService : Service() {
     }
 
     override fun onDestroy() {
+        super.onDestroy()
         player.stop()
         player.release()
-        super.onDestroy()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -176,6 +175,7 @@ class MusicService : Service() {
         Log.d("555527", "(MusicService.kt:97)-->> $tag");
         Log.d("555528", "onStartCommand: ${musicName}$musicAuthorName$musicImgUrl")
         return super.onStartCommand(intent, flags, startId)
+
     }
 
 

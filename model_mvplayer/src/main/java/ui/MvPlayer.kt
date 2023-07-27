@@ -284,6 +284,7 @@ class MvPlayer : AppCompatActivity() {
     }
 
     override fun finish() {
+        super.finish()
         mBinding.iVideoPlayer.release()
         /**
          * 很遗憾，安卓杀后台杀得很厉害，我们这边设置进入service的时候音乐暂停，但是并没有停止
@@ -293,8 +294,6 @@ class MvPlayer : AppCompatActivity() {
          */
         mBinder.start()
         unbindService(connection)//解除绑定
-        super.finish()
-
     }
 }
 
