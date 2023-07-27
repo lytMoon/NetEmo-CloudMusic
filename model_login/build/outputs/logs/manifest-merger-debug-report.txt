@@ -1,31 +1,31 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\emoCloud\model_login\src\main\AndroidManifest.xml:2:1-7:26
-INJECTED from E:\emoCloud\model_login\src\main\AndroidManifest.xml:2:1-7:26
-INJECTED from E:\emoCloud\model_login\src\main\AndroidManifest.xml:2:1-7:26
+ADDED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:2:1-7:26
+INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:2:1-7:26
+INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:2:1-7:26
 	package
-		INJECTED from E:\emoCloud\model_login\src\main\AndroidManifest.xml
-		ADDED from E:\emoCloud\model_login\src\main\AndroidManifest.xml:2:1-7:26
-		INJECTED from E:\emoCloud\model_login\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml
+		ADDED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:2:1-7:26
+		INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from E:\emoCloud\model_login\src\main\AndroidManifest.xml:2:11-69
+		ADDED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:2:11-69
 application
-ADDED from E:\emoCloud\model_login\src\main\AndroidManifest.xml:3:5-7:15
+ADDED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:3:5-7:15
 activity#com.lytredrock.model.login.ui.LoginActivity
-ADDED from E:\emoCloud\model_login\src\main\AndroidManifest.xml:4:9-6:16
+ADDED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:4:9-6:16
 	android:name
-		ADDED from E:\emoCloud\model_login\src\main\AndroidManifest.xml:5:13-45
+		ADDED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml:5:13-45
 uses-sdk
-INJECTED from E:\emoCloud\model_login\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from E:\emoCloud\model_login\src\main\AndroidManifest.xml
-INJECTED from E:\emoCloud\model_login\src\main\AndroidManifest.xml
-INJECTED from E:\emoCloud\model_login\src\main\AndroidManifest.xml
-INJECTED from E:\emoCloud\model_login\src\main\AndroidManifest.xml
+INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml
+INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml
+INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml
+INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from E:\emoCloud\model_login\src\main\AndroidManifest.xml
-		ADDED from E:\emoCloud\model_login\src\main\AndroidManifest.xml
-		INJECTED from E:\emoCloud\model_login\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml
+		ADDED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from E:\emoCloud\model_login\src\main\AndroidManifest.xml
-		ADDED from E:\emoCloud\model_login\src\main\AndroidManifest.xml
-		INJECTED from E:\emoCloud\model_login\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml
+		ADDED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\29364\Desktop\emoCloud\model_login\src\main\AndroidManifest.xml

@@ -33,6 +33,7 @@ class MusicService : Service() {
     private lateinit var musicName: String
     private lateinit var musicAuthorName: String
     private lateinit var musicImgUrl: String
+    private  var justTest ="0"
     var tag: String = "0"
     private val binder = MusicBinder()
 
@@ -141,19 +142,20 @@ class MusicService : Service() {
             )
             manager.createNotificationChannel(channel)
         }
-        //if (tag!="1"){
-        val intent = Intent(this, MusicPlayerActivity::class.java)
-        val pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-        val notification = NotificationCompat.Builder(this, "my_service")
-            .setContentTitle("emoCloud")
-            .setContentText("音乐播放服务持续生效中")
-            .setSmallIcon(R.drawable.musiclogo)
-            .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.musiclogo))
-            .setContentIntent(pi)
-            .setOngoing(true)  // 设置通知为持续显示
-            .build()
-        startForeground(1, notification)
-        //  }
+        //虽然设置了，但是很遗憾，service也绑定了主app，一开始就初始化了，if相当于没有
+        if(justTest=="0"){
+            val intent = Intent(this, MusicPlayerActivity::class.java)
+            val pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+            val notification = NotificationCompat.Builder(this, "my_service")
+                .setContentTitle("emoCloud")
+                .setContentText("音乐播放服务持续生效中")
+                .setSmallIcon(R.drawable.musiclogo)
+                .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.musiclogo))
+                .setContentIntent(pi)
+                .setOngoing(true)  // 设置通知为持续显示
+                .build()
+            startForeground(1, notification)
+        }
 
     }
 
@@ -170,10 +172,12 @@ class MusicService : Service() {
         musicName = intent?.getStringExtra("musicName").toString()
         musicAuthorName = intent?.getStringExtra("musicAuthorName").toString()
         musicImgUrl = intent?.getStringExtra("musicImgUrl").toString()
+        justTest = intent?.getStringExtra("justOK").toString()
         Log.d("555525", "(MusicService.kt:97)-->> $url");
         Log.d("555526", "(MusicService.kt:97)-->> $isTop");
         Log.d("555527", "(MusicService.kt:97)-->> $tag");
         Log.d("555528", "onStartCommand: ${musicName}$musicAuthorName$musicImgUrl")
+        Log.d("555529", "onStartCommand: $justTest")
         return super.onStartCommand(intent, flags, startId)
 
     }

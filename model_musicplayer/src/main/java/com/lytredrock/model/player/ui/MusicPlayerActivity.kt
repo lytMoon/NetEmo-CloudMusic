@@ -37,7 +37,6 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
 
     @Autowired
     lateinit var musicId: String
-    private val musicProgressData: MutableLiveData<MusicProgressData> = MutableLiveData()
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var mBinder: MusicService.MusicBinder
     private val connection = object : ServiceConnection {
@@ -67,11 +66,8 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun updateProgress() {
-        val currentPosition = mBinder.getCurrentPosition()
-        val bufferedPosition = mBinder.getBufferedPosition()
-        val duration = mBinder.getDuration()
-        Log.d("currentPlayer", "(MusicPlayerActivity.kt:48)-->> $duration")
-        updateData(currentPosition, bufferedPosition, duration)
+        mBinding.musicProgress.progress =
+            (mBinder.getCurrentPosition() * 100 / mBinder.getDuration())
     }
 
     //懒加载注入viewModel和viewBinding
@@ -93,7 +89,6 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
         replaceFragment(PageOneFragment())
         iniPlayMusic()
         identifyNotify(this)
-        iniSeekBar()//同步进度条
         iniClick()//实现点击方法
 
     }
@@ -122,7 +117,6 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
             // 存储数据
             intent.putExtra("musicUrl", it[0].url)
             intent.putExtra("is_ok", isTop)
-
             startService(intent)
             bindService(intent, connection, Context.BIND_AUTO_CREATE)
         }
@@ -132,21 +126,9 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
             intent.putExtra("musicImgUrl", it[0].al.picUrl)
             startService(intent)
         }
+        intent.putExtra("justOK", "1")
+        startService(intent)
     }
-
-    /**
-     * 这里用来更新我们的seekBar
-     */
-    private fun iniSeekBar() {
-        musicProgressData.observe(this) {
-            Log.d(
-                "musicProgressData",
-                "(MusicPlayerActivity.kt:88)-->>${it.duration}+${it.bufferedPosition}+${it.currentPosition}"
-            )
-            mBinding.musicProgress.progress = (it.currentPosition * 100 / it.duration)
-        }
-    }
-
 
     /**
      * 这里实现点击事件,分别是播放暂停的切换和初始化fragment
@@ -155,6 +137,8 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.music_play -> {
+                val isPlay = mBinder.isPlaying()
+                updateData(!isPlay)
                 if (mBinder.isPlaying()) {
                     mBinding.musicPlay.setImageDrawable(getDrawable(R.drawable.play_icon))
                     mBinder.stop()
@@ -278,19 +262,22 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
     /**
      * 这里我们使用liveData更新数据，每次都通过新的数据类进行过滤。最终把更新的数据值传递到我们的liveData里面
      */
-    private fun updateData(currentPosition: Int, bufferedPosition: Int, duration: Int) {
-        val newData = MusicProgressData(currentPosition, bufferedPosition, duration)
-        musicProgressData.value = newData
+    private fun updateData(isPlaying: Boolean) {
+        val newData = MusicProgressData(isPlaying)
+        playerViewModel.musicProgressData.value = newData
     }
 
     /**
      * finish方法里面释放我们的player和之前的handler
      */
     override fun finish() {
+        super.finish()
         handler.removeCallbacks(runnable)//释放我们的handler
         unbindService(connection)//解除绑定
         myToast("已经切换到后台服务", this)
-        super.finish()
+        val intent = Intent(this, MusicService::class.java)
+        intent.putExtra("justOK", "0")
+        startService(intent)
     }
 
 
