@@ -29,6 +29,7 @@ import com.lytredrock.model.player.fragment.PageTwoFragment
 import com.lytredrock.model.player.playerData.MusicProgressData
 import com.lytredrock.model.player.utils.ServiceUtils.identifyNotify
 import com.lytredrock.model.player.viewmodel.MusicPlayerViewModel
+import java.lang.NullPointerException
 
 
 @Route(path = "/music/musicPlay")
@@ -112,22 +113,28 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun iniSendMsg(isTop: String) {
-        val intent = Intent(this, MusicService::class.java)
-        playerViewModel.musicUrlInfo.observe(this) {
-            // 存储数据
-            intent.putExtra("musicUrl", it[0].url)
-            intent.putExtra("is_ok", isTop)
+        try {
+            val intent = Intent(this, MusicService::class.java)
+            playerViewModel.musicUrlInfo.observe(this) {
+                // 存储数据
+                intent.putExtra("musicUrl", it[0].url)
+                intent.putExtra("is_ok", isTop)
+                startService(intent)
+                bindService(intent, connection, Context.BIND_AUTO_CREATE)
+            }
+            playerViewModel.musicInfo.observe(this) {
+                intent.putExtra("musicName", it[0].name)
+                intent.putExtra("musicAuthorName", it[0].ar[0].name)
+                intent.putExtra("musicImgUrl", it[0].al.picUrl)
+                startService(intent)
+            }
+            intent.putExtra("justOK", "1")
             startService(intent)
-            bindService(intent, connection, Context.BIND_AUTO_CREATE)
+
+        } catch (e: NullPointerException) {
+            Log.d("TAG", "(MusicPlayerActivity.kt:119)-->> ");
         }
-        playerViewModel.musicInfo.observe(this) {
-            intent.putExtra("musicName", it[0].name)
-            intent.putExtra("musicAuthorName", it[0].ar[0].name)
-            intent.putExtra("musicImgUrl", it[0].al.picUrl)
-            startService(intent)
-        }
-        intent.putExtra("justOK", "1")
-        startService(intent)
+
     }
 
     /**
@@ -227,33 +234,42 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
          * 分别获取  评论 歌词 播放链接 音乐的信息
          */
         if (!::musicId.isInitialized) {
-            Log.d("852852", "(MusicPlayerActivity.kt:112)-->> 空");
-            val music = sharedPreferences.getString("my_key", "").toString()
-            Log.d("852852", "(MusicPlayerActivity.kt:109)-->> $music")
-            playerViewModel.getMusicComments(music)
-            playerViewModel.getMusicLyrics(music)
-            playerViewModel.getMusicUrl(music)
-            playerViewModel.getMusicInformation(music)
-            playerViewModel.musicInfo.observe(this) {
-                mBinding.tvMusicTitle.text = it[0].name
-                when (it[0].ar.size) {
-                    1 -> mBinding.tvArtistName.text = it[0].ar[0].name
-                    2 -> mBinding.tvArtistName.text = it[0].ar[0].name + "/" + it[0].ar[1].name
+            try {
+                Log.d("852852", "(MusicPlayerActivity.kt:112)-->> 空");
+                val music = sharedPreferences.getString("my_key", "").toString()
+                Log.d("852852", "(MusicPlayerActivity.kt:109)-->> $music")
+                playerViewModel.getMusicComments(music)
+                playerViewModel.getMusicLyrics(music)
+                playerViewModel.getMusicUrl(music)
+                playerViewModel.getMusicInformation(music)
+                playerViewModel.musicInfo.observe(this) {
+                    mBinding.tvMusicTitle.text = it[0].name
+                    when (it[0].ar.size) {
+                        1 -> mBinding.tvArtistName.text = it[0].ar[0].name
+                        2 -> mBinding.tvArtistName.text = it[0].ar[0].name + "/" + it[0].ar[1].name
+                    }
                 }
+            } catch (e: NullPointerException) {
+                Log.d("TAG", "(MusicPlayerActivity.kt:248)-->> ");
             }
         } else {
             Log.d("iniUpData", "(MusicPlayerActivity.kt:240)-->> $musicId");
-            playerViewModel.getMusicComments(musicId)
-            playerViewModel.getMusicLyrics(musicId)
-            playerViewModel.getMusicUrl(musicId)
-            playerViewModel.getMusicInformation(musicId)
-            playerViewModel.musicInfo.observe(this) {
-                mBinding.tvMusicTitle.text = it[0].name
-                when (it[0].ar.size) {
-                    1 -> mBinding.tvArtistName.text = it[0].ar[0].name
-                    2 -> mBinding.tvArtistName.text = it[0].ar[0].name + "/" + it[0].ar[1].name
+            try {
+                playerViewModel.getMusicComments(musicId)
+                playerViewModel.getMusicLyrics(musicId)
+                playerViewModel.getMusicUrl(musicId)
+                playerViewModel.getMusicInformation(musicId)
+                playerViewModel.musicInfo.observe(this) {
+                    mBinding.tvMusicTitle.text = it[0].name
+                    when (it[0].ar.size) {
+                        1 -> mBinding.tvArtistName.text = it[0].ar[0].name
+                        2 -> mBinding.tvArtistName.text = it[0].ar[0].name + "/" + it[0].ar[1].name
+                    }
                 }
+            } catch (e: NullPointerException) {
+                Log.d("TAG", "(MusicPlayerActivity.kt:260)-->> ");
             }
+
         }
     }
 

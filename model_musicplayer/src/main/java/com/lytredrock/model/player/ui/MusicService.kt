@@ -143,7 +143,7 @@ class MusicService : Service() {
             manager.createNotificationChannel(channel)
         }
         //虽然设置了，但是很遗憾，service也绑定了主app，一开始就初始化了，if相当于没有
-        if(justTest=="0"){
+      //  if(justTest=="0"){
             val intent = Intent(this, MusicPlayerActivity::class.java)
             val pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
             val notification = NotificationCompat.Builder(this, "my_service")
@@ -157,7 +157,7 @@ class MusicService : Service() {
             startForeground(1, notification)
         }
 
-    }
+ //   }
 
     override fun onDestroy() {
         super.onDestroy()

@@ -67,7 +67,7 @@ class PageOneFragment : Fragment() {
             iniComments()
         }
         mBinding.ivDownload.setOnClickListener {
-            myToast("下载", requireContext())
+            myToast("功能完善中", requireContext())
         }
         mBinding.ivLove.setOnClickListener {
             myToast("功能正在完善中", requireContext())
