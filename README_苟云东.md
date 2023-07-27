@@ -17,10 +17,12 @@
 
 ### 主页面的ui设计
 ![1690445083413](https://github.com/lytMoon/emoCloud/assets/119687323/37c64de6-9a3f-49da-9d50-ecda41b7281a)
+
 主界面由vp2+fragment+buttomnavigation组成，而其他的东西都放在各个fragment里面，在发现fragment里面，banner是由vp2
 实现的，然后使用了Timer来实现了无限和定时轮播，推荐歌单则使用了MaskableFrameLayout实现了跑马灯的效果。在主页也实现了侧滑菜单（因为接口问题，没有实现什么功能）
 ### 歌单
 ![1690445283804](https://github.com/lytMoon/emoCloud/assets/119687323/acf4c3d3-0ddd-4921-a601-424e7f9c8745)
+
 在点击进入歌单时使用了元素共享动画，在歌单页面则是使用了协调者布局加rv实现，在歌单里每个item的点击菜单则使用了PopupMenu
 
 ### 排行榜和热门歌手
@@ -29,6 +31,7 @@
 
 ### 歌曲的收藏和下载
 ![1690445628462](https://github.com/lytMoon/emoCloud/assets/119687323/5b882bbf-7b77-4875-82e3-060331c430a6)
+
 歌曲的收藏，我使用SQLite数据库存储了收藏歌曲的信息，然后在收藏歌单页面再用rv把整个数据库的数据展示出来
 歌曲的下载，我使用了DownloadManager来进行歌曲的本地下载，而歌曲的下载记录，我也是用的SQLite数据库存起来，然后再用一个单独的页面呈现这些信息
 
