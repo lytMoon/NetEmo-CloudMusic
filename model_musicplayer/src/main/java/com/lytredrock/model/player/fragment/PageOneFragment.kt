@@ -18,6 +18,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,6 +47,8 @@ class PageOneFragment : Fragment() {
         )
     }
     private lateinit var animator: ObjectAnimator
+    private val builder = AlertDialog.Builder(requireContext())
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,9 +71,20 @@ class PageOneFragment : Fragment() {
             iniComments()
         }
         mBinding.ivDownload.setOnClickListener {
-            playerViewModel.musicUrlInfo.observe(requireActivity()){
-                downloadMusic(requireContext(),it[0].url,it[0].id.toString(),"歌曲正在下载")
+
+            builder.setMessage("确定执行该操作吗？")
+            builder.setPositiveButton("是") { dialog, which ->
+                playerViewModel.musicUrlInfo.observe(requireActivity()) {
+                    myToast("准备下载",requireContext())
+                    downloadMusic(requireContext(), it[0].url, it[0].id.toString(), "歌曲正在下载")
+                }
             }
+            builder.setNegativeButton("否") { dialog, which ->
+                dialog.dismiss()
+            }
+            val dialog = builder.create()
+            dialog.show()
+
         }
         mBinding.ivLove.setOnClickListener {
             myToast("功能正在完善中", requireContext())
