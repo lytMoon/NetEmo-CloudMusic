@@ -131,7 +131,7 @@ class MainActivity : BaseActivity() {
 
                 }
             }
-        }, 100, 1000)
+        }, 1000, 1000)
 
 
         val fragments = ArrayList<BackFragment>()
