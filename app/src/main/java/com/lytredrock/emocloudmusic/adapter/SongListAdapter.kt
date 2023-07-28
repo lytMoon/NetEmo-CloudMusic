@@ -19,7 +19,7 @@ import com.lytredrock.emocloudmusic.SongListActivity
 import com.lytredrock.emocloudmusic.data.Song
 
 /**
- * description ： TODO:类的作用
+ * description ： 歌单页面的适配器
  * author : 苟云东
  * email : 2191288460@qq.com
  * date : 2023/7/19 15:31

@@ -16,7 +16,7 @@ import com.lytredrock.emocloudmusic.databinding.FragmentMineBinding
 import com.lytredrock.emocloudmusic.viewmodel.MineFragmentViewModel
 
 /**
- * description ： TODO:类的作用
+ * description ： 我的页面的fragment
  * author : 苟云东
  * email : 2191288460@qq.com
  * date : 2023/7/15 17:47

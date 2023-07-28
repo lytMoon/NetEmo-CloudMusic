@@ -23,6 +23,7 @@ class SplashActivity : BaseActivity() {
         transparentStatusBar(window, false)
         var boolean = true
 
+//        设置一个跳转方法
         myViewBinding.tvSkip.setOnClickListener {
             startActivity<MainActivity>()
             boolean = false
@@ -31,7 +32,7 @@ class SplashActivity : BaseActivity() {
 
         Glide.with(this).load(R.drawable.splash).into(myViewBinding.ivSplash)
 
-
+//设置了一个定时器，在4秒后会跳转页面
         timer.schedule(object : TimerTask() {
             @SuppressLint("SuspiciousIndentation")
             override fun run() {

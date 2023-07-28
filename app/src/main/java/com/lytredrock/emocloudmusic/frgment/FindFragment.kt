@@ -25,7 +25,7 @@ import java.util.Timer
 import java.util.TimerTask
 
 /**
- * description ： TODO:类的作用
+ * description ： 发现页面的fragment
  * author : 苟云东
  * email : 2191288460@qq.com
  * date : 2023/7/15 19:50
@@ -68,9 +68,12 @@ class FindFragment : Fragment() {
             recommendSongListLifeData.observe(viewLifecycleOwner) {
                 val myAdapter = RecommendSongListAdapter(it, requireActivity())
                 binding.rvRecommendSongList.adapter = myAdapter
+//              使用了CarouselLayoutManager()，实现了跑马灯的效果
                 binding.rvRecommendSongList.layoutManager = CarouselLayoutManager()
+//                设置推荐歌单的点击事件
                 myAdapter.setOnclick(object : RecommendSongListAdapter.ClickInterface {
                     override fun onImageviewClick(view: ImageView, position: Int) {
+//                        元素共享动画
                         val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                             requireActivity(),
                             view,
@@ -98,7 +101,7 @@ class FindFragment : Fragment() {
             }
         }
 
-
+// 利用timer实现了banner的自动轮播
         timer.schedule(object : TimerTask() {
             @SuppressLint("SuspiciousIndentation")
             override fun run() {

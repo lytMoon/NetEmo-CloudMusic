@@ -57,6 +57,7 @@ class MainActivity : BaseActivity() {
         setContentView(myViewBinding.root)
         iniBind()
         transparentStatusBar(window, false)
+//        一个图片自旋转的动画
         val rotateAnimation = RotateAnimation(
             0f,
             360f,
@@ -70,12 +71,10 @@ class MainActivity : BaseActivity() {
         rotateAnimation.interpolator = LinearInterpolator()
         myViewBinding.ivFindSong.startAnimation(rotateAnimation)
 
-
+//设置主页的侧滑栏
         myViewBinding.ivSlideMenu.bringToFront()
         myViewBinding.ivSlideMenu.setOnClickListener {
             myViewBinding.drawerLayout.openDrawer(GravityCompat.START)
-
-
         }
 
         myViewBinding.ivBroadcast.setOnClickListener {
