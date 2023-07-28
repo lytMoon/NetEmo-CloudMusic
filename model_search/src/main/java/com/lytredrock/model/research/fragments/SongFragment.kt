@@ -32,11 +32,6 @@ class SongFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("lifeCycle", "(SongFragment.kt:40)-->>  onViewCreated");
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("lifeCycle", "(SongFragment.kt:57)-->> onResume");
         songViewModel.songData.observe(viewLifecycleOwner) {
             try {
                 mBinding.rvSong.adapter = RvSongAdapter(it, requireActivity())
@@ -47,8 +42,8 @@ class SongFragment : Fragment() {
             }
 
         }
-
     }
+
 
 }
 
