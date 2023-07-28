@@ -47,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var codeNumber: String
     private lateinit var qrCodeBinding: ItemQrcodeLoginBinding
     private lateinit var identifyBinding: ItemCodeLoginBinding
+
     //懒加载注入viewBinding
     private val mBinding: ActivityLoginBinding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
 
@@ -167,6 +168,7 @@ class LoginActivity : AppCompatActivity() {
                 NetWorkUtils.receiveCodeNum(phoneNum, object : PhoneNumCallBack {
                     override fun onRespond(d: CodeNum) {
                     }
+
                     override fun onFailed(e: String) {
                     }
                 })
@@ -187,6 +189,7 @@ class LoginActivity : AppCompatActivity() {
                             finish()
                         }
                     }
+
                     override fun onFailed(e: String?) {
                         myToast("登录失败，请检查您的验证码", this@LoginActivity)
                         Log.d("TAG", "(LoginActivity.kt:150)-->> $e")

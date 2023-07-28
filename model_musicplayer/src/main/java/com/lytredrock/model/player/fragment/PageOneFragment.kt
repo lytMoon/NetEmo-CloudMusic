@@ -47,8 +47,6 @@ class PageOneFragment : Fragment() {
         )
     }
     private lateinit var animator: ObjectAnimator
-    private val builder = AlertDialog.Builder(requireContext())
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,20 +69,20 @@ class PageOneFragment : Fragment() {
             iniComments()
         }
         mBinding.ivDownload.setOnClickListener {
-
-            builder.setMessage("确定执行该操作吗？")
-            builder.setPositiveButton("是") { dialog, which ->
-                playerViewModel.musicUrlInfo.observe(requireActivity()) {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("温馨提醒")
+                .setMessage("是否要下载当前的歌曲？")
+                .setPositiveButton("同意") { _, _ ->
                     myToast("准备下载",requireContext())
-                    downloadMusic(requireContext(), it[0].url, it[0].id.toString(), "歌曲正在下载")
+                    playerViewModel.musicUrlInfo.observe(requireActivity()){
+                        downloadMusic(requireContext(),it[0].url,it[0].id.toString(),"歌曲正在下载")
+                    }
                 }
-            }
-            builder.setNegativeButton("否") { dialog, which ->
-                dialog.dismiss()
-            }
+                .setNegativeButton("拒绝") { dialog, _ ->
+                    dialog.dismiss()
+                }
             val dialog = builder.create()
             dialog.show()
-
         }
         mBinding.ivLove.setOnClickListener {
             myToast("功能正在完善中", requireContext())
