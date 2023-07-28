@@ -1,7 +1,7 @@
 package com.lytredrock.emocloudmusic.helper
 
 /**
- * description ： TODO:类的作用
+ * description ：  为了呈现下载记录，写了个SQLite的帮助类
  * author : 苟云东
  * email : 2191288460@qq.com
  * date : 2023/7/25 13:22

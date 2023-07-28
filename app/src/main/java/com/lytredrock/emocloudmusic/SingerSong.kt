@@ -31,6 +31,7 @@ class SingerSong : BaseActivity() {
         myViewBinding.collapsingToolbar.title = name
 
         Glide.with(this).load(photo).into(myViewBinding.ivSinger)
+        //进行网络请求，再通过livedata的回调来刷新ui
         myViewModel.apply {
             getSingerSongInInternet(id)
             singerSongLifeData.observe(this@SingerSong) {
@@ -38,7 +39,6 @@ class SingerSong : BaseActivity() {
                     adapter = SingerSongAdapter(it, this@SingerSong)
                     layoutManager = GridLayoutManager(this@SingerSong, 1)
                 }
-
             }
 
         }

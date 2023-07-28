@@ -13,7 +13,7 @@ import com.lytredrock.emocloudmusic.R
 import com.lytredrock.emocloudmusic.data.HotSongListData
 
 /**
- * description ： TODO:类的作用
+ * description ： 热门歌单的适配器
  * author : 苟云东
  * email : 2191288460@qq.com
  * date : 2023/7/22 16:08

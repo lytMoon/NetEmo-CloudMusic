@@ -10,7 +10,7 @@ import com.lytredrock.emocloudmusic.adapter.FragmentAdapter
 import com.lytredrock.emocloudmusic.databinding.FragmentConmmnityBinding
 
 /**
- * description ： TODO:类的作用
+ * description ： 热门页面的fragment
  * author : 苟云东
  * email : 2191288460@qq.com
  * date : 2023/7/15 19:52
@@ -45,7 +45,7 @@ class HotFragment : Fragment() {
             }
         })
         binding.vp2Hot.adapter = FragmentAdapter(requireActivity(), fragments)
-
+//vp2与tablayout的联动
         TabLayoutMediator(binding.tabLayout2, binding.vp2Hot) { tab, position ->
             when (position) {
                 0 -> tab.text = "歌榜"

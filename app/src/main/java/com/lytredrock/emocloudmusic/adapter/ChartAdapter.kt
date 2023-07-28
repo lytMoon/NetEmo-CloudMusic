@@ -13,7 +13,7 @@ import com.lytredrock.emocloudmusic.R
 import com.lytredrock.emocloudmusic.data.SongChart
 
 /**
- * description ： TODO:类的作用
+ * description ： 排行榜的适配器
  * author : 苟云东
  * email : 2191288460@qq.com
  * date : 2023/7/21 11:46

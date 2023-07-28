@@ -17,7 +17,7 @@ import com.lytredrock.emocloudmusic.data.Collect
 import com.lytredrock.emocloudmusic.helper.CollectDataHelper
 
 /**
- * description ： TODO:类的作用
+ * description ：收藏歌单的适配器
  * author : 苟云东
  * email : 2191288460@qq.com
  * date : 2023/7/25 16:48

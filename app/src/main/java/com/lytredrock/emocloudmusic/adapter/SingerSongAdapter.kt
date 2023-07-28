@@ -16,7 +16,7 @@ import com.lytredrock.emocloudmusic.SingerSong
 import com.lytredrock.emocloudmusic.data.SingSongData
 
 /**
- * description ： TODO:类的作用
+ * description ： 热门歌手的热门50首歌的适配器
  * author : 苟云东
  * email : 2191288460@qq.com
  * date : 2023/7/22 10:45

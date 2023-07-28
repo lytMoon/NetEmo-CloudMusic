@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.lytredrock.emocloudmusic.R
 
 /**
- * description ： TODO:类的作用
+ * description ： 用于banner的fragment
  * author : 苟云东
  * email : 2191288460@qq.com
  * date : 2023/7/17 11:37

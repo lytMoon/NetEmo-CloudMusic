@@ -59,7 +59,7 @@ class Download : BaseActivity() {
             layoutManager = LinearLayoutManager(this@Download)
         }
 
-
+//设置一个dialog
         myViewBinding.ivClearDownload.setOnClickListener {
             AlertDialog.Builder(this).apply {
                 setTitle("下载记录")

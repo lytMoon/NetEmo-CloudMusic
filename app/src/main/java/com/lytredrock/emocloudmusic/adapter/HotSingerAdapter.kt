@@ -16,7 +16,7 @@ import com.lytredrock.emocloudmusic.data.Artist
 
 
 /**
- * description ： TODO:类的作用
+ * description ： 热门歌手的适配器
  * author : 苟云东
  * email : 2191288460@qq.com
  * date : 2023/7/21 16:52

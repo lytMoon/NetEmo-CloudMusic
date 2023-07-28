@@ -13,7 +13,7 @@ import com.lytredrock.emocloudmusic.databinding.HotSingerBinding
 import com.lytredrock.emocloudmusic.viewmodel.HotSingerViewModel
 
 /**
- * description ： TODO:类的作用
+ * description ： 热门歌手的fragment
  * author : 苟云东
  * email : 2191288460@qq.com
  * date : 2023/7/20 19:49

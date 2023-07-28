@@ -16,7 +16,7 @@ import com.lytredrock.emocloudmusic.databinding.SongChartBinding
 import com.lytredrock.emocloudmusic.viewmodel.SongChartViewModel
 
 /**
- * description ： TODO:类的作用
+ * description ： 排行榜的fragment
  * author : 苟云东
  * email : 2191288460@qq.com
  * date : 2023/7/20 19:47
@@ -43,6 +43,7 @@ class SongChartFragment : Fragment() {
 
                 myAdapter.setOnclick(object : ChartAdapter.ClickInterface {
                     override fun onImageviewClick(view: ImageView, position: Int) {
+//                        元素共享动画
                         val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                             requireActivity(),
                             view,

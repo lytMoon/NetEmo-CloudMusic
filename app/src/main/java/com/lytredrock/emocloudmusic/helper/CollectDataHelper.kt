@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import com.lytredrock.emocloudmusic.data.Collect
 
 /**
- * description ： TODO:类的作用
+ * description ： 为了实现收藏，写了个SQLite的帮助类
  * author : 苟云东
  * email : 2191288460@qq.com
  * date : 2023/7/25 21:24

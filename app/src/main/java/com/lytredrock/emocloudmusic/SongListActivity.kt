@@ -26,7 +26,7 @@ class SongListActivity : BaseActivity() {
         setSupportActionBar(myViewBinding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         transparentStatusBar(window, false)
-
+//拿到传的参数
         val id = intent.getLongExtra("id", 0)
         val name = intent.getStringExtra("name")
         val photo = intent.getStringExtra("photo")
@@ -34,7 +34,7 @@ class SongListActivity : BaseActivity() {
 
         myViewBinding.collapsingToolbar.title = name
         Glide.with(this@SongListActivity).load(photo).into(myViewBinding.ivSongList)
-
+//进行网络请求，再通过livedata的回调来刷新ui
         myViewModel.apply {
             getSongListInInternet(id)
             songLifeData.observe(this@SongListActivity) {
@@ -42,12 +42,10 @@ class SongListActivity : BaseActivity() {
                     adapter = SongListAdapter(it, this@SongListActivity)
                     layoutManager = GridLayoutManager(this@SongListActivity, 1)
                 }
-
             }
         }
-
     }
-
+//设置左上角home键的点击方法
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
