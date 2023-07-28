@@ -72,7 +72,6 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
             mBinding.musicProgress.progress =
                 (mBinder.getCurrentPosition() * 100 / mBinder.getDuration())
         } catch (e: Exception) {
-            recreate()
             Log.d("TAG", "(MusicPlayerActivity.kt:74)-->> ");
         }
 
@@ -139,7 +138,6 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
             startService(intent)
 
         } catch (e: NullPointerException) {
-            recreate()
             Log.d("TAG", "(MusicPlayerActivity.kt:119)-->> ");
         }
 
@@ -161,14 +159,12 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
                         mBinder.start()
                     }
                 } catch (e: Exception) {
-                    recreate()
                     Log.d("TAG", "(MusicPlayerActivity.kt:153)-->> ");
                 }
                 try {
                     val isPlay = mBinder.isPlaying()
                     updateData(!isPlay)
                 } catch (e: Exception) {
-                    recreate()
                     Log.d("TAG", "(MusicPlayerActivity.kt:165)-->> ");
                 }
             }
@@ -225,7 +221,6 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
                     mBinder.start()
                     mBinding.musicPlay.setImageDrawable(getDrawable(R.drawable.pause_icon))
                 } catch (e: Exception) {
-                    recreate()
                     Log.d("TAG", "(MusicPlayerActivity.kt:218)-->> ");
                 }
             }
@@ -272,7 +267,6 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 }
             } catch (e: NullPointerException) {
-                recreate()
                 Log.d("TAG", "(MusicPlayerActivity.kt:248)-->> ");
             }
         } else {
@@ -290,7 +284,6 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 }
             } catch (e: NullPointerException) {
-                recreate()
                 Log.d("TAG", "(MusicPlayerActivity.kt:260)-->> ");
             }
 
@@ -315,7 +308,6 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
             handler.removeCallbacks(runnable)//释放我们的handler
             unbindService(connection)//解除绑定
         } catch (e: Exception) {
-            recreate()
             Log.d("TAG", "(MusicPlayerActivity.kt:313)-->> ");
         }
 
@@ -328,7 +320,7 @@ class MusicPlayerActivity : AppCompatActivity(), View.OnClickListener {
 
 /**
  * 下面的代码无用
- * 本来准备设置标记符，但是当你切换到第二个的catch时候，点击事件被vp拦截了，再次点击的时候不会切换回来（除非vp为空，所以放弃了这种判断方法）
+ * 本来准备设置标记符，但是当你切换到第二个的时候，点击事件被vp拦截了，再次点击的时候不会切换回来（除非vp为空，所以放弃了这种判断方法）
  */
 
 
