@@ -32,22 +32,26 @@ class ArtistsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         return mBinding.root
+
     }
 
-
-    override fun onResume() {
-        super.onResume()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         artistViewModel.artistData.observe(viewLifecycleOwner) {
             try {
                 mBinding.rvArtist.adapter = RvArtistAdapter(it, requireActivity())
                 mBinding.rvArtist.layoutManager =
                     GridLayoutManager(requireContext(), 1, RecyclerView.VERTICAL, false)
-            }
-            catch (e:java.lang.NullPointerException){
-                Log.d("NullPointerException","(ArtistsFragment.kt:48)-->> ");
+            } catch (e: java.lang.NullPointerException) {
+                Log.d("NullPointerException", "(ArtistsFragment.kt:48)-->> ");
             }
 
         }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
 
 
     }

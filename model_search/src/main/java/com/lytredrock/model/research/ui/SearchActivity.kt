@@ -24,7 +24,7 @@ import com.lytredrock.model.research.searchviewmodel.SongViewModel
 @Route(path = SEARCH_AROUTER)
 class SearchActivity : AppCompatActivity() {
     private val titlesList = arrayListOf<String>()
-    private val fragmentList = arrayListOf<BackInterface>()
+    private val fragmentList = ArrayList<BackInterface>()
 
     //懒加载注入viewBinding
     private val mBinding: SearchMainBinding by lazy { SearchMainBinding.inflate(layoutInflater) }

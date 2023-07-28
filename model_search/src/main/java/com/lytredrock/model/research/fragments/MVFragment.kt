@@ -29,7 +29,6 @@ class MVFragment : Fragment() {
     }
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,8 +36,8 @@ class MVFragment : Fragment() {
         return mBinding.root
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         mvViewmodel.mvData.observe(viewLifecycleOwner) {
             try {
                 mBinding.rvMv.adapter = RvMvAdapter(it, requireActivity())
@@ -49,8 +48,6 @@ class MVFragment : Fragment() {
             }
 
         }
-
-
     }
 
 
