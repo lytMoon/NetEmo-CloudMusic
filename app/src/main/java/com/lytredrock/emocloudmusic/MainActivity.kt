@@ -55,9 +55,8 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(myViewBinding.root)
-        transparentStatusBar(window, false)
         iniBind()
-
+        transparentStatusBar(window, false)
         val rotateAnimation = RotateAnimation(
             0f,
             360f,
@@ -75,24 +74,33 @@ class MainActivity : BaseActivity() {
         myViewBinding.ivSlideMenu.bringToFront()
         myViewBinding.ivSlideMenu.setOnClickListener {
             myViewBinding.drawerLayout.openDrawer(GravityCompat.START)
-            Log.d("59529","(MainActivity.kt:88)-->>${myBinder.getDuration()} ");
 
 
         }
 
         myViewBinding.ivBroadcast.setOnClickListener {
-            if (myBinder.isPlaying()) {
-                myBinder.stop()
-                myViewBinding.ivStop.visibility = View.VISIBLE
-                myViewBinding.ivBroadcast.visibility = View.GONE
+            try {
+                if (myBinder.isPlaying()) {
+                    myBinder.stop()
+                    myViewBinding.ivStop.visibility = View.VISIBLE
+                    myViewBinding.ivBroadcast.visibility = View.GONE
+                }
+            } catch (e: Exception) {
+                recreate()
             }
+
         }
         myViewBinding.ivStop.setOnClickListener {
-            if (!myBinder.isPlaying()) {
-                myBinder.start()
-                myViewBinding.ivStop.visibility = View.GONE
-                myViewBinding.ivBroadcast.visibility = View.VISIBLE
+            try {
+                if (!myBinder.isPlaying()) {
+                    myBinder.start()
+                    myViewBinding.ivStop.visibility = View.GONE
+                    myViewBinding.ivBroadcast.visibility = View.VISIBLE
+                }
+            } catch (e: java.lang.Exception) {
+                recreate()
             }
+
         }
         /**
          * 利用ARouter跳转
@@ -109,13 +117,18 @@ class MainActivity : BaseActivity() {
             @SuppressLint("SuspiciousIndentation")
             override fun run() {
                 runOnUiThread {
-                    myViewBinding.tvFindSongName.text = myBinder.getMusicName()
-                    myViewBinding.tvFindSongAuthor.text = myBinder.getMusicAuthor()
-                    if (myBinder.isPlaying()) {
-                        myViewBinding.ivFindSong.startAnimation(rotateAnimation)
-                    } else {
-                        myViewBinding.ivFindSong.clearAnimation()
+                    try {
+                        myViewBinding.tvFindSongName.text = myBinder.getMusicName()
+                        myViewBinding.tvFindSongAuthor.text = myBinder.getMusicAuthor()
+                        if (myBinder.isPlaying()) {
+                            myViewBinding.ivFindSong.startAnimation(rotateAnimation)
+                        } else {
+                            myViewBinding.ivFindSong.clearAnimation()
+                        }
+                    } catch (e: Exception) {
+                        recreate()
                     }
+
                 }
             }
         }, 100, 1000)
