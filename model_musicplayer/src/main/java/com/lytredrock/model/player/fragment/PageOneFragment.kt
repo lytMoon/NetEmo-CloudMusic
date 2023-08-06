@@ -75,7 +75,7 @@ class PageOneFragment : Fragment() {
                 .setPositiveButton("同意") { _, _ ->
                     myToast("准备下载",requireContext())
                     playerViewModel.musicUrlInfo.observe(requireActivity()){
-                        downloadMusic(requireContext(),it[0].url,it[0].id.toString(),"歌曲正在下载")
+                        downloadMusic(requireContext(),it[0].url,it[0].id.toString()+".mp3","歌曲正在下载")
                     }
                 }
                 .setNegativeButton("拒绝") { dialog, _ ->
